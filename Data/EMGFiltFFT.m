@@ -56,6 +56,7 @@ fftEmg8 = abs(fft(emgData8));
 figure;
 hold on;
 subplot(2,4,1);
+title('FFT of raw EMG - all channels');
 plot(freq,fftEmg1);
 xlim([0 100]);
 subplot(2,4,2);
@@ -100,6 +101,7 @@ figure;
 hold on;
 subplot(2,4,1);
 plot(freq,abs(fft(filterEmg1)));
+title('Butterworth and FFT - all channels');
 xlim([0 100]);
 subplot(2,4,2);
 plot(freq,abs(fft(filterEmg2)));
@@ -123,3 +125,34 @@ subplot(2,4,8);
 plot(freq,abs(fft(filterEmg8)));
 xlim([0 100]);
 hold off;
+
+%% Plotter de forskellige kanaler:
+
+
+figure;
+axes('Position' , [0.05 -0.92 1 1], 'Visible' , 'off')
+text(0.45,0.95,'Tid (s)')
+h = text(0.03,1.3, 'Raw EMG - all channels')
+set(h, 'rotation', 90)
+hold on;
+subplot(2,4,1);
+plot(emgData1);
+subplot(2,4,2);
+plot(emgData2);
+subplot(2,4,3);
+plot(emgData3);
+subplot(2,4,4);
+plot(emgData4);
+subplot(2,4,5);
+plot(emgData5);
+subplot(2,4,6);
+plot(emgData6);
+subplot(2,4,7);
+plot(emgData7);
+subplot(2,4,8);
+plot(emgData8);
+hold off;
+
+%% Rut-meen-skuar
+
+
