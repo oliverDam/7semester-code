@@ -16,3 +16,11 @@ for i=1:3
     plot(accelMat{i});
 end
 hold off;
+
+%% Finding the RMS of accelerations
+
+for i=1:3
+    RMS(i) = rms(accelMat{i});
+end
+
+RMS
