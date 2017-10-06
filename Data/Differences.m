@@ -16,18 +16,3 @@ end
 
 RMSCompMat = [RMS1; RMS2]
 
-%% Something with the frequencies and fft. Take a look at the differences
-%  between the frequencies of the signals?
-
-for i=1:8
-    fftEmg1(i) = rms(abs(fft(emg1Data([i],:))));
-end
-
-for i=1:8
-    fftEmg2(i) = rms(abs(fft(emg2Data([i],:))));
-end
-
-RMSFFT = [fftEmg1; fftEmg2]
-
-
-
