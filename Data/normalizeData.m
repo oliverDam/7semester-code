@@ -1,9 +1,6 @@
 function [output] = normalizeData(emgData)
 
-for i=1:8
-    column = emgData([i],:);
-    columnMatrix{i} = (column - min(column)) / (max(column) - min(column));
-end
+% This normalized the absolute value of the shit you throw into the fucking
+% function. Jesus christ it's so god damn simple!!
 
-output = [columnMatrix{1}; columnMatrix{2}; columnMatrix{3}; columnMatrix{4}; columnMatrix{5}; ...
-    columnMatrix{6}; columnMatrix{7}; columnMatrix{8}];
+output = normc(abs(emgData));
