@@ -4,7 +4,7 @@
 
 %% You'll need to use removeAndSplit on the data before filtering!!
 
-function EMGFiltFFT(emgData)
+function [output]= EMGFiltFFT(emgData)
 
 %% Doing some fft-ish things:
 
@@ -35,6 +35,9 @@ hold off;
 for i=1:8
     filterEmg{i} = filtfilt(b,a,emgData([i],:));
 end
+
+output = [filterEmg{1}; filterEmg{2}; filterEmg{3}; filterEmg{4}; filterEmg{5}; ...
+    filterEmg{6}; filterEmg{7}; filterEmg{8}];
 
 %% Plotter butt-filteret:
 figure;
