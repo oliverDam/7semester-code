@@ -43,10 +43,8 @@ else
 end
 % End initialization code - DO NOT EDIT
 
-
 % --- Executes just before GUI_Training is made visible.
 function GUI_Training_OpeningFcn(hObject, eventdata, handles, varargin)
-realTimeFeatureExtractOptimised2;
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -79,7 +77,7 @@ function start_MVC_Callback(hObject, eventdata, handles)
 % hObject    handle to start_MVC (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+realTimeFeatureExtractOptimised2(1);
 %plot emg data from MYO
 
 

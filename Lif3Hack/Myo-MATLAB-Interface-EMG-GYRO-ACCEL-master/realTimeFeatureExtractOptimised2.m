@@ -1,11 +1,9 @@
-function realTimeFeatureExtractOptimised2()
+function realTimeFeatureExtractOptimised2(input)
 
 %% Pseudo-real-time EMG data extraction from Myo to MATLAB
 % Extracts EMG data from a MYO to MATLAB via C++
 % Requires MYO Connect to be running
 % Runs a C++ executable in a command prompt
-
-clear; clc; close all % House keep
 
 %% Genmeral Setup
 lineLength = 54;
@@ -18,17 +16,20 @@ curPosition = 0;
 sampSize = 20;
 
 %% This we have tilfoejt:
-movVar = dsp.MovingVariance('Method','Sliding window', 'ForgettingFactor', 0.9); %Moving variance stuff
-logVarData = NaN([(sampMax - windowLength) numChannels]);
+% We have to figure out how to make it go in this loop for a certain number
+% of times!
+for limit=1:sampMax
+    movVar = dsp.MovingVariance('Method','Sliding window', 'ForgettingFactor', 0.9); %Moving variance stuff
+    logVarData = NaN([(sampMax - windowLength) numChannels]);
 
-emgData = NaN([sampMax numChannels]); % Matrix for EMG data
-mavData = NaN([(sampMax - windowLength) numChannels]); % Matrix for MAV feature
+    emgData = NaN([sampMax numChannels]); % Matrix for EMG data
+    mavData = NaN([(sampMax - windowLength) numChannels]); % Matrix for MAV feature
 
-fileNameEMG = 'emg.txt'; % File for data transmission; again stop judging ^^
-cmdWindowName = 'EMG Gather';
+    fileNameEMG = 'emg.txt'; % File for data transmission; again stop judging ^^
+    cmdWindowName = 'EMG Gather';
 
-FileEMG = fopen(fileNameEMG,'w'); % Reset file
-fclose(FileEMG); 
+    FileEMG = fopen(fileNameEMG,'w'); % Reset file
+    fclose(FileEMG); 
 
 system(['start /realtime "' cmdWindowName '" getMyoEmg.exe & exit &']) % Start (non-blocking) C thread
 figure(1) % Do after cmd call to bring to foreground
@@ -132,6 +133,13 @@ while get(gcf,'currentchar')==']' % While no button has been pressed
     title([' Dot thingy stuff and such' ])
     drawnow
     
+    %Plot the moving dot
+    if input == 1;
+        plotMovingDot(dotThing, curSample);
+    else
+        lol = 1;
+    end
+    
     if curSample > sampMax % Clear arrays when large
         curSample = 1;
         lastSample = 1;
@@ -141,6 +149,8 @@ while get(gcf,'currentchar')==']' % While no button has been pressed
         logVarData = NaN([(sampMax - windowLength) numChannels]);
         startTime = curTime;
     end
+end
+limit = limit+1;
 end
 
 %% CLean up - target specific window made for this script
