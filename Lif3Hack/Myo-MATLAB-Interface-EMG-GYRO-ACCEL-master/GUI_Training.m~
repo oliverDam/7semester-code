@@ -77,6 +77,7 @@ function start_MVC_Callback(hObject, eventdata, handles)
 % hObject    handle to start_MVC (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+realTimeFeatureExtractOptimised2(1);
 %plot emg data from MYO
 
 
@@ -145,13 +146,13 @@ function plotbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 sliderValue = get(handles.slider_MVC,'Value');
-value = sliderValue;
-%axesObject = findobj('Tag', 'axes1');
+value = sliderValue
+axesObject = findobj('Tag', 'axes1');
 %xlim([0 1]);
 %ylim([0 4000]);
 x = [0 500 1000 3000 3800];
 y = [0.01, 0.01, value, value, 0.01];
-%axes(handles.axes1);
+axes(handles.axes1);
 p = plot(x,y);
 axis([0 4000 0 1]);
-%set(p, 'Parent', axes1);
+set(p, 'Parent', a);
