@@ -1,4 +1,4 @@
-function realTimeFeatureExtractOptimised2(input)
+function realTimeFeatureExtractOptimised2
 
 %% Pseudo-real-time EMG data extraction from Myo to MATLAB
 % Extracts EMG data from a MYO to MATLAB via C++
@@ -16,9 +16,7 @@ curPosition = 0;
 sampSize = 20;
 
 %% This we have tilfoejt:
-% We have to figure out how to make it go in this loop for a certain number
-% of times!
-for limit=1:sampMax
+
     movVar = dsp.MovingVariance('Method','Sliding window', 'ForgettingFactor', 0.9); %Moving variance stuff
     logVarData = NaN([(sampMax - windowLength) numChannels]);
 
@@ -102,7 +100,7 @@ while get(gcf,'currentchar')==']' % While no button has been pressed
     end
         
     % Plots
-    subplot(4,1,1)
+    subplot(3,1,1)
     plot(emgData)
     ylim([-128 127])
     xlim([1 sampMax])
@@ -110,7 +108,7 @@ while get(gcf,'currentchar')==']' % While no button has been pressed
     xlabel('Samples')
     ylabel('Amplitude')
     
-    subplot(4,1,2)
+    subplot(3,1,2)
     plot(mavData)
     ylim([0 127])
     xlim([1 sampMax])
@@ -118,7 +116,7 @@ while get(gcf,'currentchar')==']' % While no button has been pressed
     xlabel('Press any key to quit..')
     ylabel('Amplitude')
     
-    subplot(4,1,3)
+    subplot(3,1,3)
     plot(logVarData)
     ylim([0 10])
     xlim([1 sampMax])
@@ -126,19 +124,7 @@ while get(gcf,'currentchar')==']' % While no button has been pressed
     xlabel('Press any key to quit..')
     ylabel('Amplitude')
     
-    subplot(4,1,4)
-    plot(dotThing)
-    ylim([0 1])
-    xlim([1 sampMax])
-    title([' Dot thingy stuff and such' ])
     drawnow
-    
-    %Plot the moving dot
-    if input == 1;
-        plotMovingDot(dotThing, curSample);
-    else
-        lol = 1;
-    end
     
     if curSample > sampMax % Clear arrays when large
         curSample = 1;
@@ -151,7 +137,6 @@ while get(gcf,'currentchar')==']' % While no button has been pressed
     end
 end
 limit = limit+1;
-end
 
 %% CLean up - target specific window made for this script
 system(['taskkill /f /fi "WindowTitle eq  ' cmdWindowName '" /T & exit']) 

@@ -77,7 +77,6 @@ function start_MVC_Callback(hObject, eventdata, handles)
 % hObject    handle to start_MVC (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-realTimeFeatureExtractOptimised2(1);
 %plot emg data from MYO
 
 
