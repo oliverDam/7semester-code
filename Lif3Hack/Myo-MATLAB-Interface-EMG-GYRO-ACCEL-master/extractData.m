@@ -1,4 +1,4 @@
-function extractData
+function [output] = extractData;
 
 %% Some setup:
 
@@ -14,7 +14,7 @@ curPosition = 0;
 curSample = 1;
 lastSample = 1;
 
-figure(2);
+%figure;
 
 %Timestampstuff:
 FileEMG = fopen(fileNameEMG,'r'); 
@@ -57,23 +57,23 @@ while 1; % While no button has been pressed
         lastSample = curSample;  
     end
     
-    % Plots
-    subplot(2,1,1)
-    plot(emgData)
-    ylim([-128 127])
-    xlim([1 sampMax])
-    title(['Sample frequency: ' num2str(curSample/(curTime - startTime))])
-    xlabel('Samples')
-    ylabel('Amplitude')
-    
-    subplot(2,1,2)
-    plot(mavData)
-    ylim([0 127])
-    xlim([1 sampMax])
-    title([num2str(windowLength) ' Sample Window MAV'])
-    xlabel('Press any key to quit..')
-    ylabel('Amplitude')
-    drawnow
+%     % Plots
+%     subplot(2,1,1)
+%     plot(emgData)
+%     ylim([-128 127])
+%     xlim([1 sampMax])
+%     title(['Sample frequency: ' num2str(curSample/(curTime - startTime))])
+%     xlabel('Samples')
+%     ylabel('Amplitude')
+%     
+%     subplot(2,1,2)
+%     plot(mavData)
+%     ylim([0 127])
+%     xlim([1 sampMax])
+%     title([num2str(windowLength) ' Sample Window MAV'])
+%     xlabel('Press any key to quit..')
+%     ylabel('Amplitude')
+%     drawnow
     
     if curSample > sampMax % Clear arrays when large
         curSample = 1;
@@ -82,4 +82,5 @@ while 1; % While no button has been pressed
         mavData = NaN([(sampMax - windowLength) numChannels]);
         startTime = curTime;
     end
+    output = emgData;
 end

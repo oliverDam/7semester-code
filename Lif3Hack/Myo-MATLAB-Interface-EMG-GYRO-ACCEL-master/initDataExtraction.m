@@ -24,7 +24,6 @@ FileEMG = fopen(fileNameEMG,'w'); % Reset file
 fclose(FileEMG); 
 
 system(['start /realtime "' cmdWindowName '" getMyoEmg.exe & exit &']) % Start (non-blocking) C thread
-set(gcf,'currentchar',']') % Used for exit on button press
 
 %% Pause for handshake with myo connect and for data collection to begin
 pause(1);
