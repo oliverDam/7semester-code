@@ -50,9 +50,8 @@ function GUI_Training_OpeningFcn(hObject, eventdata, handles, varargin)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to GUI_Training (see VARARGIN)
-
+addpath(genpath('MyoMex'));
 handles.myoMex = [];
-[m1,mm] = initDevice();
 
 % Choose default command line output for GUI_Training
 handles.output = hObject;
@@ -81,6 +80,7 @@ function start_MVC_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %plot emg data from MYO
+startRecording(m1);
 
 
 % --- Executes on button press in Stop_MVC.
@@ -89,6 +89,7 @@ function Stop_MVC_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %save the data when press stop
+stopRecording(m1);
 
 % --- Executes on button press in Fraction_MVC.
 function Fraction_MVC_Callback(hObject, eventdata, handles)
