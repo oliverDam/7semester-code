@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 02-Nov-2017 12:27:25
+% Last Modified by GUIDE v2.5 06-Nov-2017 12:06:07
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -50,7 +50,9 @@ function GUI_Training_OpeningFcn(hObject, eventdata, handles, varargin)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to GUI_Training (see VARARGIN)
-addpath(genpath('MyoMex'));
+
+% Adds the specific path to your MyoMex folder:
+addpath('C:\Users\Simon\Documents\aKandidat\STM1\7semester-code\MyoMex-master\MyoMex');
 handles.myoMex = [];
 
 % Choose default command line output for GUI_Training
@@ -80,7 +82,6 @@ function start_MVC_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %plot emg data from MYO
-startRecording(m1);
 
 
 % --- Executes on button press in Stop_MVC.
@@ -89,7 +90,6 @@ function Stop_MVC_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %save the data when press stop
-stopRecording(m1);
 
 % --- Executes on button press in Fraction_MVC.
 function Fraction_MVC_Callback(hObject, eventdata, handles)
@@ -147,15 +147,31 @@ function plotbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to plotbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+[m1,mm] = initDevice();
+startRecording(m1);
 sliderValue = get(handles.slider_MVC,'Value');
-value = sliderValue;
-%axesObject = findobj('Tag', 'axes1');
-%xlim([0 1]);
-%ylim([0 4000]);
-x = [0 500 1000 3000 3800];
-y = [0.01, 0.01, value, value, 0.01];
-%axes(handles.axes1);
-p = plot(x,y);
-axis([0 4000 0 1]);
-%set(p, 'Parent', axes1);
+trapezoidPlot(sliderValue, handles.axes1, m1, mm);
+stopRecording(m1,mm);
+
+
+
+function edit1_Callback(hObject, eventdata, handles)
+% hObject    handle to edit1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit1 as text
+%        str2double(get(hObject,'String')) returns contents of edit1 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end

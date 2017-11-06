@@ -15,6 +15,8 @@ obj.accel;
 obj.accel_fixed;
 obj.pose;
 obj.pose_rest;
+obj.timeEMG;
+obj.emg;
 assignin('base','m1init', 1);
 end
 
