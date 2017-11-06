@@ -16,22 +16,23 @@ function trapezoidPlot(sliderValue, handles, m1, mm);
         
         %Gets the time we want to record:
         %recordingTime = str2double(get(handles.edit1))*1000;
-        recordingTime = 4000;
+        recordingTime = 10;
         previousSample = 0;
         i = 1;
+        time = 0;
         %Somehow this retrieves an array with 8 emg data stuffz in it
         %wrong:
             
         
-            while i <= recordingTime
+            while time <= recordingTime
                 emg = m1.emg;
-                lolDinMor = m1.timeEMG; %This has something to do with the
-                %time we've recorded EMG, so it might be useful in some way
-                if previousSample ~= lolDinMor && ~isempty(emg)
-                    dataMatrix(i,:) = emg
+                compareValue = emg;
+                if previousSample(1,1) ~= compareValue(1,1) && ~isempty(emg)
+                    dataMatrix(i,:) = emg;
                     avgEmg = mean(emg);
-                    i = i+1
-                    previousSample = lolDinMor
+                    i = i+1;
+                    time = m1.timeEMG;
+                    previousSample = emg;
                 else
                     continue;
                 end
