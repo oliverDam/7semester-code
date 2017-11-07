@@ -82,6 +82,10 @@ function start_MVC_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %plot emg data from MYO
+[m1,mm] = initDevice();
+startRecording(m1);
+findMVC(handles.axes1, m1);
+stopRecording(m1,mm);
 
 
 % --- Executes on button press in Stop_MVC.
@@ -150,7 +154,7 @@ function plotbutton_Callback(hObject, eventdata, handles)
 [m1,mm] = initDevice();
 startRecording(m1);
 sliderValue = get(handles.slider_MVC,'Value');
-trapezoidPlot(sliderValue, handles.axes1, m1, mm);
+trapezoidPlot(sliderValue, handles.axes1, m1);
 stopRecording(m1,mm);
 
 
