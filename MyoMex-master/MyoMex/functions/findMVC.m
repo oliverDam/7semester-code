@@ -1,7 +1,7 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function trapezoidPlot(handles, m1)
+function findMVC(handles, m1)
 
 %Pause for initialization or something:
 pause(0.1);
