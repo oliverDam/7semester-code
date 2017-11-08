@@ -57,13 +57,12 @@ if isError ~= 1
                         lastSample,1:8);
                     filterEmg = butterFilter(toBeFiltered);
                     
-                    %This I'm not so sure about:
+                    %This is also ok for a window and such stuff.
                     meanAbs = mean(abs(filterEmg));
-                    maxEmg = max(meanAbs);
                     
-                    %Rescales the input between 0 and our MVC
-                    maxEmg = max(rescale(maxEmg, 'InputMin', 0, ...
-                        'InputMax', maximum));
+                    %Rescales the input between 0 and our MVC and finds the
+                    %max value in the output vector to plot:
+                    maxEmg = max(rescaleMatrix(meanAbs,MVC));
                     
                     %Plots the dot:
                     axes(plothandle);

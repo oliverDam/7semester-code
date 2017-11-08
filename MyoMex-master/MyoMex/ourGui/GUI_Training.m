@@ -94,6 +94,9 @@ function Stop_MVC_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %save the data when press stop
+MVC = load('MVC.mat');
+MVCvector = findMVCvector(cell2mat(struct2cell(MVC)));
+save('MVCvector.mat','MVCvector');
 
 % --- Executes on button press in Fraction_MVC.
 function Fraction_MVC_Callback(hObject, eventdata, handles)

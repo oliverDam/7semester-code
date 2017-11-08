@@ -37,22 +37,24 @@ if ~isempty(plothandle);
             tEMG = timeEMG(iiEMG);
             dataMatrix(iiEMG,:) = m1.emg_log(iiEMG,:);
             lastSample = max(iiEMG);
-            max(dataMatrix(iiEMG,:))
+            %max(dataMatrix(iiEMG,:))
             
             %Creates a window with the size 'windowSize', in order to
             %split it into something which we can filter in real time. This
             %doesn't provide any overlap in the data.
             if lastSample >= windowSize && buffer >= windowSize
                 time = m1.timeEMG;
-                toBeFiltered = dataMatrix(lastSample-(windowSize-1):lastSample,1:8);
+                toBeFiltered = dataMatrix(lastSample-(windowSize-1):...
+                    lastSample,1:8);
                 filterEmg = butterFilter(toBeFiltered);
                 
                 %I'm not completely sure about the following lines, since
                 %i was a bit too tired when i wrote them. Figure it out
                 %guys!
                 meanAbs = mean(abs(filterEmg));
+                maxEmgMatrix(lastSample,:) = meanAbs;
                 maxEmg = max(meanAbs);
-                MVC(lastSample) = maxEmg;
+                %MVC(lastSample) = maxEmg;
                 
                 %This plots the dot, and it works as it should
                 axes(plothandle);
@@ -67,8 +69,11 @@ if ~isempty(plothandle);
     end
 end
 
-%Finds the max value in the MVC and saves it
-MVC = max(MVC);
-save('MVC.mat','MVC');
-
+try
+    load('MVC.mat');
+    MVC = [MVC ; findMVCvector(maxEmgMatrix)]
+    save('MVC.mat','MVC');
+catch
+    MVC = findMVCvector(maxEmgMatrix)
+    save('MVC.mat','MVC');
 end
