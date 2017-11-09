@@ -7,7 +7,7 @@ function findMVC(handles, m1)
 pause(0.1);
     
 %Setup of the trapezoid:
-x = [0 2000 4000 8000 9000 10000];
+x = [0 2000 4000 7000 9000 10000];
 y = [0.01, 0.01, 0.9, 0.9, 0.01 0.01];
 
 %Required setup. Do NOT touch unless you want to screw every single thing

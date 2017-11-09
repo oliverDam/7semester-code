@@ -1,7 +1,7 @@
 function [output] = butterFilter(inputData)
 
 %Sets up the butterworth filter
-[b,a] = butter(2,0.05,'high');
+[b,a] = butter(2,0.1,'high');
 
 %Filters the eight channels
 for i=1:8
