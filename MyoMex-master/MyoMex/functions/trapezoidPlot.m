@@ -5,8 +5,9 @@ function trapezoidPlot(sliderValue, handles, m1)
 %Tries to load the MVC we've recorded:
 try
     load('MVC.mat');
+    load('baseline.mat');
     maximum = max(MVC);
-    disp('MVC found');
+    disp('MVC and baseline found');
     isError = 0;
 catch
     warning('MVC not found - go record it before trying again');
@@ -57,6 +58,7 @@ if isError ~= 1
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
                         lastSample,1:8);
+                    toBeFiltered = toBeFiltered - baseline;
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok for a window and such stuff.
@@ -72,14 +74,14 @@ if isError ~= 1
                     lol = plot(time*1000, maxEmg, 'or', 'MarkerSize', ...
                         5, 'MarkerFaceColor', 'g');
                     drawnow;
-                    accelMatrix = m1.accel_log(iiIMU,:)
+                    accelMatrix = m1.accel_log(iiIMU,:);
                     buffer1 = 0;
                 else 
                     buffer1 = buffer1 + 1;
                 end
                 
                 %%Second window:
-                if lastSample >= windowSize+20 && buffer2 <= windowSize
+                if lastSample >= windowSize+20 && buffer2 >= windowSize
                     
                     %Gets the time we've recorded EMG in this function
                     time = m1.timeEMG;
@@ -87,6 +89,7 @@ if isError ~= 1
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
                         lastSample,1:8);
+                    toBeFiltered = toBeFiltered - baseline;
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok for a window and such stuff.
@@ -102,7 +105,7 @@ if isError ~= 1
                     lol = plot(time*1000, maxEmg, 'or', 'MarkerSize', ...
                         5, 'MarkerFaceColor', 'g');
                     drawnow;
-                    accelMatrix = m1.accel_log(iiIMU,:)
+                    accelMatrix = m1.accel_log(iiIMU,:);
                     buffer2 = 0;
                 else
                     buffer2 = buffer2 + 1;

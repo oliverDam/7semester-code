@@ -1,14 +1,19 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function findMVC(handles, m1)
+function findMVC(handles, m1, doWhat)
 
 %Pause for initialization or something:
 pause(0.1);
     
 %Setup of the trapezoid:
-x = [0 2000 4000 7000 9000 10000];
-y = [0.01, 0.01, 0.9, 0.9, 0.01 0.01];
+if doWhat == 0
+    x = [0 2000 4000 7000 9000 10000];
+    y = [0.01, 0.01, 0.9, 0.9, 0.01 0.01];
+elseif doWhat == 1
+    x = [0 2000 4000 7000 9000 10000];
+    y = [0.01, 0.01, 0.01, 0.01, 0.01 0.01];
+end
 
 %Required setup. Do NOT touch unless you want to screw every single thing
 %in the entire program up!
@@ -68,12 +73,18 @@ if ~isempty(plothandle);
         end
     end
 end
+baseline = mean(dataMatrix);
+%baseline = mean(dataMatrix(0:2000,1:8))
 
-try
+if doWhat == 0;
+    try
     load('MVC.mat');
-    MVC = [MVC ; findMVCvector(maxEmgMatrix)]
+    MVC = [MVC ; findMVCvector(maxEmgMatrix)];
     save('MVC.mat','MVC');
 catch
-    MVC = findMVCvector(maxEmgMatrix)
+    MVC = findMVCvector(maxEmgMatrix);
     save('MVC.mat','MVC');
+    end
+elseif doWhat == 1;
+    save('baseline.mat','baseline');
 end

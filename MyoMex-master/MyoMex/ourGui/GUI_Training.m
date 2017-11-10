@@ -84,7 +84,7 @@ function start_MVC_Callback(hObject, eventdata, handles)
 %plot emg data from MYO
 [m1,mm] = initDevice();
 startRecording(m1);
-findMVC(handles.axes1, m1);
+findMVC(handles.axes1, m1, 0);
 stopRecording(m1,mm);
 
 
@@ -103,8 +103,10 @@ function Fraction_MVC_Callback(hObject, eventdata, handles)
 % hObject    handle to Fraction_MVC (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-%need the slider fraction and do something with the trapezoid
-
+[m1,mm] = initDevice();
+startRecording(m1);
+findMVC(handles.axes1, m1, 1);
+stopRecording(m1,mm);
 
 % --- Executes on slider movement.
 function slider_MVC_Callback(hObject, eventdata, handles)
