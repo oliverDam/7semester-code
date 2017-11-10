@@ -67,7 +67,7 @@ if isError ~= 1
                     %Rescales the input between 0 and our MVC and finds the
                     %max value in the output vector to plot:
                     meanAbs = removeBaseline(meanAbs, baseline);
-                    maxEmg = max(rescaleMatrix(meanAbs,MVC))
+                    maxEmg = max(rescaleMatrix(meanAbs,MVC));
                     
                     %Plots the dot:
                     axes(plothandle);
@@ -99,7 +99,7 @@ if isError ~= 1
                     %Rescales the input between 0 and our MVC and finds the
                     %max value in the output vector to plot:
                     meanAbs = removeBaseline(meanAbs, baseline);
-                    maxEmg = max(rescaleMatrix(meanAbs,MVC))
+                    maxEmg = max(rescaleMatrix(meanAbs,MVC));
                     
                     %Plots the dot:
                     axes(plothandle);
