@@ -73,7 +73,7 @@ if isError ~= 1
                     axes(plothandle);
                     delete(lol);
                     lol = plot(time*1000, maxEmg, 'or', 'MarkerSize', ...
-                        5, 'MarkerFaceColor', 'g');
+                        10, 'MarkerFaceColor', 'g');
                     drawnow;
                     accelMatrix = m1.accel_log(iiIMU,:);
                     buffer1 = 0;
@@ -105,7 +105,7 @@ if isError ~= 1
                     axes(plothandle);
                     delete(lol);
                     lol = plot(time*1000, maxEmg, 'or', 'MarkerSize', ...
-                        5, 'MarkerFaceColor', 'g');
+                        10, 'MarkerFaceColor', 'g');
                     drawnow;
                     accelMatrix = m1.accel_log(iiIMU,:);
                     buffer2 = 0;
