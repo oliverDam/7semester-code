@@ -64,7 +64,7 @@ if ~isempty(plothandle);
                 %This plots the dot, and it works as it should
                 axes(plothandle);
                 delete(lol);
-                lol = plot(time*1000, maxEmg, 'or', 'MarkerSize', 5, 'MarkerFaceColor', 'g');
+                lol = plot(time*1000, maxEmg, 'or', 'MarkerSize', 10, 'MarkerFaceColor', 'g');
                 drawnow;
                 buffer = 0;
             else
