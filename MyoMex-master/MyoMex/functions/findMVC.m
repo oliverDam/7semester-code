@@ -77,14 +77,8 @@ baseline = mean(dataMatrix);
 %baseline = mean(dataMatrix(0:2000,1:8))
 
 if doWhat == 0;
-    try
-    load('MVC.mat');
-    MVC = [MVC ; findMVCvector(maxEmgMatrix)];
-    save('MVC.mat','MVC');
-catch
     MVC = findMVCvector(maxEmgMatrix);
     save('MVC.mat','MVC');
-    end
 elseif doWhat == 1;
     save('baseline.mat','baseline');
 end

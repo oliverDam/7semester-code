@@ -6,7 +6,8 @@ function trapezoidPlot(sliderValue, handles, m1)
 try
     load('MVC.mat');
     load('baseline.mat');
-    maximum = max(MVC);
+    MVC
+    maximum = mean(MVC)
     disp('MVC and baseline found');
     isError = 0;
 catch
@@ -66,13 +67,13 @@ if isError ~= 1
                     
                     %Rescales the input between 0 and our MVC and finds the
                     %max value in the output vector to plot:
-                    meanAbs = removeBaseline(meanAbs, baseline);
-                    maxEmg = max(rescaleMatrix(meanAbs,MVC));
+                    meanAbs = mean(removeBaseline(meanAbs, baseline));
+                    meanEmg = rescale(meanAbs,'InputMin',0,'InputMax',maximum);
                     
                     %Plots the dot:
                     axes(plothandle);
                     delete(lol);
-                    lol = plot(time*1000, maxEmg, 'or', 'MarkerSize', ...
+                    lol = plot(time*1000, meanEmg, 'or', 'MarkerSize', ...
                         10, 'MarkerFaceColor', 'g');
                     drawnow;
                     accelMatrix = m1.accel_log(iiIMU,:);
@@ -98,13 +99,13 @@ if isError ~= 1
                     
                     %Rescales the input between 0 and our MVC and finds the
                     %max value in the output vector to plot:
-                    meanAbs = removeBaseline(meanAbs, baseline);
-                    maxEmg = max(rescaleMatrix(meanAbs,MVC));
+                    meanAbs = mean(removeBaseline(meanAbs, baseline));
+                    meanEmg = rescale(meanAbs,'InputMin',0,'InputMax',maximum);
                     
                     %Plots the dot:
                     axes(plothandle);
                     delete(lol);
-                    lol = plot(time*1000, maxEmg, 'or', 'MarkerSize', ...
+                    lol = plot(time*1000, meanEmg, 'or', 'MarkerSize', ...
                         10, 'MarkerFaceColor', 'g');
                     drawnow;
                     accelMatrix = m1.accel_log(iiIMU,:);
