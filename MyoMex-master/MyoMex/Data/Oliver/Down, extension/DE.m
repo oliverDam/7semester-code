@@ -1,35 +1,35 @@
-load('AccelData30')
+load('DF_AccelData30')
 
-DF_AccelData30 = accelMatrix;
+DE_AccelData30 = DF_AccelData30;
 
-save('DF_AccelData30.mat','DF_AccelData30')
+save('DE_AccelData30.mat','DE_AccelData30')
 
-load('AccelData50')
+load('DF_AccelData50')
 
-DF_AccelData50 = accelMatrix;
+DE_AccelData50 = DF_AccelData30;
 
-save('DF_AccelData50.mat','DF_AccelData50')
+save('DE_AccelData50.mat','DE_AccelData50')
 
-load('AccelData80')
+load('DF_AccelData80')
 
-DF_AccelData80 = accelMatrix;
+DE_AccelData80 = DF_AccelData30;
 
-save('DF_AccelData80.mat','DF_AccelData80')
+save('DE_AccelData80.mat','DE_AccelData80')
 
-load('EmgData30')
+load('DF_EmgData30')
 
-DF_EmgData30 = EmgMatrix;
+DE_EmgData30 = DF_EmgData30;
 
-save('DF_EmgData30.mat','DF_EmgData30')
+save('DE_EmgData30.mat','DE_EmgData30')
 
-load('EmgData50')
+load('DF_EmgData50')
 
-DF_EmgData50 = EmgMatrix;
+DE_EmgData50 = DF_EmgData50;
 
-save('DF_EmgData50.mat','DF_EmgData50')
+save('DE_EmgData50.mat','DE_EmgData50')
 
-load('EmgData80')
+load('DF_EmgData80')
 
-DF_EmgData80 = EmgMatrix;
+DE_EmgData80 = DF_EmgData80;
 
-save('DF_EmgData80.mat','DF_EmgData80')
+save('DE_EmgData80.mat','DE_EmgData80')
