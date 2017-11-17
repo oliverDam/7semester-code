@@ -19,3 +19,5 @@ hold on;
 plot(ypredExte,'g')
 plot(ypredRadi,'m')
 plot(ypredUlna,'r')
+
+mean(ypredExte)
