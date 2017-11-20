@@ -8,7 +8,7 @@ k7 = featureExtractionMAV(allE_Extension(3601:4200,:));
 k8 = featureExtractionMAV(allE_Extension(4201:4800,:));
 k9 = featureExtractionMAV(allE_Extension(4801:5400,:));
 
-allMav_Extension = [k1;k2;k3;k4;k5;k6;k7;k8;k9]
+allMav_Extension = [k1;k2;k3;k4;k5;k6;k7;k8;k9];
 
 k1 = featureExtractionMAV(allE_Flexion(1:600,:));
 k2 = featureExtractionMAV(allE_Flexion(601:1200,:));
@@ -20,7 +20,7 @@ k7 = featureExtractionMAV(allE_Flexion(3601:4200,:));
 k8 = featureExtractionMAV(allE_Flexion(4201:4800,:));
 k9 = featureExtractionMAV(allE_Flexion(4801:5400,:));
 
-allMav_Flexion = [k1;k2;k3;k4;k5;k6;k7;k8;k9]
+allMav_Flexion = [k1;k2;k3;k4;k5;k6;k7;k8;k9];
 
 k1 = featureExtractionMAV(allE_Radial(1:600,:));
 k2 = featureExtractionMAV(allE_Radial(601:1200,:));
@@ -32,7 +32,7 @@ k7 = featureExtractionMAV(allE_Radial(3601:4200,:));
 k8 = featureExtractionMAV(allE_Radial(4201:4800,:));
 k9 = featureExtractionMAV(allE_Radial(4801:5400,:));
 
-allMav_Radial = [k1;k2;k3;k4;k5;k6;k7;k8;k9]
+allMav_Radial = [k1;k2;k3;k4;k5;k6;k7;k8;k9];
 
 k1 = featureExtractionMAV(allE_Ulnar(1:600,:));
 k2 = featureExtractionMAV(allE_Ulnar(601:1200,:));
@@ -44,4 +44,4 @@ k7 = featureExtractionMAV(allE_Ulnar(3601:4200,:));
 k8 = featureExtractionMAV(allE_Ulnar(4201:4800,:));
 k9 = featureExtractionMAV(allE_Ulnar(4801:5400,:));
 
-allMav_Ulnar = [k1;k2;k3;k4;k5;k6;k7;k8;k9]
+allMav_Ulnar = [k1;k2;k3;k4;k5;k6;k7;k8;k9];
