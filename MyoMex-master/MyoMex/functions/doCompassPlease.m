@@ -1,9 +1,9 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function doCompassPlease(handles, m1)
+function doCompassPlease(handles, m1, sensX, sensY)
 
-try
+
     load('baseline.mat');
     load('MVC.mat');
     load('ExtensionRegression.mat');
@@ -36,7 +36,7 @@ try
         windowSize = 40;
         
         %Makes sure we'll record for the stated 'recordingTime'
-        while 1
+        while time <= 30
             
             %This has been stolen from MyoMex to retrieve data:
             timeEMG = m1.timeEMG_log;
@@ -62,11 +62,11 @@ try
                     %This is also ok featz cause we so streetz:
                     featz = featureExtractionMovVar(toBeFiltered);
                     valueToPlot = getRegressionValue(featz,mahExtensionRegrizzle, ...
-                        mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle);
+                       mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle);
                     
                     axes(plothandle);
                     delete(lol);
-                    lol = compass(valueToPlot(1),valueToPlot(2));
+                    lol = compass(sensX*valueToPlot(1),sensY*valueToPlot(2));
                     drawnow;
                     
                     buffer1 = 0;
@@ -93,7 +93,7 @@ try
                     
                     axes(plothandle);
                     delete(lol);
-                    lol = compass(valueToPlot(1),valueToPlot(2));
+                    lol = compass(sensX*valueToPlot(1),sensY*valueToPlot(2));
                     drawnow;
                     
                     buffer2 = 0;
@@ -103,10 +103,4 @@ try
             end
         end
     end
-    
-    %This could be changed in order to save it as a specific file (might
-    %be able to do it with a textfield in the GUI before testing?):
-    save('AccelData.mat','accelMatrix');
-    EmgMatrix = butterFilter(EmgMatrix);
-    save('EmgData.mat','EmgMatrix');
 end

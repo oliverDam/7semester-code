@@ -9,12 +9,22 @@ flex6 = featureData(:,6);
 flex7 = featureData(:,7);
 flex8 = featureData(:,8);
 
-ypredFlex = feval(mahFlexionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
-ypredExte = feval(mahExtensionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
-ypredRadi = feval(mahRadialRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
-ypredUlna = feval(mahUlnarRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
+ypredFlex = mean(feval(mahFlexionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
+ypredExte = mean(feval(mahExtensionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
+ypredRadi = mean(feval(mahRadialRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
+ypredUlna = mean(feval(mahUlnarRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
 
-xValue = ypredExte-ypredFlex;
-yValue = ypredUlna-ypredRadi;
+
+if ypredExte >= ypredFlex
+    xValue = ypredExte;
+else
+    xValue = 0-ypredFlex;
+end
+
+if ypredUlna >= ypredRadi
+    yValue = ypredUlna;
+else
+    yValue = 0-ypredRadi
+end    
 
 output = [xValue, yValue]
