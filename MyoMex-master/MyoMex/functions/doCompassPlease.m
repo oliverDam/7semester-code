@@ -5,7 +5,6 @@ function doCompassPlease(handles, m1, sensX, sensY)
 
 
     load('baseline.mat');
-    load('MVC.mat');
     load('ExtensionRegression.mat');
     load('FlexionRegression.mat');
     load('RadialRegression.mat');
