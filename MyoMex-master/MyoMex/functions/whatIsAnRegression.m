@@ -3,11 +3,13 @@ function [output] = whatIsAnRegression(rightEmgData, wrongEmgData1, wrongEmgData
 %Take ALL the data as inputs and such and fuck it and it works #yolo
 %Movement is the percent value between 0 and 1 for the movement?
 
-inputData(1:5400,1:8) = rightEmgData;
+L = length(rightEmgData(:,1));
 
-inputData(5401:10800,1:8) = wrongEmgData1;
-inputData(10801:16200,1:8) = wrongEmgData2;
-inputData(16201:21600,1:8) = wrongEmgData3;
+inputData(1:L,1:8) = rightEmgData;
+
+inputData(L+1:2*L,1:8) = wrongEmgData1;
+inputData(2*L+1:3*L,1:8) = wrongEmgData2;
+inputData(3*L+1:4*L,1:8) = wrongEmgData3;
 
 %Makes it into something table-ish:
 channel_1 = inputData(:,1);
