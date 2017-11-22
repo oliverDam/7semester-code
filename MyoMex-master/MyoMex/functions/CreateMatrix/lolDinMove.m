@@ -1,7 +1,7 @@
 %%Input is MAV - We'll explain that somewhere! You also need all the MVC's
 %%to be loaded in order to run this garbage script :)
 
-k1 = featureExtractionMove(allMav_Extension(1:30,:),DE_MVC)
+k1 = featureExtractionMove(allMav_Extension(1:30,:),DE_MVC);
 k2 = featureExtractionMove(allMav_Extension(31:60,:),FE_MVC);
 k3 = featureExtractionMove(allMav_Extension(61:90,:),SE_MVC);
 k4 = featureExtractionMove(allMav_Extension(91:120,:),DE_MVC);
@@ -12,7 +12,7 @@ k8 = featureExtractionMove(allMav_Extension(211:240,:),FE_MVC);
 k9 = featureExtractionMove(allMav_Extension(241:270,:),SE_MVC);
 
 allMove_Extension = [k1;k2;k3;k4;k5;k6;k7;k8;k9];
-allMove_Extension = [allMove_Extension; ones(810,1)*0]
+allMove_Extension = [allMove_Extension; ones(810,1)*0];
 
 k1 = featureExtractionMove(allMav_Flexion(1:30,:),DF_MVC);
 k2 = featureExtractionMove(allMav_Flexion(31:60,:),FF_MVC);
@@ -25,7 +25,7 @@ k8 = featureExtractionMove(allMav_Flexion(211:240,:),FF_MVC);
 k9 = featureExtractionMove(allMav_Flexion(241:270,:),SF_MVC);
 
 allMove_Flexion = [k1;k2;k3;k4;k5;k6;k7;k8;k9];
-allMove_Flexion = [allMove_Flexion; ones(810,1)*0]
+allMove_Flexion = [allMove_Flexion; ones(810,1)*0];
 
 k1 = featureExtractionMove(allMav_Radial(1:30,:),DR_MVC);
 k2 = featureExtractionMove(allMav_Radial(31:60,:),FR_MVC);
@@ -38,7 +38,7 @@ k8 = featureExtractionMove(allMav_Radial(211:240,:),FR_MVC);
 k9 = featureExtractionMove(allMav_Radial(241:270,:),SR_MVC);
 
 allMove_Radial = [k1;k2;k3;k4;k5;k6;k7;k8;k9];
-allMove_Radial = [allMove_Radial; ones(810,1)*0]
+allMove_Radial = [allMove_Radial; ones(810,1)*0];
 
 k1 = featureExtractionMove(allMav_Ulnar(1:30,:),DU_MVC);
 k2 = featureExtractionMove(allMav_Ulnar(31:60,:),FU_MVC);
@@ -51,7 +51,7 @@ k8 = featureExtractionMove(allMav_Ulnar(211:240,:),FU_MVC);
 k9 = featureExtractionMove(allMav_Ulnar(241:270,:),SU_MVC);
 
 allMove_Ulnar = [k1;k2;k3;k4;k5;k6;k7;k8;k9];
-allMove_Ulnar = [allMove_Ulnar; ones(810,1)*0]
+allMove_Ulnar = [allMove_Ulnar; ones(810,1)*0];
 
 save('allMove_Extension.mat','allMove_Extension')
 save('allMove_Flexion.mat','allMove_Flexion')
