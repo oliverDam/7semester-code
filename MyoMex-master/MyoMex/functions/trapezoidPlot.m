@@ -28,6 +28,8 @@ if isError ~= 1
         hold on;
         axes(plothandle);
         plot(x,y);
+        xlabel('Time in ms');
+        ylabel('EMG intensity');
         
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.

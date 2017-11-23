@@ -38,7 +38,7 @@ cereal.Properties.VarDescription = Variables(1,:);
 regressionInput = dataset2table(cereal);
 
 modelspec = 'movement ~ channel_1 + channel_2 + channel_3 + channel_4  + channel_5 + channel_6 + channel_7 + channel_8';% + accel_x + accel_y + accel_z';
-mdl = fitlm(regressionInput, modelspec, 'RobustOpts','on')
+mdl = fitlm(regressionInput, modelspec)
 
 plotResiduals(mdl)
 
