@@ -25,9 +25,6 @@ channel_8 = inputData(:,8);
 %accel_y = accelData(:,2);
 %accel_z = accelData(:,3);
 
-% We have to implemet something that tells the regressor which movements
-% we're performing at a given time. I'm not going to do that.
-
 %Creation of dataset for regression-stuff:
 cereal = dataset(movement, channel_1, channel_2, channel_3, channel_4, ... 
     channel_5, channel_6, channel_7, channel_8);%, accel_x, accel_y, accel_z);
