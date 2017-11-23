@@ -1,4 +1,4 @@
-function [output] = featureExtractionMovVar(emgData)
+function [output] = featureExtractionLiveLogMovVar(emgData)
 
 %Creates a sliding-window MAV with a windowlength of 40.
 %This slides through the data with a 40 sample window but it doesn't

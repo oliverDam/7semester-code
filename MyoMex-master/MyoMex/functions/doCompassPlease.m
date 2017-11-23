@@ -9,7 +9,8 @@ function doCompassPlease(handles, m1, sensX, sensY)
     load('FlexionRegression.mat');
     load('RadialRegression.mat');
     load('UlnarRegression.mat');
-
+    
+    getRegressValue = [ones(9,2)*0]
     pause(0.1);
 
     plothandle = handles;
@@ -35,7 +36,7 @@ function doCompassPlease(handles, m1, sensX, sensY)
         windowSize = 40;
         
         %Makes sure we'll record for the stated 'recordingTime'
-        while time <= 30
+        while time <= 60
             
             %This has been stolen from MyoMex to retrieve data:
             timeEMG = m1.timeEMG_log;
@@ -50,7 +51,7 @@ function doCompassPlease(handles, m1, sensX, sensY)
                 if lastSample >= windowSize && buffer1 >= windowSize
                     
                     %Gets the time we've recorded EMG in this function
-                    time = m1.timeEMG
+                    time = m1.timeEMG;
                     
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
@@ -59,9 +60,11 @@ function doCompassPlease(handles, m1, sensX, sensY)
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
-                    featz = featureExtractionMovVar(toBeFiltered);
-                    valueToPlot = getRegressionValue(featz,mahExtensionRegrizzle, ...
-                       mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle);
+                    featz = featureExtractionLiveLogVar(toBeFiltered);
+                    getRegressValue = [getRegressValue;getRegressionValue(featz,mahExtensionRegrizzle, ...
+                       mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
+                   
+                    valueToPlot = mean(getRegressValue(end-5:end,:));
                     
                     axes(plothandle);
                     delete(lol);
@@ -86,9 +89,11 @@ function doCompassPlease(handles, m1, sensX, sensY)
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
-                    featz = featureExtractionMovVar(toBeFiltered);
-                    valueToPlot = getRegressionValue(featz,mahExtensionRegrizzle, ...
-                        mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle);
+                    featz = featureExtractionLiveLogVar(toBeFiltered);
+                    getRegressValue = [getRegressValue;getRegressionValue(featz,mahExtensionRegrizzle, ...
+                        mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
+                    
+                    valueToPlot = mean(getRegressValue(end-5:end,:));
                     
                     axes(plothandle);
                     delete(lol);

@@ -21,10 +21,10 @@ else
     xValue = 0-ypredFlex;
 end
 
-if ypredUlna >= ypredRadi
-    yValue = ypredUlna;
+if ypredRadi >= ypredUlna
+    yValue = ypredRadi;
 else
-    yValue = 0-ypredRadi
+    yValue = 0-ypredUlna;
 end    
 
-output = [xValue, yValue]
+output = [xValue, yValue];
