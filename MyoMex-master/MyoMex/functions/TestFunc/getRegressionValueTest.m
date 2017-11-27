@@ -14,4 +14,12 @@ ypredFlex = feval(mahFlexionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,
 ypredRadi = feval(mahRadialRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
 ypredUlna = feval(mahUlnarRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
 
+figure;
+plot(smooth(ypredExte))
+hold on;
+plot(smooth(ypredFlex))
+plot(smooth(ypredRadi))
+plot(smooth(ypredUlna))
+legend('Extension','Flexion','Radial','Ulnar');
+
 output = [ypredFlex, ypredExte, ypredRadi, ypredUlna];
