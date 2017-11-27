@@ -25,11 +25,18 @@ ypredExte = feval(mahExtensionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex
 ypredRadi = feval(mahRadialRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
 ypredUlna = feval(mahUlnarRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
 
-plot(ypredExte,'k')
+figure;
+plot(smooth(ypredExte),'k')
 hold on;
-plot(ypredFlex,'b')
-plot(ypredRadi,'g')
-plot(ypredUlna,'m')
-plot(allMove,'r')
+plot(smooth(ypredFlex),'b')
+plot(smooth(ypredRadi),'g')
+plot(smooth(ypredUlna),'m')
+plot(smooth(allMove),'r')
 
-output = [ypredFlex;ypredExte;ypredRadi;ypredUlna]
+figure;
+ypred = [mean(ypredExte(1:270,:),2); mean(ypredFlex(271:540,:),2); mean(ypredRadi(541:810,:),2); mean(ypredUlna(811:1080,:),2)];
+plot(smooth(ypred),'b')
+hold on;
+plot(smooth(allMove),'r')
+
+output = [ypred]
