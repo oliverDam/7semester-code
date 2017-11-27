@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 20-Nov-2017 10:06:23
+% Last Modified by GUIDE v2.5 27-Nov-2017 10:10:33
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -241,3 +241,16 @@ function slider3_CreateFcn(hObject, eventdata, handles)
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
+
+
+% --- Executes on button press in TargetTest.
+function TargetTest_Callback(hObject, eventdata, handles)
+% hObject    handle to TargetTest (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+[m1,mm] = initDevice();
+startRecording(m1);
+sliderValue1 = get(handles.slider2,'Value');
+sliderValue2 = get(handles.slider3,'Value');
+doAdvancedCompassTestThing(handles.axes1, m1,sliderValue1,sliderValue2);
+stopRecording(m1,mm);

@@ -1,6 +1,7 @@
 function goScatterPlot(feature1,feature2,feature3,feature4)
 
 bigMatrix = [feature1;feature2;feature3;feature4];
+
 Ex = ones(270,1)*0;
 Fl = ones(270,1)*1;
 Ra = ones(270,1)*2;

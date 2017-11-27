@@ -14,7 +14,6 @@ ypredExte = mean(feval(mahExtensionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6
 ypredRadi = mean(feval(mahRadialRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
 ypredUlna = mean(feval(mahUlnarRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
 
-
 if ypredExte >= ypredFlex
     xValue = ypredExte;
 else
