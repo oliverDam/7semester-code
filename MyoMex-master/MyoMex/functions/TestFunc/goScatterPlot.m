@@ -16,7 +16,7 @@ figure(1)
 subplot(1,3,1)
 pareto(pexp);
 xlabel('a)')
-title('PCA of the MAV feature of the four movements')
+title('PCA of the LogVar feature of the four movements')
 subplot(1,3,[2 3])
 %Scatterplot of the four movements
 scatter3(scrs(1:270, 1 ), scrs(1:270, 2 ), scrs(1:270, 3 ), 10, overallMovement(1:270,1),'filled')
