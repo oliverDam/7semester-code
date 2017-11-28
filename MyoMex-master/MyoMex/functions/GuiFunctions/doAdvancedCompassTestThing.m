@@ -38,9 +38,9 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
         %randomOrder = randperm(8,8)    %find random order for targetplots
         randomOrder = (1:31); % not random anymore
         plotData = [0.25 ,0, 0.25 ,0, 0.25 ,0, 0 ,0, -0.25 ,0, -0.25 ,0, -0.25 ,0, 0 , ... 
-            0, 0.75 ,0, 0.75 ,0, 0.75 ,0, 0 ,0, -0.75 ,0, -0.75 ,0, -0.75 ,0, 0; ...
+            0, 0.65 ,0, 0.75 ,0, 0.65 ,0, 0 ,0, -0.65 ,0, -0.75 ,0, -0.65 ,0, 0; ...
             0.25 ,0 , 0 ,0, -0.25 ,0, -0.25 ,0, -0.25 ,0, 0 ,0, 0.25 ,0, 0.25 , ...
-            0, 0.75 ,0, 0 ,0, -0.75 ,0, -0.75 ,0, -0.75 ,0, 0 ,0, 0.75 ,0, 0.75];
+            0, 0.65 ,0, 0 ,0, -0.65 ,0, -0.75 ,0, -0.65 ,0, 0 ,0, 0.65 ,0, 0.75];
             
         %Makes sure we'll record for the stated 'recordingTime'
         while allPoint ~= 32
@@ -73,7 +73,7 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
                     
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
-                        lastSample,1:31);
+                        lastSample,1:8);
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
@@ -101,7 +101,7 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
                     
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
-                        lastSample,1:31);
+                        lastSample,1:8);
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
@@ -139,8 +139,14 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
             end
         end
     end
+    gotIt = gotIt(1:2:end);
+    testResult = sum(timeEnd-timeStart)/sum(gotIt);
+    timeDif = timeEnd-timeStart;
+    
+    save('testResult.mat','testResult');
     save('timeStart.mat','timeStart');
     save('timeEnd.mat','timeEnd');
+    save('timeDif.mat','timeDif');
     save('gotIt.mat','gotIt');
     save('EmgMatrix.mat','EmgMatrix');
 end
