@@ -40,6 +40,10 @@ regressionInput = dataset2table(cereal);
 modelspec = 'movement ~ channel_1 + channel_2 + channel_3 + channel_4  + channel_5 + channel_6 + channel_7 + channel_8';% + accel_x + accel_y + accel_z';
 mdl = fitlm(regressionInput, modelspec, 'RobustOpts','on')
 
-plotResiduals(mdl)
+%inputData = inputData';
+%mdl = fitrlinear(inputData,movement,'ObservationsIn','columns','KFold',5,'Lambda',logspace(-5,-1,15), ...
+    'Learner','leastsquares','Regularization','ridge')
+
+%plotResiduals(mdl)
 
 output = mdl;

@@ -1,7 +1,7 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function doAdvancedCompassTestThing(handles, m1,sensX,sensY)
+function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
 
     load('ExtensionRegression.mat');
     load('FlexionRegression.mat');
@@ -11,7 +11,7 @@ function doAdvancedCompassTestThing(handles, m1,sensX,sensY)
     getRegressValue = [ones(9,2)*0]
     pause(0.1);
 
-    plothandle = handles;
+    plothandle = handles1;
     if ~isempty(plothandle);
         cla();
         max_lim = 1;
