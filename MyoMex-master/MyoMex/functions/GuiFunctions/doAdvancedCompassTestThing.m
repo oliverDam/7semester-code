@@ -35,11 +35,15 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
         radius = 0.1;
         valueToPlot = [0,0];
         iGotZePointz = 0;
-        randomOrder = randperm(8,8)    %find random order for targetplots
-        plotData = [0.5 , 0.7 , 0.5 , 0 , -0.5 , -0.7 , -0.5 , 0; 0.5 , 0 , -0.5 , -0.7 , -0.5 , 0 , 0.5 , 0.7];
-        
+        %randomOrder = randperm(8,8)    %find random order for targetplots
+        randomOrder = (1:31); % not random anymore
+        plotData = [0.25 ,0, 0.25 ,0, 0.25 ,0, 0 ,0, -0.25 ,0, -0.25 ,0, -0.25 ,0, 0 , ... 
+            0, 0.75 ,0, 0.75 ,0, 0.75 ,0, 0 ,0, -0.75 ,0, -0.75 ,0, -0.75 ,0, 0; ...
+            0.25 ,0 , 0 ,0, -0.25 ,0, -0.25 ,0, -0.25 ,0, 0 ,0, 0.25 ,0, 0.25 , ...
+            0, 0.75 ,0, 0 ,0, -0.75 ,0, -0.75 ,0, -0.75 ,0, 0 ,0, 0.75 ,0, 0.75];
+            
         %Makes sure we'll record for the stated 'recordingTime'
-        while allPoint ~= 9
+        while allPoint ~= 32
             
             %This has been stolen from MyoMex to retrieve data:
             timeEMG = m1.timeEMG_log;
@@ -69,7 +73,7 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
                     
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
-                        lastSample,1:8);
+                        lastSample,1:31);
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
@@ -97,7 +101,7 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
                     
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
-                        lastSample,1:8);
+                        lastSample,1:31);
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
