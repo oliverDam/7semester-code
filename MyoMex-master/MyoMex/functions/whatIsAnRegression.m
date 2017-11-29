@@ -1,15 +1,19 @@
-function [output] = whatIsAnRegression(rightEmgData, wrongEmgData1, wrongEmgData2, wrongEmgData3, movement)
+function [output] = whatIsAnRegression(rightEmgData, wrongEmgData1, wrongEmgData2, wrongEmgData3, restData, movement)
 
 %Take ALL the data as inputs and such and fuck it and it works #yolo
 %Movement is the percent value between 0 and 1 for the movement?
 
 L = length(rightEmgData(:,1));
+LR = length(restData(:,1));
 
 inputData(1:L,1:8) = rightEmgData;
 
 inputData(L+1:2*L,1:8) = wrongEmgData1;
 inputData(2*L+1:3*L,1:8) = wrongEmgData2;
 inputData(3*L+1:4*L,1:8) = wrongEmgData3;
+inputData(4*L+1:(4*L+LR),1:8) = restData;
+
+movement = [movement; ones(LR,1)*0];
 
 %Makes it into something table-ish:
 channel_1 = inputData(:,1);
@@ -38,7 +42,7 @@ cereal.Properties.VarDescription = Variables(1,:);
 regressionInput = dataset2table(cereal);
 
 modelspec = 'movement ~ channel_1 + channel_2 + channel_3 + channel_4  + channel_5 + channel_6 + channel_7 + channel_8';% + accel_x + accel_y + accel_z';
-mdl = fitlm(regressionInput, modelspec, 'RobustOpts','on')
+mdl = fitlm(regressionInput, modelspec)
 
 plotResiduals(mdl)
 
