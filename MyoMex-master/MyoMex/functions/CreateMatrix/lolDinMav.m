@@ -45,3 +45,8 @@ k8 = featureExtractionMAV(allE_Ulnar(4201:4800,:));
 k9 = featureExtractionMAV(allE_Ulnar(4801:5400,:));
 
 allMav_Ulnar = [k1;k2;k3;k4;k5;k6;k7;k8;k9];
+
+save('allMav_Extension.mat','allMav_Extension');
+save('allMav_Flexion.mat','allMav_Flexion');
+save('allMav_Radial.mat','allMav_Radial');
+save('allMav_Ulnar.mat','allMav_Ulnar');

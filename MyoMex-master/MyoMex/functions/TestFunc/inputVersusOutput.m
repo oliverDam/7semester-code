@@ -23,7 +23,7 @@ flex8 = allData(:,8);
 ypredFlex = feval(mahFlexionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
 ypredExte = feval(mahExtensionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
 ypredRadi = feval(mahRadialRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
-ypredUlna = feval(mahUlnarRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8);
+ypredUlna = feval(mahUlnarRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8)
 
 figure;
 plot(smooth(ypredExte),'k')
@@ -32,11 +32,20 @@ plot(smooth(ypredFlex),'b')
 plot(smooth(ypredRadi),'g')
 plot(smooth(ypredUlna),'m')
 plot(smooth(allMove),'r')
+legend('Predicted Extension','Predicted Flexion','Predicted Radial Deviation','Predicted Ulnar Deviation','Expected Output')
+y1 = get(gca,'ylim');
+plot([length(ypredFlex)/4 length(ypredFlex)/4], [-0.4 1],'k')
+plot([length(ypredFlex)/2 length(ypredFlex)/2], [-0.4 1],'k')
+plot([length(ypredFlex)/4*3 length(ypredFlex)/4*3], [-0.4 1],'k')
 
 figure;
-ypred = [mean(ypredExte(1:270,:),2); mean(ypredFlex(271:540,:),2); mean(ypredRadi(541:810,:),2); mean(ypredUlna(811:1080,:),2)];
+ypred = [ypredExte(1:270,:); ypredFlex(271:540,:); ypredRadi(541:810,:); ypredUlna(811:1080,:)];
 plot(smooth(ypred),'b')
 hold on;
 plot(smooth(allMove),'r')
+legend('Predicted Value','Expected Output');
+plot([length(ypredFlex)/4 length(ypredFlex)/4], [-0.4 1],'k')
+plot([length(ypredFlex)/2 length(ypredFlex)/2], [-0.4 1],'k')
+plot([length(ypredFlex)/4*3 length(ypredFlex)/4*3], [-0.4 1],'k')
 
-output = [ypred]
+output = [ypredExte,ypredFlex,ypredRadi,ypredUlna]
