@@ -1,9 +1,25 @@
-function [output] = whatIsAnRegressionWithAccel(rightFeatData, wrongFeatData1, wrongFeatData2, wrongFeatData3, rightAccData, wrongAccData1, wrongAccData2, wrongAccData3, movement)
-
+function [output] = whatIsAnRegressionWithAccel(rightFeatData, wrongFeatData1, wrongFeatData2, wrongFeatData3, baselineEmg, rightAccData, wrongAccData1, wrongAccData2, wrongAccData3, baselineAcc, movement)
 %Take ALL the data as inputs and such and fuck it and it works #yolo
 %Movement is the percent value between 0 and 1 for the movement?
 
-inputData = [rightFeatData; wrongFeatData1; wrongFeatData2; wrongFeatData3];
+L = length(rightFeatData(:,1));
+LR = length(baselineEmg(:,1));
+
+inputData(1:L,1:8) = rightFeatData;
+
+inputData(L+1:2*L,1:8) = wrongFeatData1;
+inputData(2*L+1:3*L,1:8) = wrongFeatData2;
+inputData(3*L+1:4*L,1:8) = wrongFeatData3;
+inputData(4*L+1:(4*L+LR),1:8) = baselineEmg;
+
+accData(1:L,1:3) = rightAccData;
+
+accData(L+1:2*L,1:3) = wrongAccData1;
+accData(2*L+1:3*L,1:3) = wrongAccData2;
+accData(3*L+1:4*L,1:3) = wrongAccData3;
+accData(4*L+1:(4*L+LR),1:3) = baselineAcc(1:LR,1:3);
+
+movement = [movement; ones(LR,1)*0];
 
 %Makes it into something table-ish:
 channel_1 = inputData(:,1);
@@ -15,14 +31,9 @@ channel_6 = inputData(:,6);
 channel_7 = inputData(:,7);
 channel_8 = inputData(:,8);
 
-accelData = [rightAccData; wrongAccData1; wrongAccData2; wrongAccData3]
-
-accel_x = accelData(:,1);
-accel_y = accelData(:,2);
-accel_z = accelData(:,3);
-
-% We have to implemet something that tells the regressor which movements
-% we're performing at a given time. I'm not going to do that.
+accel_x = accData(:,1);
+accel_y = accData(:,2);
+accel_z = accData(:,3);
 
 %Creation of dataset for regression-stuff:
 cereal = dataset(movement, channel_1, channel_2, channel_3, channel_4, ... 
