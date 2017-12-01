@@ -21,7 +21,7 @@ plot([length(Flex)/4 length(Flex)/4], [-0.4 1],'k')
 plot([length(Flex)/2 length(Flex)/2], [-0.4 1],'k')
 plot([length(Flex)/4*3 length(Flex)/4*3], [-0.4 1],'k')
 ylabel('Intensity of movement')
-title('Superimposition of MAV regressor input-data')
+title('Superimposition of new data onto expected output of LogVar regressor')
 xlim([0 length(Flex)]);
 
 % figure;
