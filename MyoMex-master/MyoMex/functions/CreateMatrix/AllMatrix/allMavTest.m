@@ -21,3 +21,8 @@ k2 = featureExtractionMAV(allE_Ulnar(601:1200,:));
 k3 = featureExtractionMAV(allE_Ulnar(1201:1800,:));
 
 allMav_Ulnar = [k1;k2;k3];
+
+save('allMav_Extension.mat','allMav_Extension')
+save('allMav_Flexion.mat','allMav_Flexion')
+save('allMav_Radial.mat','allMav_Radial')
+save('allMav_Ulnar.mat','allMav_Ulnar')

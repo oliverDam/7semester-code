@@ -1,10 +1,10 @@
 load('AccelData.mat')
 load('EmgData.mat')
-FR_AccelData80 = accelMatrix;
-FR_EmgData80 = EmgMatrix;
-save('FR_AccelData80.mat','FR_AccelData80');
-save('FR_EmgData80.mat','FR_EmgData80');
+SU_Test50 = accelMatrix;
+SU_TestA50 = EmgMatrix;
+save('SU_Test50.mat','SU_Test50');
+save('SU_TestA50.mat','SU_TestA50');
 
 load('MVC.mat')
-FR_MVC = MVC;
-save('FR_MVC.mat','FR_MVC')
+SU_MVC = MVC;
+save('SU_MVC.mat','SU_MVC')

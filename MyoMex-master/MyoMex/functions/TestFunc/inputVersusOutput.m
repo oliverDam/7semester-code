@@ -38,8 +38,10 @@ plot([length(ypredFlex)/4 length(ypredFlex)/4], [-0.4 1],'k')
 plot([length(ypredFlex)/2 length(ypredFlex)/2], [-0.4 1],'k')
 plot([length(ypredFlex)/4*3 length(ypredFlex)/4*3], [-0.4 1],'k')
 
+L = length(ypredExte);
+
 figure;
-ypred = [ypredExte(1:270,:); ypredFlex(271:540,:); ypredRadi(541:810,:); ypredUlna(811:1080,:)];
+ypred = [ypredExte(1:1/4*L,:); ypredFlex(1/4*L+1:2/4*L,:); ypredRadi(2/4*L+1:3/4*L,:); ypredUlna(3/4*L+1:L,:)];
 plot(smooth(ypred),'b')
 hold on;
 plot(smooth(allMove),'r')
