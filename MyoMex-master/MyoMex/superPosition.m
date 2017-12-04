@@ -1,5 +1,5 @@
 
-function superPosition(output1,output2,output3,output4,move1,move2,move3,move4) 
+function [output] = superPosition(output1,output2,output3,output4,move1,move2,move3,move4) 
 
 Exte = mean([output1(:,1), output2(:,1), output3(:,1), output4(:,1)],2);
 Flex = mean([output1(:,2), output2(:,2), output3(:,2), output4(:,2)],2);
@@ -23,6 +23,8 @@ plot([length(Flex)/4*3 length(Flex)/4*3], [-0.4 1],'k')
 ylabel('Intensity of movement')
 title('Superimposition of new data onto expected output of LogVar regressor')
 xlim([0 length(Flex)]);
+
+output = [Exte,Flex,Radi,Ulna,move]
 
 % figure;
 % right = [Exte(1:270,:); Flex(271:540,:); Radi(541:810,:); Ulna(811:1080,:)];
