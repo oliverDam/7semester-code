@@ -45,3 +45,8 @@ k8 = featureExtractionLogVar(allE_Ulnar(4201:4800,:));
 k9 = featureExtractionLogVar(allE_Ulnar(4801:5400,:));
 
 allLogVar_Ulnar = [k1;k2;k3;k4;k5;k6;k7;k8;k9];
+
+save('allLogVar_Extension.mat','allLogVar_Extension')
+save('allLogVar_Flexion.mat','allLogVar_Flexion')
+save('allLogVar_Radial.mat','allLogVar_Radial')
+save('allLogVar_Ulnar.mat','allLogVar_Ulnar')
