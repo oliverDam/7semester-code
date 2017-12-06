@@ -18,9 +18,19 @@ mean_matrix = [mean_Mav, meanOverall_Mav, mean_Log, meanOverall_Log]
 
 
 figure;
+subplot(1,2,1);
 hold on;
-bar(1:10,mean_matrix);
-errorbar(1:10,mean_matrix,std_matrix,'.');
-somenames = {'','Extension MAV','Flexion MAV','Radial MAV','Ulnar MAV','Overall MAV', 'Extension LogVar','Flexion LogVar','Radial LogVar','Ulnar LogVar','Overall LogVar',''};
+bar(1:5,mean_matrix(:,1:5));
+errorbar(1:5,mean_matrix(:,1:5),std_matrix(:,1:5),'.');
+somenames = {'','Extension','Flexion','Radial','Ulnar','Overall',''};
 set(gca,'xticklabel',somenames);
+ylabel('Error')
+hold off;
+
+subplot(1,2,2);
+hold on;
+bar(6:10,mean_matrix(:,6:10));
+errorbar(6:10,mean_matrix(:,6:10),std_matrix(:,6:10),'.');
+somenames2 = {'','Extension','Flexion','Radial','Ulnar','Overall',''}
+set(gca,'xticklabel',somenames2);
 ylabel('Error')
