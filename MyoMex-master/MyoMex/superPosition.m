@@ -1,12 +1,12 @@
 
-function [output] = superPosition(output1,output2,output3,output4,move1,move2,move3,move4) 
+function [output] = superPosition(output1,output2,output3,output4,output5,output6,output7,move1,move2,move3,move4,move5,move6,move7) 
 
-Exte = mean([output1(:,1), output2(:,1), output3(:,1), output4(:,1)],2);
-Flex = mean([output1(:,2), output2(:,2), output3(:,2), output4(:,2)],2);
-Radi = mean([output1(:,3), output2(:,3), output3(:,3), output4(:,3)],2);
-Ulna = mean([output1(:,4), output2(:,4), output3(:,4), output4(:,4)],2);
+Exte = mean([output1(:,1), output2(:,1), output3(:,1), output4(:,1), output5(:,1), output6(:,1), output7(:,1)],2);
+Flex = mean([output1(:,2), output2(:,2), output3(:,2), output4(:,2), output5(:,2), output6(:,2), output7(:,2)],2);
+Radi = mean([output1(:,3), output2(:,3), output3(:,3), output4(:,3), output5(:,3), output6(:,3), output7(:,3)],2);
+Ulna = mean([output1(:,4), output2(:,4), output3(:,4), output4(:,4), output5(:,4), output6(:,4), output7(:,4)],2);
 
-move = mean([move1, move2, move3, move4],2);
+move = mean([move1, move2, move3, move4, move5, move6, move7],2);
 
 figure;
 plot(smooth(Exte),'k')
@@ -21,7 +21,7 @@ plot([length(Flex)/4 length(Flex)/4], [-0.4 1],'k')
 plot([length(Flex)/2 length(Flex)/2], [-0.4 1],'k')
 plot([length(Flex)/4*3 length(Flex)/4*3], [-0.4 1],'k')
 ylabel('Intensity of movement')
-title('Superimposition of new data onto expected output of LogVar regressor')
+title('Superimposition of training data onto expected output of LogVar regressor')
 xlim([0 length(Flex)]);
 
 output = [Exte,Flex,Radi,Ulna,move]
