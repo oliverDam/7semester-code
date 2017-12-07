@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 27-Nov-2017 10:10:33
+% Last Modified by GUIDE v2.5 07-Dec-2017 10:02:26
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -253,4 +253,17 @@ startRecording(m1);
 sliderValue1 = get(handles.slider2,'Value');
 sliderValue2 = get(handles.slider3,'Value');
 doAdvancedCompassTestThing(handles.axes1, m1,sliderValue1,sliderValue2);
+stopRecording(m1,mm);
+
+
+% --- Executes on button press in TestIMU.
+function TestIMU_Callback(hObject, eventdata, handles)
+% hObject    handle to TestIMU (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+[m1,mm] = initDevice();
+startRecording(m1);
+sliderValue1 = get(handles.slider2,'Value');
+sliderValue2 = get(handles.slider3,'Value');
+doAdvancedCompassTestThingIMU(handles.axes1, m1,sliderValue1,sliderValue2);
 stopRecording(m1,mm);

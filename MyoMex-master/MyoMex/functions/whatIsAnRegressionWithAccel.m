@@ -1,23 +1,23 @@
-function [output] = whatIsAnRegressionWithAccel(rightFeatData, wrongFeatData1, wrongFeatData2, wrongFeatData3, baselineEmg, rightAccData, wrongAccData1, wrongAccData2, wrongAccData3, baselineAcc, movement)
+function [output] = whatIsAnRegressionWithAccel(rightFeatData, wrongFeatData1, wrongFeatData2, wrongFeatData3, restData, rightAccData, wrongAccData1, wrongAccData2, wrongAccData3, restAcc, movement)
 %Take ALL the data as inputs and such and fuck it and it works #yolo
 %Movement is the percent value between 0 and 1 for the movement?
 
 L = length(rightFeatData(:,1));
-LR = length(baselineEmg(:,1));
+LR = length(restData(:,1));
 
 inputData(1:L,1:8) = rightFeatData;
 
 inputData(L+1:2*L,1:8) = wrongFeatData1;
 inputData(2*L+1:3*L,1:8) = wrongFeatData2;
 inputData(3*L+1:4*L,1:8) = wrongFeatData3;
-inputData(4*L+1:(4*L+LR),1:8) = baselineEmg;
+inputData(4*L+1:(4*L+LR),1:8) = restData;
 
 accData(1:L,1:3) = rightAccData;
 
 accData(L+1:2*L,1:3) = wrongAccData1;
 accData(2*L+1:3*L,1:3) = wrongAccData2;
 accData(3*L+1:4*L,1:3) = wrongAccData3;
-accData(4*L+1:(4*L+LR),1:3) = baselineAcc(1:LR,1:3);
+accData(4*L+1:(4*L+LR),1:3) = restAcc(1:LR,1:3);
 
 movement = [movement; ones(LR,1)*0];
 

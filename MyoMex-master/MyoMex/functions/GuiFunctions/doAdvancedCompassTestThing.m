@@ -105,7 +105,7 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
-                    featz = featureExtractionLiveLogVar(toBeFiltered);
+                    featz = featureExtractionLiveLogVar(toBeFiltered)
                     getRegressValue = [getRegressValue;getRegressionValue(featz,mahExtensionRegrizzle, ...
                         mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
                     
