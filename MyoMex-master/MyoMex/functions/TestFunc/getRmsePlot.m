@@ -25,6 +25,8 @@ errorbar(1:5,mean_matrix(:,1:5),std_matrix(:,1:5),'.');
 somenames = {'','Extension','Flexion','Radial','Ulnar','Overall',''};
 set(gca,'xticklabel',somenames);
 ylabel('Error')
+title('RMSE for MAV regressor')
+ylim([0 0.3])
 hold off;
 
 subplot(1,2,2);
@@ -33,4 +35,6 @@ bar(6:10,mean_matrix(:,6:10));
 errorbar(6:10,mean_matrix(:,6:10),std_matrix(:,6:10),'.');
 somenames2 = {'','Extension','Flexion','Radial','Ulnar','Overall',''}
 set(gca,'xticklabel',somenames2);
+title('RMSE for LogVar regressor')
+ylim([0 0.3])
 ylabel('Error')

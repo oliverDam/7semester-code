@@ -128,7 +128,7 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
                     gotIt(allPoint) = 1;
                     allPoint = allPoint+1;
                     delete(h_target)
-                elseif time-timeStart(allPoint) >= 45
+                elseif time-timeStart(allPoint) >= 30
                     onPoint = 1;
                     timeEnd(allPoint) = time;
                     gotIt(allPoint) = 0;
