@@ -1,7 +1,7 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function findMVC(handles, m1, doWhat)
+function findMVC(handles, m1, doWhat, movementType)
 
 %Pause for initialization or something:
 pause(0.1);
@@ -76,9 +76,28 @@ end
 baseline = mean(dataMatrix);
 %baseline = mean(dataMatrix(0:2000,1:8))
 
+
+%% Something with the name of the variables we're going to save:
 if doWhat == 0;
-    MVC = findMVCvector(maxEmgMatrix);
-    save('MVC.mat','MVC');
+    if movementType == 1
+        MVCFlexion = findMVCvector(maxEmgMatrix);
+        movement = 'Flexion';
+    elseif movementType == 2
+        MVCExtension = findMVCvector(maxEmgMatrix);
+        movement = 'Extension';
+    elseif movementType == 3
+        MVCRadial = findMVCvector(maxEmgMatrix);
+        movement = 'Radial';
+    else
+        MVCUlnar = findMVCvector(maxEmgMatrix);
+        movement = 'Ulnar';
+    end
+
+    Name1 = convertCharsToStrings(strcat('MVC',movement,'.mat'));
+    Name2 = convertCharsToStrings(strcat('MVC',movement));
+
+    save(Name1,Name2);
+    
 elseif doWhat == 1;
     save('baseline.mat','baseline');
 end

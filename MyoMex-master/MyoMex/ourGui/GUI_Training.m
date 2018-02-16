@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 16-Jan-2018 10:30:25
+% Last Modified by GUIDE v2.5 16-Feb-2018 10:15:16
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -87,7 +87,8 @@ function start_MVC_Callback(hObject, eventdata, handles)
 %plot emg data from MYO
 [m1,mm] = initDevice();
 startRecording(m1);
-findMVC(handles.axes1, m1, 0);
+movementType = get(handles.listbox1,'value');
+findMVC(handles.axes1, m1, 0, movementType);
 stopRecording(m1,mm);
 
 
@@ -111,7 +112,7 @@ function Fraction_MVC_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 [m1,mm] = initDevice();
 startRecording(m1);
-findMVC(handles.axes1, m1, 1);
+findMVC(handles.axes1, m1, 1, 0);
 stopRecording(m1,mm);
 
 % --- Executes on slider movement.
@@ -164,8 +165,11 @@ function plotbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 [m1,mm] = initDevice();
 startRecording(m1);
+
+%Gets the needed values;
 sliderValue = get(handles.slider_MVC,'Value');
-trapezoidPlot(sliderValue, handles.axes1, m1);
+movementType = get(handles.listbox1,'value');
+trapezoidPlot(sliderValue, handles.axes1, m1,movementType);
 stopRecording(m1,mm);
 
 
@@ -290,3 +294,33 @@ function stopCommunication_Callback(hObject, eventdata, handles)
 t = tcpip('localhost',9090);
 echotcpip('off')
 fclose(t)
+
+
+% --- Executes on selection change in listbox1.
+function listbox1_Callback(hObject, eventdata, handles)
+% hObject    handle to listbox1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from listbox1
+
+
+% --- Executes during object creation, after setting all properties.
+function listbox1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to listbox1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in testknap.
+function testknap_Callback(hObject, eventdata, handles)
+% hObject    handle to testknap (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)

@@ -1,19 +1,27 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function trapezoidPlot(sliderValue, handles, m1)
+function trapezoidPlot(sliderValue, handles, m1, movementType)
 %Tries to load the MVC we've recorded:
-try
-    load('MVC.mat');
+
+movementType
+
+    if movementType == 1
+        movement = 'Flexion';
+    elseif movementType == 2
+        movement = 'Extension';
+    elseif movementType == 3
+        movement = 'Radial';
+    else
+        movement = 'Ulnar';
+    end
+
+    MVC = cell2mat(struct2cell(load(convertCharsToStrings(strcat('MVC',movement,'.mat')))));
     load('baseline.mat');
-    MVC
+    
     maximum = mean(MVC)
     disp('MVC and baseline found');
     isError = 0;
-catch
-    warning('MVC not found - go record it before trying again');
-    isError = 1;
-end
 
 %Will only do the following if there's no error
 if isError ~= 1
@@ -118,11 +126,47 @@ if isError ~= 1
             end
         end
     end
+   
+%%Saving with a specific name instead of the same for every case:
+Intensity = num2str(sliderValue*100);
+
+if movementType == 1
+    if sliderValue == 0.2
+        EmgFlexion20 = butterFilter(EmgMatrix);
+    elseif sliderValue == 0.4
+        EmgFlexion40 = butterFilter(EmgMatrix);
+    else
+        EmgFlexion60 = butterFilter(EmgMatrix);
+    end
     
-    %This could be changed in order to save it as a specific file (might
-    %be able to do it with a textfield in the GUI before testing?):
-    save('AccelData.mat','accelMatrix');
-    EmgMatrix = butterFilter(EmgMatrix);
-    save('EmgData.mat','EmgMatrix');
+elseif movementType == 2
+    if sliderValue == 0.2
+        EmgExtension20 = butterFilter(EmgMatrix);
+    elseif sliderValue == 0.4
+        EmgExtension40 = butterFilter(EmgMatrix);
+    else
+        EmgExtension60 = butterFilter(EmgMatrix);
+    end
+    
+elseif movementType == 3
+    if sliderValue == 0.2
+        EmgRadial20 = butterFilter(EmgMatrix);
+    elseif sliderValue == 0.4
+        EmgRadial40 = butterFilter(EmgMatrix);
+    else
+        EmgRadial60 = butterFilter(EmgMatrix);
+    end
+    
+else
+    if sliderValue == 0.2
+        EmgUlnar20 = butterFilter(EmgMatrix);
+    elseif sliderValue == 0.4
+        EmgUlnar40 = butterFilter(EmgMatrix);
+    else
+        EmgUlnar60 = butterFilter(EmgMatrix);
+    end
+end
+    
+    save(convertCharsToStrings(strcat('Emg',movement,Intensity,'.mat')),convertCharsToStrings(strcat('Emg',movement,Intensity)));
 end
 end
