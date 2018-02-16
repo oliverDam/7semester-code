@@ -9,6 +9,12 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
     load('UlnarRegression.mat');
     
     getRegressValue = [ones(9,2)*0]
+    
+    % Initiates communication
+
+        t = udp('172.25.151.247',9090);
+        fopen(t)
+       
     pause(0.1);
 
     plothandle = handles1;
@@ -85,6 +91,8 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
                     
                     axes(plothandle);
                     delete(lol);
+                    plotNumbers = [sensX*valueToPlot(1),sensY*valueToPlot(2)]
+                    fwrite(t,plotNumbers, 'double')
                     lol = compass(sensX*valueToPlot(1),sensY*valueToPlot(2));
                     drawnow;
                     
@@ -113,6 +121,8 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
                     
                     axes(plothandle);
                     delete(lol);
+                    plotNumbers = [sensX*valueToPlot(1),sensY*valueToPlot(2)]
+                    fwrite(t,plotNumbers, 'double')
                     lol = compass(sensX*valueToPlot(1),sensY*valueToPlot(2));
                     drawnow;
                     

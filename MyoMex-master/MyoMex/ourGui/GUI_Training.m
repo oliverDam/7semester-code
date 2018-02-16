@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 07-Dec-2017 10:02:26
+% Last Modified by GUIDE v2.5 16-Jan-2018 10:30:25
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -60,6 +60,9 @@ handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
+
+% Creates a t:
+t = tcpip('localhost',9090);
 
 % UIWAIT makes GUI_Training wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -267,3 +270,23 @@ sliderValue1 = get(handles.slider2,'Value');
 sliderValue2 = get(handles.slider3,'Value');
 doAdvancedCompassTestThingIMU(handles.axes1, m1,sliderValue1,sliderValue2);
 stopRecording(m1,mm);
+
+
+% --- Executes on button press in startCommunication.
+function startCommunication_Callback(hObject, eventdata, handles)
+% hObject    handle to startCommunication (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+echotcpip('on',9090)
+t = tcpip('localhost',9090);
+fopen(t)
+
+
+% --- Executes on button press in stopCommunication.
+function stopCommunication_Callback(hObject, eventdata, handles)
+% hObject    handle to stopCommunication (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+t = tcpip('localhost',9090);
+echotcpip('off')
+fclose(t)
