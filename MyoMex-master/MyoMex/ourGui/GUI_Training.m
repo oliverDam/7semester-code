@@ -157,7 +157,7 @@ startRecording(m1);
 %Gets the needed values;
 sliderValue = get(handles.slider_MVC,'Value');
 movementType = get(handles.listbox1,'value');
-trapezoidPlot(sliderValue, handles.axes1, m1,movementType);
+trapezoidPlot(sliderValue, handles.axes1, handles.axes4, m1,movementType);
 stopRecording(m1,mm);
 
 

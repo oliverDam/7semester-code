@@ -1,7 +1,7 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function trapezoidPlot(sliderValue, handles, m1, movementType)
+function trapezoidPlot(sliderValue, handles, handles2, m1, movementType)
 
     if movementType == 1
         movement = 'Flexion';
@@ -28,12 +28,15 @@ if isError ~= 1
     x = [0 2000 5000 10000 13000 15000];
     y = [0.01, 0.01, sliderValue, sliderValue, 0.01 0.01];
     
+    handleplot = handles2;
     plothandle = handles;
     if ~isempty(plothandle);
         cla();
-        hold on;
         axes(plothandle);
         plot(x,y);
+        xlim([0 15000]);
+        ylim([0 1]);
+        hold on;
         xlabel('Time in ms');
         ylabel('EMG intensity');
         
@@ -75,15 +78,16 @@ if isError ~= 1
                     
                     %Rescales the input between 0 and our MVC and finds the
                     %max value in the output vector to plot:
-                    meanAbs = mean(removeBaseline(meanAbs, baseline));
-                    meanEmg = rescale(meanAbs,'InputMin',0,'InputMax',maximum);
+                    ClMeanAbs = mean(removeBaseline(meanAbs, baseline));
+                    meanEmg = rescale(ClMeanAbs,'InputMin',0,'InputMax',maximum);
                     
                     %Plots the dot:
-                    axes(plothandle);
+                    %axes(plothandle);
                     delete(lol);
-                    lol = plot(time*1000, meanEmg, 'or', 'MarkerSize', ...
+                    lol = plot(plothandle, time*1000, meanEmg, 'or', 'MarkerSize', ...
                         10, 'MarkerFaceColor', 'g');
                     drawnow;
+                    realSpiderplot(handleplot,meanAbs);
                     accelMatrix = m1.accel_log(iiIMU,:);
                     buffer1 = 0;
                 else 
@@ -107,15 +111,16 @@ if isError ~= 1
                     
                     %Rescales the input between 0 and our MVC and finds the
                     %max value in the output vector to plot:
-                    meanAbs = mean(removeBaseline(meanAbs, baseline));
-                    meanEmg = rescale(meanAbs,'InputMin',0,'InputMax',maximum);
+                    ClMeanAbs = mean(removeBaseline(meanAbs, baseline));
+                    meanEmg = rescale(ClMeanAbs,'InputMin',0,'InputMax',maximum);
                     
                     %Plots the dot:
-                    axes(plothandle);
+                    %axes(plothandle);
                     delete(lol);
-                    lol = plot(time*1000, meanEmg, 'or', 'MarkerSize', ...
+                    lol = plot(plothandle,time*1000, meanEmg, 'or', 'MarkerSize', ...
                         10, 'MarkerFaceColor', 'g');
                     drawnow;
+                    realSpiderplot(handleplot,meanAbs);
                     accelMatrix = m1.accel_log(iiIMU,:);
                     buffer2 = 0;
                 else
