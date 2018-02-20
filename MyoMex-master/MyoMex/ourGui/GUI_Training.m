@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 20-Feb-2018 10:08:27
+% Last Modified by GUIDE v2.5 20-Feb-2018 11:03:12
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -120,18 +120,6 @@ function slider_MVC_Callback(hObject, eventdata, handles)
 % hObject    handle to slider_MVC (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-%        this tries to make the slider only work in discrete numbers (0.1 0.2 etc)
-%           but does not work yet
-%          numSteps = 11;
-%          set(handles.slider_MVC, 'Min', 0);
-%          set(handles.slider_MVC, 'Max', numSteps);
-%          set(handles.slider_MVC, 'Value', 0.01);
-%          set(handles.slider_MVC, 'SliderStep', [1/(numSteps) , 1]);
-%          % save the current/last slider value
-%          handles.lastSliderVal = get(handles.slider_MVC,'Value');
-%          % Update handles structure
-%          guidata(hObject, handles);
-
 
  sliderValue = get(handles.slider_MVC,'Value');
  set(handles.text2,'String',num2str(sliderValue));
@@ -273,27 +261,8 @@ startRecording(m1);
 sliderValue1 = get(handles.slider2,'Value');
 sliderValue2 = get(handles.slider3,'Value');
 doAdvancedCompassTestThingIMU(handles.axes1, m1,sliderValue1,sliderValue2);
+% Use axes4 for some reason
 stopRecording(m1,mm);
-
-
-% --- Executes on button press in startCommunication.
-function startCommunication_Callback(hObject, eventdata, handles)
-% hObject    handle to startCommunication (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-echotcpip('on',9090)
-t = tcpip('localhost',9090);
-fopen(t)
-
-
-% --- Executes on button press in stopCommunication.
-function stopCommunication_Callback(hObject, eventdata, handles)
-% hObject    handle to stopCommunication (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-t = tcpip('localhost',9090);
-echotcpip('off')
-fclose(t)
 
 
 % --- Executes on selection change in listbox1.
@@ -317,10 +286,3 @@ function listbox1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-
-% --- Executes on button press in testknap.
-function testknap_Callback(hObject, eventdata, handles)
-% hObject    handle to testknap (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
