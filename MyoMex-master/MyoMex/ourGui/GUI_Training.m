@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 16-Feb-2018 10:15:16
+% Last Modified by GUIDE v2.5 20-Feb-2018 10:08:27
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;

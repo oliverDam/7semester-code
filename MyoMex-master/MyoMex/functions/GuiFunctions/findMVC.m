@@ -8,10 +8,10 @@ pause(0.1);
     
 %Setup of the trapezoid:
 if doWhat == 0
-    x = [0 2000 4000 7000 9000 10000];
-    y = [0.01, 0.01, 0.9, 0.9, 0.01 0.01];
+    x = [0 2000 4000 7000 9000 15000];
+    y = [0.5, 0.5, 0.5, 0.5, 0.5 0.5];
 elseif doWhat == 1
-    x = [0 2000 4000 7000 9000 10000];
+    x = [0 2000 4000 7000 9000 15000];
     y = [0.01, 0.01, 0.01, 0.01, 0.01 0.01];
 end
 
@@ -25,7 +25,7 @@ if ~isempty(plothandle);
     plot(x,y);
         
     %A little more of the setup. You're not allowed to touch this either!
-    recordingTime = 10;
+    recordingTime = 15;
     buffer = 0;
     time = 0;
     lol = plot(0,0);

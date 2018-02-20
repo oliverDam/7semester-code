@@ -2,9 +2,6 @@
 % "Plot Button" is pressed
 
 function trapezoidPlot(sliderValue, handles, m1, movementType)
-%Tries to load the MVC we've recorded:
-
-movementType
 
     if movementType == 1
         movement = 'Flexion';
@@ -28,8 +25,9 @@ if isError ~= 1
     pause(0.1);
     
     %Creates the trapezoid based on the slidervalue from the input.
-    x = [0 2000 4000 7000 9000 10000];
+    x = [0 2000 5000 10000 13000 15000];
     y = [0.01, 0.01, sliderValue, sliderValue, 0.01 0.01];
+    
     plothandle = handles;
     if ~isempty(plothandle);
         cla();
@@ -41,7 +39,7 @@ if isError ~= 1
         
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.
-        recordingTime = 10;
+        recordingTime = 15;
         buffer1 = 0;
         buffer2 = 0;
         time = 0;
