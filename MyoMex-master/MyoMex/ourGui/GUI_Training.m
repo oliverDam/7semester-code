@@ -102,7 +102,7 @@ function Stop_MVC_Callback(hObject, eventdata, handles)
 startRecording(m1);
 sliderValue1 = get(handles.slider2,'Value');
 sliderValue2 = get(handles.slider3,'Value');
-doCompassPlease(handles.axes1, m1,sliderValue1,sliderValue2);
+compassClassification(handles.axes1, m1,sliderValue1,sliderValue2);
 stopRecording(m1,mm);
 
 % --- Executes on button press in Fraction_MVC.
