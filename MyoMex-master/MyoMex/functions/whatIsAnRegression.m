@@ -1,7 +1,7 @@
 function [output] = whatIsAnRegression(rightEmgData, wrongEmgData1, wrongEmgData2, wrongEmgData3, restData, movement)
 
-%Take ALL the data as inputs and such and fuck it and it works #yolo
-%Movement is the percent value between 0 and 1 for the movement?
+%Take ALL the data as inputs and creates the regressors.
+%Movement is the percent value between 0 and 1 for the movement
 
 L = length(rightEmgData(:,1));
 LR = length(restData(:,1));

@@ -1,30 +1,35 @@
-% this plots the trapezoid in the axes1 in the training GUI when button
-% "Plot Button" is pressed
+% This function retrieves the weighted regression values and plots them in
+% the compass plot. This is a training plot which means we don't have any
+% targets appearing at all.
 
-function compassClassification(handles, m1, sensX, sensY)
+function compassClassification(handles, handles2, m1, sensX, sensY)
 
 
     load('baseline.mat');
     load('MdlLinear.mat');
+    load('ExtensionRegression.mat');
+    load('FlexionRegression.mat');
+    load('RadialRegression.mat');
+    load('UlnarRegression.mat');
     
     getRegressValue = [ones(9,2)*0]
     pause(0.1);
 
     plothandle = handles;
+    plothandle2 = handles2;
     if ~isempty(plothandle);
         cla();
+        axes(plothandle);
         max_lim = 1;
         x_fake = [0 max_lim 0 -max_lim];
         y_fake = [max_lim 0 -max_lim 0]
         h_fake = compass(x_fake,y_fake)
         hold on;
-        
-        axes(plothandle);
-        
         set(h_fake,'Visible','off');
         
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.
+        
         recordingTime = 100000000;
         buffer1 = 0;
         buffer2 = 0;
@@ -57,14 +62,19 @@ function compassClassification(handles, m1, sensX, sensY)
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
-                    featz = featureExtractionLiveMAV(toBeFiltered);
-                    getRegressValue = [getRegressValue;getClassificationValue(featz,MdlLinear)];
+                    feat = featureExtractionLiveMAV(toBeFiltered);
+                    getRegressValue = [getRegressValue;getRegressionValue(feat,mahExtensionRegrizzle, ...
+                        mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
                    
+                    %Gets the classifier values:
+                    classValue = getClassificationValue(feat,MdlLinear);
+                    bar(plothandle2,classValue);
+                    
                     valueToPlot = mean(getRegressValue(end-5:end,:));
                     
                     axes(plothandle);
                     delete(lol);
-                    lol = compass(sensX*valueToPlot(1),sensY*valueToPlot(2));
+                    lol = compass(plothandle,sensX*valueToPlot(1),sensY*valueToPlot(2));
                     drawnow;
                     
                     buffer1 = 0;
@@ -85,14 +95,19 @@ function compassClassification(handles, m1, sensX, sensY)
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
-                    featz = featureExtractionLiveLogVar(toBeFiltered);
-                    getRegressValue = [getRegressValue;getClassificationValue(featz,MdlLinear)];
+                    feat = featureExtractionLiveLogVar(toBeFiltered);
+                    getRegressValue = [getRegressValue;getRegressionValue(feat,mahExtensionRegrizzle, ...
+                        mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
+                   
+                    %Gets the classifier values:
+                    classValue = getClassificationValue(feat,MdlLinear);
+                    bar(plothandle2,classValue);
                     
+                    %Finds the values to plot:
                     valueToPlot = mean(getRegressValue(end-5:end,:));
                     
-                    axes(plothandle);
                     delete(lol);
-                    lol = compass(sensX*valueToPlot(1),sensY*valueToPlot(2));
+                    lol = compass(plothandle,sensX*valueToPlot(1),sensY*valueToPlot(2));
                     drawnow;
                     
                     buffer2 = 0;
