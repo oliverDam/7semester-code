@@ -12,7 +12,7 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
     load('RadialRegression.mat');
     load('UlnarRegression.mat');
     
-    getRegressValue = [ones(9,2)*0]
+    getRegressValue = [ones(9,2)*0];
     pause(0.1);
 
     plothandle = handles;
@@ -22,8 +22,8 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
         axes(plothandle);
         max_lim = 1;
         x_fake = [0 max_lim 0 -max_lim];
-        y_fake = [max_lim 0 -max_lim 0]
-        h_fake = compass(x_fake,y_fake)
+        y_fake = [max_lim 0 -max_lim 0];
+        h_fake = compass(x_fake,y_fake);
         hold on;
         set(h_fake,'Visible','off');
         
