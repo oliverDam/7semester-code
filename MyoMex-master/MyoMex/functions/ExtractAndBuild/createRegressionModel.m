@@ -1,4 +1,4 @@
-function [output] = whatIsAnRegression(rightEmgData, wrongEmgData1, wrongEmgData2, wrongEmgData3, restData, movement)
+function [output] = createRegressionModel(rightEmgData, wrongEmgData1, wrongEmgData2, wrongEmgData3, restData, movement)
 
 %Take ALL the data as inputs and creates the regressors.
 %Movement is the percent value between 0 and 1 for the movement
@@ -44,6 +44,6 @@ regressionInput = dataset2table(cereal);
 modelspec = 'movement ~ channel_1 + channel_2 + channel_3 + channel_4  + channel_5 + channel_6 + channel_7 + channel_8';% + accel_x + accel_y + accel_z';
 mdl = fitlm(regressionInput, modelspec)
 
-plotResiduals(mdl)
+%plotResiduals(mdl)
 
 output = mdl;
