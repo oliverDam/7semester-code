@@ -79,8 +79,8 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
                     
                     %This is also ok featz cause we so streetz:
                     featz = featureExtractionLiveMAV(toBeFiltered);
-                    getRegressValue = [getRegressValue;getRegressionValue(featz,mahExtensionRegrizzle, ...
-                       mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
+                    getRegressValue = [getRegressValue;getRegressionValue(featz,ExtensionRegression, ...
+                       FlexionRegression,RadialRegression,UlnarRegression)];
                    
                     valueToPlot = mean(getRegressValue(end-5:end,:));
                     
@@ -108,8 +108,8 @@ function doAdvancedCompassTestThing(handles1, m1,sensX,sensY, handles2)
                     
                     %This is also ok featz cause we so streetz:
                     featz = featureExtractionLiveMAV(toBeFiltered)
-                    getRegressValue = [getRegressValue;getRegressionValue(featz,mahExtensionRegrizzle, ...
-                        mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
+                    getRegressValue = [getRegressValue;getRegressionValue(featz,ExtensionRegression, ...
+                        FlexionRegression,RadialRegression,UlnarRegression)];
                     
                     valueToPlot = mean(getRegressValue(end-5:end,:));
                     

@@ -4,10 +4,10 @@ for i=1:8
     Column{i} = transpose(emgData(:,[i])); 
 end
 
-c1 = buffer(Column{1},40,20)
+c1 = buffer(Column{1},40,20);
 for j = 1:length(c1(1,:))
-    temp = mean(abs(c1(:,j)))
-    meabs1(j) = temp
+    temp = mean(abs(c1(:,j)));
+    meabs1(j) = temp;
 end 
 
 c2 = buffer(Column{2},40,20);

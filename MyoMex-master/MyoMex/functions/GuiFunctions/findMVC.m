@@ -73,6 +73,7 @@ if ~isempty(plothandle);
         end
     end
 end
+hold off;
 baseline = mean(dataMatrix);
 %baseline = mean(dataMatrix(0:2000,1:8))
 

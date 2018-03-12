@@ -33,7 +33,7 @@ if isError ~= 1
     if ~isempty(plothandle);
         cla();
         axes(plothandle);
-        plot(x,y);
+        trapezoid = plot(x,y);
         xlim([0 15000]);
         ylim([0 1]);
         hold on;
@@ -129,7 +129,8 @@ if isError ~= 1
             end
         end
     end
-   
+
+delete(trapezoid);
 %%Saving with a specific name instead of the same for every case:
 Intensity = num2str(sliderValue*100);
 
@@ -160,7 +161,7 @@ elseif movementType == 3
         EmgRadial60 = butterFilter(EmgMatrix);
     end
     
-else
+elseif movementType == 4
     if sliderValue == 0.2
         EmgUlnar20 = butterFilter(EmgMatrix);
     elseif sliderValue == 0.4
@@ -168,8 +169,12 @@ else
     else
         EmgUlnar60 = butterFilter(EmgMatrix);
     end
+else 
+    EmgRest = butterFilter(EmgMatrix);
+    movement = 'Rest';
+    Intensity = [];
 end
     
-    save(convertCharsToStrings(strcat('Emg',movement,Intensity,'.mat')),convertCharsToStrings(strcat('Emg',movement,Intensity)));
-end
+save(convertCharsToStrings(strcat('Emg',movement,Intensity,'.mat')),convertCharsToStrings(strcat('Emg',movement,Intensity)));
+
 end

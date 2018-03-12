@@ -61,8 +61,8 @@ function doCompassPlease(handles, m1, sensX, sensY)
                     
                     %This is also ok featz cause we so streetz:
                     featz = featureExtractionLiveLogVar(toBeFiltered);
-                    getRegressValue = [getRegressValue;getRegressionValue(featz,mahExtensionRegrizzle, ...
-                       mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
+                    getRegressValue = [getRegressValue;getRegressionValue(featz,ExtensionRegression, ...
+                       FlexionRegression,RadialRegression,UlnarRegression)];
                    
                     valueToPlot = mean(getRegressValue(end-5:end,:));
                     
@@ -90,8 +90,8 @@ function doCompassPlease(handles, m1, sensX, sensY)
                     
                     %This is also ok featz cause we so streetz:
                     featz = featureExtractionLiveLogVar(toBeFiltered);
-                    getRegressValue = [getRegressValue;getRegressionValue(featz,mahExtensionRegrizzle, ...
-                        mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
+                    getRegressValue = [getRegressValue;getRegressionValue(featz,ExtensionRegression, ...
+                        FlexionRegression,RadialRegression,UlnarRegression)];
                     
                     valueToPlot = mean(getRegressValue(end-5:end,:));
                     

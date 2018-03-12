@@ -63,12 +63,14 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     
                     %This is also ok featz cause we so streetz:
                     feat = featureExtractionLiveMAV(toBeFiltered);
-                    getRegressValue = [getRegressValue;getRegressionValue(feat,mahExtensionRegrizzle, ...
-                        mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
+                    getRegressValue = [getRegressValue;getRegressionValue(feat,ExtensionRegression, ...
+                        FlexionRegression,RadialRegression,UlnarRegression)];
                    
                     %Gets the classifier values:
-                    classValue = getClassificationValue(feat,MdlLinear);
-                    bar(plothandle2,classValue);
+                    classValue(lastSample,:) = getClassificationValue(feat,MdlLinear);
+                    class = mean(classValue(lastSample-(windowSize-1):...
+                        lastSample,:)/(windowSize-1));
+                    bar(plothandle2,class);
                     
                     valueToPlot = mean(getRegressValue(end-5:end,:));
                     
@@ -96,12 +98,14 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     
                     %This is also ok featz cause we so streetz:
                     feat = featureExtractionLiveLogVar(toBeFiltered);
-                    getRegressValue = [getRegressValue;getRegressionValue(feat,mahExtensionRegrizzle, ...
-                        mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)];
+                    getRegressValue = [getRegressValue;getRegressionValue(feat,ExtensionRegression, ...
+                        FlexionRegression,RadialRegression,UlnarRegression)];
                    
                     %Gets the classifier values:
-                    classValue = getClassificationValue(feat,MdlLinear);
-                    bar(plothandle2,classValue);
+                    classValue(lastSample,:) = getClassificationValue(feat,MdlLinear);
+                    class = mean(classValue(lastSample-(windowSize-1):...
+                        lastSample,:)/(windowSize-1));
+                    bar(plothandle2,class);
                     
                     %Finds the values to plot:
                     valueToPlot = mean(getRegressValue(end-5:end,:));

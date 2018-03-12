@@ -72,6 +72,7 @@ randomOrder = randperm(8,8)    %find random order for targetplots
             pause(0.01);        %change. maybe.
         end
     end
+    hold off;
 end
 
 

@@ -16,9 +16,9 @@ load('EmgUlnar20.mat');
 load('EmgUlnar40.mat');
 load('EmgUlnar60.mat');
 
-Extension = [EmgExtension20(5001:10000,:),EmgExtension40(5001:10000,:),EmgExtension60(5001:10000,:)];
-Flexion = [EmgFlexion20(5001:10000,:),EmgFlexion40(5001:10000,:),EmgFlexion60(5001:10000,:)];
-Radial = [EmgRadial20(5001:10000,:),EmgRadial40(5001:10000,:),EmgRadial60(5001:10000,:)];
-Ulnar = [EmgUlnar20(5001:10000,:),EmgUlnar40(5001:10000,:),EmgUlnar60(5001:10000,:)];
+Extension = [EmgExtension20(1001:2000,:);EmgExtension40(1001:2000,:);EmgExtension60(1001:2000,:)];
+Flexion = [EmgFlexion20(1001:2000,:);EmgFlexion40(1001:2000,:);EmgFlexion60(1001:2000,:)];
+Radial = [EmgRadial20(1001:2000,:);EmgRadial40(1001:2000,:);EmgRadial60(1001:2000,:)];
+Ulnar = [EmgUlnar20(1001:2000,:);EmgUlnar40(1001:2000,:);EmgUlnar60(1001:2000,:)];
 
-output = [Extension, Flexion, Radial, Ulnar]
+output = [Extension; Flexion; Radial; Ulnar];

@@ -22,5 +22,6 @@ yEmg(9) = EmgChannels(1)*1;
 
 axes(plotHandle);
 plot(plotHandle,xEmg,yEmg);
+hold off;
 xlim([-1 1]);
 ylim([-1 1]);
