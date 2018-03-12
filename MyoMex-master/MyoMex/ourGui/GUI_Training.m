@@ -52,7 +52,10 @@ function GUI_Training_OpeningFcn(hObject, eventdata, handles, varargin)
 % varargin   command line arguments to GUI_Training (see VARARGIN)
 
 % Adds the specific path to your MyoMex folder:
+%For Simon:
 addpath('C:\Users\Simon\Documents\aKandidat\STM1\7semester-code\MyoMex-master\MyoMex');
+%For Christian:
+%addpath('C:\Users\chrko\Desktop\8semester-code\MyoMex-master\MyoMex');
 handles.myoMex = [];
 
 % Choose default command line output for GUI_Training
