@@ -95,7 +95,7 @@ findMVC(handles.axes1, m1, 0, movementType);
 stopRecording(m1,mm);
 
 
-% --- Executes on button press in Stop_MVC.
+% --- Executes on button press in compassClassification.
 function Stop_MVC_Callback(hObject, eventdata, handles)
 % hObject    handle to Stop_MVC (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -248,9 +248,9 @@ function TargetTest_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 [m1,mm] = initDevice();
 startRecording(m1);
-sliderValue1 = get(handles.slider2,'Value');
-sliderValue2 = get(handles.slider3,'Value');
-doAdvancedCompassTestThing(handles.axes1, m1,sliderValue1,sliderValue2);
+%sliderValue1 = get(handles.slider2,'Value');
+%sliderValue2 = get(handles.slider3,'Value');
+targetTest(handles.axes1, m1);
 stopRecording(m1,mm);
 
 

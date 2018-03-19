@@ -70,7 +70,7 @@ if isError ~= 1
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
                         lastSample,1:8);
-                    toBeFiltered = toBeFiltered - baseline;
+%                     toBeFiltered = toBeFiltered - baseline;
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok for a window and such stuff.
@@ -88,7 +88,7 @@ if isError ~= 1
                         10, 'MarkerFaceColor', 'g');
                     drawnow;
                     realSpiderplot(handleplot,meanAbs);
-                    accelMatrix = m1.accel_log(iiIMU,:);
+%                     accelMatrix = m1.accel_log(iiIMU,:);
                     buffer1 = 0;
                 else 
                     buffer1 = buffer1 + 1;
@@ -103,7 +103,7 @@ if isError ~= 1
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
                         lastSample,1:8);
-                    toBeFiltered = toBeFiltered - baseline;
+%                     toBeFiltered = toBeFiltered - baseline;
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok for a window and such stuff.
@@ -121,7 +121,7 @@ if isError ~= 1
                         10, 'MarkerFaceColor', 'g');
                     drawnow;
                     realSpiderplot(handleplot,meanAbs);
-                    accelMatrix = m1.accel_log(iiIMU,:);
+%                     accelMatrix = m1.accel_log(iiIMU,:);
                     buffer2 = 0;
                 else
                     buffer2 = buffer2 + 1;

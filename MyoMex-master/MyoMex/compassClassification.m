@@ -27,15 +27,22 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
         hold on;
         set(h_fake,'Visible','off');
         
+        axes(plothandle2)
+        whyTho = [1 1 1 1];
+        someBars = bar(plothandle2, whyTho,'w');
+        hold on;
+        
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.
         
-        recordingTime = 100000000;
+        classVal = [0 0 0 0 ; 0 0 0 0];
+%         recordingTime = 100000000;
         buffer1 = 0;
         buffer2 = 0;
         time = 0;
         lol = compass(0,0);
         windowSize = 40;
+        barplot = bar(plothandle2,[0 0 0 0]);
         
         %Makes sure we'll record for the stated 'recordingTime'
         while time <= 60
@@ -67,10 +74,12 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                         FlexionRegression,RadialRegression,UlnarRegression)];
                    
                     %Gets the classifier values:
-                    classValue(lastSample,:) = getClassificationValue(feat,MdlLinear);
-                    class = mean(classValue(lastSample-(windowSize-1):...
-                        lastSample,:)/(windowSize-1));
-                    bar(plothandle2,class);
+                    %classValue(lastSample,:) = getClassificationValue(feat,MdlLinear);
+                    classVal = [classVal;getClassificationValue(feat,MdlLinear)];
+                    len = size(classVal,1);
+                    classToPlot = mean(classVal(len-2:len,:));
+                    delete(barplot);
+                    barplot = bar(plothandle2,classToPlot,'g');
                     
                     valueToPlot = mean(getRegressValue(end-5:end,:));
                     
@@ -102,10 +111,14 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                         FlexionRegression,RadialRegression,UlnarRegression)];
                    
                     %Gets the classifier values:
-                    classValue(lastSample,:) = getClassificationValue(feat,MdlLinear);
-                    class = mean(classValue(lastSample-(windowSize-1):...
-                        lastSample,:)/(windowSize-1));
-                    bar(plothandle2,class);
+                    %classValue(lastSample,:) = getClassificationValue(feat,MdlLinear);
+                    %class = mean(classValue(lastSample-(windowSize-1):...
+                    %    lastSample,:)/(windowSize-1));
+                    classVal = [classVal;getClassificationValue(feat,MdlLinear)];
+                    len = size(classVal,1);
+                    classToPlot = mean(classVal(len-2:len,:));
+                    delete(barplot);
+                    barplot = bar(plothandle2,classToPlot,'g');
                     
                     %Finds the values to plot:
                     valueToPlot = mean(getRegressValue(end-5:end,:));

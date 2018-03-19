@@ -74,24 +74,24 @@ if ~isempty(plothandle);
     end
 end
 hold off;
-baseline = mean(dataMatrix);
 %baseline = mean(dataMatrix(0:2000,1:8))
 
 
 %% Something with the name of the variables we're going to save:
 if doWhat == 0;
     if movementType == 1
-        MVCFlexion = findMVCvector(maxEmgMatrix);
+        MVCFlexion = mean(maxEmgMatrix);
         movement = 'Flexion';
     elseif movementType == 2
-        MVCExtension = findMVCvector(maxEmgMatrix);
+        MVCExtension = mean(maxEmgMatrix);
         movement = 'Extension';
     elseif movementType == 3
-        MVCRadial = findMVCvector(maxEmgMatrix);
+        MVCRadial = mean(maxEmgMatrix);
         movement = 'Radial';
     else
-        MVCUlnar = findMVCvector(maxEmgMatrix);
+        MVCUlnar = mean(maxEmgMatrix);
         movement = 'Ulnar';
+        %Possible to use findMVCVector instead if this doesn't work well.
     end
 
     Name1 = convertCharsToStrings(strcat('MVC',movement,'.mat'));
@@ -100,5 +100,6 @@ if doWhat == 0;
     save(Name1,Name2);
     
 elseif doWhat == 1;
+    baseline = mean(dataMatrix);
     save('baseline.mat','baseline');
 end
