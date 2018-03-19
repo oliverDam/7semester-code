@@ -1,3 +1,4 @@
+
 function [ZCoutput] = featureExtractionZC(emgData);
 
 for i=1:8
