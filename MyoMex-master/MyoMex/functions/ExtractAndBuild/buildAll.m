@@ -13,9 +13,9 @@ load('EmgRest.mat');
 %A length we need later
 L = length(allData)/4;
 
-%Extracts MAV
+%Extracts features:
 allMav = featureExtractionMAV(allData);
-Rest = featureExtractionMAV(EmgRest(1001:2000,:));
+RestMav = featureExtractionMAV(EmgRest(1001:2000,:));
 L2 = length(allMav)/4;
 
 %Creates the class label names for the classifier
@@ -38,16 +38,16 @@ MdlLinearRadUln = fitcdiscr(allMav(2*L2+1:L2*4,:),moveLabelMav(2*L2+1:L2*4,:),'D
 
 %Creates the regression models
 ExtensionRegression = createRegressionModel(allMav(1:L2,:),allMav(L2+1:2*L2,:), ... 
-    allMav(2*L2+1:3*L2,:), allMav(3*L2+1:4*L2,:), Rest, ExtensionIntensity);
+    allMav(2*L2+1:3*L2,:), allMav(3*L2+1:4*L2,:), RestMav, ExtensionIntensity);
 
 FlexionRegression = createRegressionModel(allMav(L2+1:2*L2,:), allMav(2*L2+1:3*L2,:), ... 
-    allMav(3*L2+1:4*L2,:), allMav(1:L2,:), Rest, FlexionIntensity);
+    allMav(3*L2+1:4*L2,:), allMav(1:L2,:), RestMav, FlexionIntensity);
 
 RadialRegression = createRegressionModel(allMav(2*L2+1:3*L2,:), allMav(3*L2+1:4*L2,:), ...
-    allMav(1:L2,:), allMav(L2+1:2*L2,:), Rest, RadialIntensity);
+    allMav(1:L2,:), allMav(L2+1:2*L2,:), RestMav, RadialIntensity);
 
 UlnarRegression = createRegressionModel(allMav(3*L2+1:4*L2,:), allMav(1:L2,:), ... 
-    allMav(L2+1:2*L2,:), allMav(2*L2+1:3*L2,:), Rest, UlnarIntensity);
+    allMav(L2+1:2*L2,:), allMav(2*L2+1:3*L2,:), RestMav, UlnarIntensity);
 
 %Saves all the new things:
 save('ExtensionRegression.mat','ExtensionRegression');
