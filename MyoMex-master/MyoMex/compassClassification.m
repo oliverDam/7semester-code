@@ -6,7 +6,14 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
 
 
     load('baseline.mat');
+    
+    %%Change to this to get a single model:
     load('MdlLinear.mat');
+    
+    %%Multi model
+    %load('MdlLinearExtFle.mat');
+    %load('MdlLinearRadUln.mat');
+    
     load('ExtensionRegression.mat');
     load('FlexionRegression.mat');
     load('RadialRegression.mat');
@@ -73,9 +80,13 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     getRegressValue = [getRegressValue;getRegressionValue(feat,ExtensionRegression, ...
                         FlexionRegression,RadialRegression,UlnarRegression)];
                    
-                    %Gets the classifier values:
-                    %classValue(lastSample,:) = getClassificationValue(feat,MdlLinear);
+                    %%Gets the classifier values with a single model:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
+                    
+                    %%Get the classifier values with multiple models:
+                    %classVal = [classVal;getMultClassificationValue(feat,...
+                        MdlLinearExtFle,MdlLinearRadUln)];
+                    
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
                     delete(barplot);
@@ -110,11 +121,13 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     getRegressValue = [getRegressValue;getRegressionValue(feat,ExtensionRegression, ...
                         FlexionRegression,RadialRegression,UlnarRegression)];
                    
-                    %Gets the classifier values:
-                    %classValue(lastSample,:) = getClassificationValue(feat,MdlLinear);
-                    %class = mean(classValue(lastSample-(windowSize-1):...
-                    %    lastSample,:)/(windowSize-1));
+                    %%Gets the classifier values:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
+                    
+                    %%Get the classifier values with multiple models
+                    %classVal = [classVal;getMultClassificationValue(feat,...
+                    %    MdlLinearExtFle,MdlLinearRadUln)];
+                    
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
                     delete(barplot);

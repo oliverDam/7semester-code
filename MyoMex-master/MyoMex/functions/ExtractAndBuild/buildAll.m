@@ -29,7 +29,11 @@ RadialIntensity = featureExtractionMove(allMav(2*L2+1:3*L2,:),MVCRadial);
 UlnarIntensity = featureExtractionMove(allMav(3*L2+1:4*L2,:),MVCUlnar);
 
 %Creates the classifier
-MdlLinear = fitcdiscr(allMav,moveLabelMav,'DiscrimType','quadratic', ... 
+%MdlLinear = fitcdiscr(allMav,moveLabelMav,'DiscrimType','linear', ... 
+%    'ScoreTransform','none','HyperparameterOptimizationOptions','bayesopt')
+MdlLinearExtFle = fitcdiscr(allMav(1:L2*2,:),moveLabelMav(1:L2*2,:),'DiscrimType','linear', ... 
+    'ScoreTransform','none','HyperparameterOptimizationOptions','bayesopt')
+MdlLinearRadUln = fitcdiscr(allMav(2*L2+1:L2*4,:),moveLabelMav(2*L2+1:L2*4,:),'DiscrimType','linear', ... 
     'ScoreTransform','none','HyperparameterOptimizationOptions','bayesopt')
 
 %Creates the regression models
@@ -50,6 +54,8 @@ save('ExtensionRegression.mat','ExtensionRegression');
 save('FlexionRegression.mat','FlexionRegression');
 save('RadialRegression.mat','RadialRegression');
 save('UlnarRegression.mat','UlnarRegression');
-save('MdlLinear.mat','MdlLinear');
+%save('MdlLinear.mat','MdlLinear');
+save('MdlLinearExtFle.mat','MdlLinearExtFle');
+save('MdlLinearRadUln.mat','MdlLinearRadUln');
 save('allData.mat','allData');
 save('allMav.mat','allMav');
