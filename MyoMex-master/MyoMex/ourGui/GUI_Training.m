@@ -65,7 +65,7 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 % Creates a t:
-t = tcpip('localhost',9090);
+%t = tcpip('localhost',9090);
 
 % UIWAIT makes GUI_Training wait for user response (see UIRESUME)
 % uiwait(handles.figure1);

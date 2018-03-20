@@ -2,7 +2,7 @@
 function [ZCoutput] = featureExtractionZC(emgData);
 
 for i=1:8
-    Column{i} = transpose(EmgFlexion20(:,[i])); 
+    Column{i} = transpose(emgData(:,[i])); 
 end
 
 c1 = buffer(Column{1},40,20);

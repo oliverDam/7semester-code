@@ -20,9 +20,9 @@ end
 plothandle = handles;
 if ~isempty(plothandle);
     cla();
+    plot(plothandle,x,y,'r');
     hold on;
-    axes(plothandle);
-    plot(x,y);
+    plot(plothandle,[0 0],[0 1],'w');
         
     %A little more of the setup. You're not allowed to touch this either!
     recordingTime = 15;
@@ -31,6 +31,7 @@ if ~isempty(plothandle);
     lol = plot(0,0);
     windowSize = 40;
     MVC = 0;
+    maxEmgMatrix = [];
     
     %Makes sure we're recording for 'recordingTime' seconds:
     while time <= recordingTime
@@ -57,7 +58,7 @@ if ~isempty(plothandle);
                 %i was a bit too tired when i wrote them. Figure it out
                 %guys!
                 meanAbs = mean(abs(filterEmg));
-                maxEmgMatrix(lastSample,:) = meanAbs;
+                maxEmgMatrix = [maxEmgMatrix;meanAbs];
                 maxEmg = max(meanAbs);
                 %MVC(lastSample) = maxEmg;
                 
@@ -80,18 +81,17 @@ hold off;
 %% Something with the name of the variables we're going to save:
 if doWhat == 0;
     if movementType == 1
-        MVCFlexion = mean(maxEmgMatrix);
+        MVCFlexion = mean(maxEmgMatrix(100:220,:));
         movement = 'Flexion';
     elseif movementType == 2
-        MVCExtension = mean(maxEmgMatrix);
+        MVCExtension = mean(maxEmgMatrix(100:220,:));
         movement = 'Extension';
     elseif movementType == 3
-        MVCRadial = mean(maxEmgMatrix);
+        MVCRadial = mean(maxEmgMatrix(100:220,:));
         movement = 'Radial';
-    else
-        MVCUlnar = mean(maxEmgMatrix);
+    elseif movementType == 4
+        MVCUlnar = mean(maxEmgMatrix(100:220,:));
         movement = 'Ulnar';
-        %Possible to use findMVCVector instead if this doesn't work well.
     end
 
     Name1 = convertCharsToStrings(strcat('MVC',movement,'.mat'));

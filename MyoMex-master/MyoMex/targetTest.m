@@ -33,9 +33,12 @@ plothandle = handles1;
         allPoint = 1;
         onPoint = 1;
         radius = 1;
-        value = [0,0];
+        outputValue = [0,0];
         gotPoint = 0;
         getRegressValue = [];
+        
+        %This determines how long we can try to get to the area.
+        maxTime = 5; 
         
         %Begin the test at x = 0 & y = 0.
         prevValue = [0,0];
@@ -99,12 +102,11 @@ plothandle = handles1;
                        FlexionRegression,RadialRegression,UlnarRegression)];
                    
                     %temp = mean(getRegressValue(end-5:end,:));
-                    value = getRegressValue(end,:)+value;
+                    outputValue = [outputValue;getRegressValue(end,:)+outputValue(end,:)];
                     
                     axes(plothandle);
                     delete(lol);
-                    plotNumbers = [value(1),value(2)]
-                    lol = scatter(plothandle, value(1),value(2),'b', ...
+                    lol = scatter(plothandle, outputValue(end,1),outputValue(end,2),'b', ...
             'MarkerFaceColor','r');
                     %axis([-max_lim max_lim -max_lim max_lim]);
                     drawnow;
@@ -130,13 +132,12 @@ plothandle = handles1;
                     getRegressValue = [getRegressValue;getRegressionValue(featz,ExtensionRegression, ...
                         FlexionRegression,RadialRegression,UlnarRegression)];
                     
-                    value = getRegressValue(end,:)+value;
+                    outputValue = [outputValue;getRegressValue(end,:)+outputValue(end,:)];
                     
                     axes(plothandle);
                     delete(lol);
-                    plotNumbers = [value(1),value(2)]
-                    lol = scatter(plothandle,value(1),value(2),'r', ...
-            'MarkerFaceColor','b');
+                    lol = scatter(plothandle,outputValue(end,1),outputValue(end,2),'b', ...
+            'MarkerFaceColor','r');
                     %axis([-max_lim max_lim -max_lim max_lim]);
                     drawnow;
                     
@@ -145,14 +146,14 @@ plothandle = handles1;
                     buffer2 = buffer2 + 1;
                 end
                 
-                gotPoint = inpolygon(value(1),value(2),targetAreaX,targetAreaY);
+                gotPoint = inpolygon(outputValue(end,1),outputValue(end,2),targetAreaX,targetAreaY);
                 if gotPoint == 1 
                     onPoint = 1;
                     timeEnd(allPoint) = time;
                     gotIt(allPoint) = 1;
                     allPoint = allPoint+1;
                     delete(h_target)
-                elseif time-timeStart(allPoint) >= 30
+                elseif time-timeStart(allPoint) >= maxTime
                     onPoint = 1;
                     timeEnd(allPoint) = time;
                     gotIt(allPoint) = 0;
@@ -173,4 +174,5 @@ plothandle = handles1;
     save('timeDif.mat','timeDif');
     save('gotIt.mat','gotIt');
     save('EmgMatrix.mat','EmgMatrix');
+    save('outputValue.mat','outputValue');
 end

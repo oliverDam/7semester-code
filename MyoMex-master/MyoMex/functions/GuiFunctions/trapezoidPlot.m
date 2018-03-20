@@ -70,7 +70,7 @@ if isError ~= 1
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
                         lastSample,1:8);
-%                     toBeFiltered = toBeFiltered - baseline;
+                    toBeFiltered = toBeFiltered - baseline;
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok for a window and such stuff.
@@ -103,7 +103,7 @@ if isError ~= 1
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
                         lastSample,1:8);
-%                     toBeFiltered = toBeFiltered - baseline;
+                    toBeFiltered = toBeFiltered - baseline;
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok for a window and such stuff.
