@@ -35,15 +35,16 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
         set(h_fake,'Visible','off');
         
         axes(plothandle2)
-        whyTho = [1 1 1 1];
+        whyTho = [1 1 1 1 1];
         someBars = bar(plothandle2, whyTho,'w');
+        str = {'Extension','Flexion','Radial','Ulnar','Rest'};
+        set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
         hold on;
         
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.
         
-        classVal = [0 0 0 0 ; 0 0 0 0];
-%         recordingTime = 100000000;
+        classVal = [0 0 0 0 0 ; 0 0 0 0 0];
         buffer1 = 0;
         buffer2 = 0;
         time = 0;
@@ -76,16 +77,18 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
-                    feat = featureExtractionLiveMAV(toBeFiltered);
-                    getRegressValue = [getRegressValue;getRegressionValue(feat,ExtensionRegression, ...
+                    featMav = featureExtractionLiveMAV(toBeFiltered);
+                    featSSC = mean(featureExtractionSSC(toBeFiltered));
+                    featWL = mean(featureExtractionWL(toBeFiltered));
+                    featZC = mean(featureExtractionZC(toBeFiltered));
+                    
+                    feat = [featMav, featSSC, featWL, featZC];
+                    
+                    getRegressValue = [getRegressValue;getRegressionValue(featMav,ExtensionRegression, ...
                         FlexionRegression,RadialRegression,UlnarRegression)];
                    
                     %%Gets the classifier values with a single model:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
-                    
-                    %%Get the classifier values with multiple models:
-                    %classVal = [classVal;getMultClassificationValue(feat,...
-                        MdlLinearExtFle,MdlLinearRadUln)];
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
@@ -117,16 +120,18 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
-                    feat = featureExtractionLiveLogVar(toBeFiltered);
-                    getRegressValue = [getRegressValue;getRegressionValue(feat,ExtensionRegression, ...
+                    featMav = featureExtractionLiveMAV(toBeFiltered);
+                    featSSC = mean(featureExtractionSSC(toBeFiltered));
+                    featWL = mean(featureExtractionWL(toBeFiltered));
+                    featZC = mean(featureExtractionZC(toBeFiltered));
+                    
+                    feat = [featMav, featSSC, featWL, featZC];
+
+                    getRegressValue = [getRegressValue;getRegressionValue(featMav,ExtensionRegression, ...
                         FlexionRegression,RadialRegression,UlnarRegression)];
                    
                     %%Gets the classifier values:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
-                    
-                    %%Get the classifier values with multiple models
-                    %classVal = [classVal;getMultClassificationValue(feat,...
-                    %    MdlLinearExtFle,MdlLinearRadUln)];
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));

@@ -250,7 +250,7 @@ function TargetTest_Callback(hObject, eventdata, handles)
 startRecording(m1);
 %sliderValue1 = get(handles.slider2,'Value');
 %sliderValue2 = get(handles.slider3,'Value');
-targetTest(handles.axes1, m1);
+targetTest(handles.axes1, handles.regressionBarPlot, m1);
 stopRecording(m1,mm);
 
 

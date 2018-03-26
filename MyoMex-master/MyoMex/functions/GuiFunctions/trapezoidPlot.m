@@ -25,7 +25,11 @@ if isError ~= 1
     pause(0.1);
     
     %Creates the trapezoid based on the slidervalue from the input.
-    x = [0 2000 5000 10000 13000 15000];
+    if movementType == 5
+        x = [0 2000 5000 10000 35000 45000]
+    else
+        x = [0 2000 5000 10000 13000 15000];
+    end
     y = [0.01, 0.01, sliderValue, sliderValue, 0.01 0.01];
     
     handleplot = handles2;
@@ -34,7 +38,11 @@ if isError ~= 1
         cla();
         axes(plothandle);
         trapezoid = plot(x,y);
-        xlim([0 15000]);
+        if movementType == 5
+            xlim([0 45000]);
+        else
+            xlim([0 15000]);
+        end
         ylim([0 1]);
         hold on;
         xlabel('Time in ms');
@@ -42,7 +50,12 @@ if isError ~= 1
         
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.
-        recordingTime = 15;
+        if movementType == 5
+            recordingTime = 45;
+        else 
+            recordingTime = 15;
+        end
+        
         buffer1 = 0;
         buffer2 = 0;
         time = 0;

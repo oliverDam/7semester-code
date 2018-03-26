@@ -10,52 +10,54 @@ load('MVCRadial.mat');
 load('MVCUlnar.mat');
 load('EmgRest.mat');
 
-%A length we need later
-L = length(allData)/4;
 
 %Extracts features:
 allMav = featureExtractionMAV(allData);
-RestMav = featureExtractionMAV(EmgRest(1001:2000,:));
-L2 = length(allMav)/4;
+allSSC = featureExtractionSSC(allData);
+allWL = featureExtractionWL(allData);
+allZC = featureExtractionZC(allData);
+restMav = featureExtractionMAV(EmgRest(1001:4000,:));
+restSSC = featureExtractionSSC(EmgRest(1001:4000,:));
+restWL = featureExtractionWL(EmgRest(1001:4000,:));
+restZC = featureExtractionZC(EmgRest(1001:4000,:));
+L = length(allMav)/4;
 
 %Creates the class label names for the classifier
-moveLabel = repelem({'Extension';'Flexion';'Radial';'Ulnar'}, L, 1);
-moveLabelMav = repelem({'Extension';'Flexion';'Radial';'Ulnar'}, L2, 1);
+moveLabelMav = [repelem({'Extension';'Flexion';'Radial';'Ulnar';'Rest'}, L, 1)];
 
 %Finds the intensities of the movements (the intensity shown in trapezoid)
-ExtensionIntensity = featureExtractionMove(allMav(1:L2,:),MVCExtension);
-FlexionIntensity = featureExtractionMove(allMav(L2+1:2*L2,:),MVCFlexion);
-RadialIntensity = featureExtractionMove(allMav(2*L2+1:3*L2,:),MVCRadial);
-UlnarIntensity = featureExtractionMove(allMav(3*L2+1:4*L2,:),MVCUlnar);
+ExtensionIntensity = featureExtractionMove(allMav(1:L,:),MVCExtension);
+FlexionIntensity = featureExtractionMove(allMav(L+1:2*L,:),MVCFlexion);
+RadialIntensity = featureExtractionMove(allMav(2*L+1:3*L,:),MVCRadial);
+UlnarIntensity = featureExtractionMove(allMav(3*L+1:4*L,:),MVCUlnar);
+
+classInput = [allMav,allSSC,allWL,allZC;restMav,restSSC,restWL,restZC];
 
 %Creates the classifier
-%MdlLinear = fitcdiscr(allMav,moveLabelMav,'DiscrimType','linear', ... 
-%    'ScoreTransform','none','HyperparameterOptimizationOptions','bayesopt')
-MdlLinearExtFle = fitcdiscr(allMav(1:L2*2,:),moveLabelMav(1:L2*2,:),'DiscrimType','linear', ... 
-    'ScoreTransform','none','HyperparameterOptimizationOptions','bayesopt')
-MdlLinearRadUln = fitcdiscr(allMav(2*L2+1:L2*4,:),moveLabelMav(2*L2+1:L2*4,:),'DiscrimType','linear', ... 
+MdlLinear = fitcdiscr(classInput,moveLabelMav,'DiscrimType','pseudolinear', ... 
     'ScoreTransform','none','HyperparameterOptimizationOptions','bayesopt')
 
 %Creates the regression models
-ExtensionRegression = createRegressionModel(allMav(1:L2,:),allMav(L2+1:2*L2,:), ... 
-    allMav(2*L2+1:3*L2,:), allMav(3*L2+1:4*L2,:), RestMav, ExtensionIntensity);
+ExtensionRegression = createRegressionModel(allMav(1:L,:),allMav(L+1:2*L,:), ... 
+    allMav(2*L+1:3*L,:), allMav(3*L+1:4*L,:), restMav, ExtensionIntensity);
 
-FlexionRegression = createRegressionModel(allMav(L2+1:2*L2,:), allMav(2*L2+1:3*L2,:), ... 
-    allMav(3*L2+1:4*L2,:), allMav(1:L2,:), RestMav, FlexionIntensity);
+FlexionRegression = createRegressionModel(allMav(L+1:2*L,:), allMav(2*L+1:3*L,:), ... 
+    allMav(3*L+1:4*L,:), allMav(1:L,:), restMav, FlexionIntensity);
 
-RadialRegression = createRegressionModel(allMav(2*L2+1:3*L2,:), allMav(3*L2+1:4*L2,:), ...
-    allMav(1:L2,:), allMav(L2+1:2*L2,:), RestMav, RadialIntensity);
+RadialRegression = createRegressionModel(allMav(2*L+1:3*L,:), allMav(3*L+1:4*L,:), ...
+    allMav(1:L,:), allMav(L+1:2*L,:), restMav, RadialIntensity);
 
-UlnarRegression = createRegressionModel(allMav(3*L2+1:4*L2,:), allMav(1:L2,:), ... 
-    allMav(L2+1:2*L2,:), allMav(2*L2+1:3*L2,:), RestMav, UlnarIntensity);
+UlnarRegression = createRegressionModel(allMav(3*L+1:4*L,:), allMav(1:L,:), ... 
+    allMav(L+1:2*L,:), allMav(2*L+1:3*L,:), restMav, UlnarIntensity);
 
 %Saves all the new things:
 save('ExtensionRegression.mat','ExtensionRegression');
 save('FlexionRegression.mat','FlexionRegression');
 save('RadialRegression.mat','RadialRegression');
 save('UlnarRegression.mat','UlnarRegression');
-%save('MdlLinear.mat','MdlLinear');
-save('MdlLinearExtFle.mat','MdlLinearExtFle');
-save('MdlLinearRadUln.mat','MdlLinearRadUln');
+save('MdlLinear.mat','MdlLinear');
 save('allData.mat','allData');
 save('allMav.mat','allMav');
+save('allSSC.mat','allSSC');
+save('allWL.mat','allWL');
+save('allZC.mat','allZC');

@@ -81,16 +81,16 @@ hold off;
 %% Something with the name of the variables we're going to save:
 if doWhat == 0;
     if movementType == 1
-        MVCFlexion = mean(maxEmgMatrix(100:220,:));
+        MVCFlexion = mean(maxEmgMatrix(75:150,:));
         movement = 'Flexion';
     elseif movementType == 2
-        MVCExtension = mean(maxEmgMatrix(100:220,:));
+        MVCExtension = mean(maxEmgMatrix(75:150,:));
         movement = 'Extension';
     elseif movementType == 3
-        MVCRadial = mean(maxEmgMatrix(100:220,:));
+        MVCRadial = mean(maxEmgMatrix(75:150,:));
         movement = 'Radial';
     elseif movementType == 4
-        MVCUlnar = mean(maxEmgMatrix(100:220,:));
+        MVCUlnar = mean(maxEmgMatrix(75:150,:));
         movement = 'Ulnar';
     end
 

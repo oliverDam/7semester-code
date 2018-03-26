@@ -1,6 +1,6 @@
 %This is for the moving dot thing:
 
-function targetTest(handles1, m1)
+function targetTest(handles1, handles2, m1)
 
 %value = prevValue + value
 %plot(handle,value+prevValue,'or', 'MarkerSize', 10, 'MarkerFaceColor', 'g');
@@ -9,9 +9,12 @@ function targetTest(handles1, m1)
     load('FlexionRegression.mat');
     load('RadialRegression.mat');
     load('UlnarRegression.mat');
+    load('MdlLinear.mat');
 
 %Setup of the plot:
 plothandle = handles1;
+plothandle2 = handles2;
+
     if ~isempty(plothandle);
         cla();
         axes(plothandle);
@@ -21,9 +24,13 @@ plothandle = handles1;
         xlim([-20 20]);
         ylim([-20 20]);
         hold on;
-        %axes(plothandle);
-        %axis(plothandle,[-max_lim max_lim -max_lim max_lim]);
         
+        axes(plothandle2)
+        whyTho = [1 1 1 1 1];
+        someBars = bar(plothandle2, whyTho,'w');
+        str = {'Extension','Flexion','Radial','Ulnar','Rest'};
+        set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
+        hold on;        
         
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.        
@@ -36,6 +43,8 @@ plothandle = handles1;
         outputValue = [0,0];
         gotPoint = 0;
         getRegressValue = [];
+        classVal = [0 0 0 0 0; 0 0 0 0 0]
+        barplot = bar(plothandle2,[0 0 0 0]);
         
         %This determines how long we can try to get to the area.
         maxTime = 5; 
@@ -96,13 +105,24 @@ plothandle = handles1;
                         lastSample,1:8);
                     filterEmg = butterFilter(toBeFiltered);
                     
-                    %This is also ok featz cause we so streetz:
-                    featz = featureExtractionLiveMAV(toBeFiltered);
-                    getRegressValue = [getRegressValue;getRegressionValue(featz,ExtensionRegression, ...
-                       FlexionRegression,RadialRegression,UlnarRegression)];
+                    %Extraction of the features:
+                    featMav = featureExtractionLiveMAV(toBeFiltered);
+                    featSSC = mean(featureExtractionSSC(toBeFiltered));
+                    featWL = mean(featureExtractionWL(toBeFiltered));
+                    featZC = mean(featureExtractionZC(toBeFiltered));
+                    
+                    feat = [featMav, featSSC, featWL, featZC];
                    
+                    classVal = [classVal;getClassificationValue(feat,MdlLinear)];
+                    
+                    len = size(classVal,1);
+                    classToPlot = mean(classVal(len-2:len,:));
+                    delete(barplot);
+                    barplot = bar(plothandle2,classToPlot,'g');
+                    
                     %temp = mean(getRegressValue(end-5:end,:));
-                    outputValue = [outputValue;getRegressValue(end,:)+outputValue(end,:)];
+                    outputValue = [outputValue;[(classVal(end,1)-classVal(end,2)),(classVal(end,3)-classVal(end,4))] ... 
+                        + outputValue(end,:)];
                     
                     axes(plothandle);
                     delete(lol);
@@ -128,11 +148,22 @@ plothandle = handles1;
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
-                    featz = featureExtractionLiveMAV(toBeFiltered)
-                    getRegressValue = [getRegressValue;getRegressionValue(featz,ExtensionRegression, ...
-                        FlexionRegression,RadialRegression,UlnarRegression)];
+                    featMav = featureExtractionLiveMAV(toBeFiltered);
+                    featSSC = mean(featureExtractionSSC(toBeFiltered));
+                    featWL = mean(featureExtractionWL(toBeFiltered));
+                    featZC = mean(featureExtractionZC(toBeFiltered));
                     
-                    outputValue = [outputValue;getRegressValue(end,:)+outputValue(end,:)];
+                    feat = [featMav, featSSC, featWL, featZC];
+                    
+                    classVal = [classVal;getClassificationValue(feat,MdlLinear)];
+                    
+                    len = size(classVal,1);
+                    classToPlot = mean(classVal(len-2:len,:));
+                    delete(barplot);
+                    barplot = bar(plothandle2,classToPlot,'g');
+                    
+                    outputValue = [outputValue;[(classVal(end,1)-classVal(end,2)),(classVal(end,3)-classVal(end,4))] ... 
+                        + outputValue(end,:)];
                     
                     axes(plothandle);
                     delete(lol);
