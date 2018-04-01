@@ -8,7 +8,10 @@ function [output] = getClassificationValue(featureData,MdlLinear)
 ypredExte = mean(scores(:,1));
 ypredFlex = mean(scores(:,2));
 ypredRadi = mean(scores(:,3));
-ypredUlna = mean(scores(:,4));
-ypredRest = mean(scores(:,5));
+
+%This is due to the alphabetical sorting of the scores, which means that
+%ulnar comes after rest in the output scores. Silly stuff, MATLAB...
+ypredUlna = mean(scores(:,5));
+ypredRest = mean(scores(:,4));
 
 output = [ypredExte, ypredFlex, ypredRadi, ypredUlna, ypredRest];

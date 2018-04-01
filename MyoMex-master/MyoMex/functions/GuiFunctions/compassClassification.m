@@ -82,7 +82,8 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     featWL = mean(featureExtractionWL(toBeFiltered));
                     featZC = mean(featureExtractionZC(toBeFiltered));
                     
-                    feat = [featMav, featSSC, featWL, featZC];
+                    feat = [featMav,featWL];
+                    %feat = [featMav, featSSC, featWL, featZC];
                     
                     getRegressValue = [getRegressValue;getRegressionValue(featMav,ExtensionRegression, ...
                         FlexionRegression,RadialRegression,UlnarRegression)];
@@ -125,7 +126,8 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     featWL = mean(featureExtractionWL(toBeFiltered));
                     featZC = mean(featureExtractionZC(toBeFiltered));
                     
-                    feat = [featMav, featSSC, featWL, featZC];
+                    feat = [featMav,featWL];
+                    %feat = [featMav, featSSC, featWL, featZC];
 
                     getRegressValue = [getRegressValue;getRegressionValue(featMav,ExtensionRegression, ...
                         FlexionRegression,RadialRegression,UlnarRegression)];
