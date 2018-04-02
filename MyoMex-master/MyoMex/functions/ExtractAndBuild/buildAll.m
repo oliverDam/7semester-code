@@ -31,8 +31,8 @@ FlexionIntensity = featureExtractionMove(allMav(L+1:2*L,:),MVCFlexion);
 RadialIntensity = featureExtractionMove(allMav(2*L+1:3*L,:),MVCRadial);
 UlnarIntensity = featureExtractionMove(allMav(3*L+1:4*L,:),MVCUlnar);
 
-classInput = [allMav,allWL;restMav,restWL];
-%classInput = [allMav,allSSC,allWL,allZC;restMav,restSSC,restWL,restZC];
+%classInput = [allMav,allWL;restMav,restWL];
+classInput = [allMav,allSSC,allWL,allZC;restMav,restSSC,restWL,restZC];
 
 %Creates the classifier
 MdlLinear = fitcdiscr(classInput,moveLabelMav,'DiscrimType','pseudolinear', ... 

@@ -23,6 +23,8 @@ plothandle2 = handles2;
         extra = plot(x,y);
         xlim([-20 20]);
         ylim([-20 20]);
+        grid on;
+        grid minor;
         hold on;
         
         axes(plothandle2)
@@ -44,7 +46,13 @@ plothandle2 = handles2;
         gotPoint = 0;
         getRegressValue = [];
         classVal = [0 0 0 0 0; 0 0 0 0 0]
-        barplot = bar(plothandle2,[0 0 0 0]);
+        lim4Green = 0.75
+        %barplot = bar(plothandle2,[0 0 0 0]);
+        barplot1 = bar(plothandle2,0,1);
+        barplot2 = bar(plothandle2,0,2);
+        barplot3 = bar(plothandle2,0,3);
+        barplot4 = bar(plothandle2,0,4);
+        barplot5 = bar(plothandle2,0,5);
         
         %This determines how long we can try to get to the area.
         maxTime = 5; 
@@ -112,13 +120,45 @@ plothandle2 = handles2;
                     featZC = mean(featureExtractionZC(toBeFiltered));
                     
                     feat = [featMav, featSSC, featWL, featZC];
-                   
+                    
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
-                    delete(barplot);
-                    barplot = bar(plothandle2,classToPlot,'g');
+                    %delete(barplot);
+                    %barplot = bar(plothandle2,classToPlot,'g');
+                    
+                    delete(barplot1);
+                    delete(barplot2);
+                    delete(barplot3);
+                    delete(barplot4);
+                    delete(barplot5);
+                    
+                    if classToPlot(1) >= lim4Green
+                        barplot1 = bar(plothandle2,1,classToPlot(1),'g')
+                    else
+                        barplot1 = bar(plothandle2,1,classToPlot(1),'r')
+                    end
+                    if classToPlot(2) >= lim4Green
+                        barplot2 = bar(plothandle2,2,classToPlot(2),'g')
+                    else
+                        barplot2 = bar(plothandle2,2,classToPlot(2),'r')
+                    end
+                    if classToPlot(3) >= lim4Green
+                        barplot3 = bar(plothandle2,3,classToPlot(3),'g')
+                    else
+                        barplot3 = bar(plothandle2,3,classToPlot(3),'r')
+                    end
+                    if classToPlot(4) >= lim4Green
+                        barplot4 = bar(plothandle2,4,classToPlot(4),'g')
+                    else
+                        barplot4 = bar(plothandle2,4,classToPlot(4),'r')
+                    end
+                    if classToPlot(5) >= lim4Green
+                        barplot5 = bar(plothandle2,5,classToPlot(5),'g')
+                    else
+                        barplot5 = bar(plothandle2,5,classToPlot(5),'r')
+                    end
                     
                     %temp = mean(getRegressValue(end-5:end,:));
                     outputValue = [outputValue;[(classVal(end,1)-classVal(end,2)),(classVal(end,3)-classVal(end,4))] ... 
@@ -159,8 +199,40 @@ plothandle2 = handles2;
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
-                    delete(barplot);
-                    barplot = bar(plothandle2,classToPlot,'g');
+                    %delete(barplot);
+                    %barplot = bar(plothandle2,classToPlot,'g');
+                    
+                    delete(barplot1);
+                    delete(barplot2);
+                    delete(barplot3);
+                    delete(barplot4);
+                    delete(barplot5);
+                    
+                    if classToPlot(1) >= lim4Green
+                        barplot1 = bar(plothandle2,1,classToPlot(1),'g')
+                    else
+                        barplot1 = bar(plothandle2,1,classToPlot(1),'r')
+                    end
+                    if classToPlot(2) >= lim4Green
+                        barplot2 = bar(plothandle2,2,classToPlot(2),'g')
+                    else
+                        barplot2 = bar(plothandle2,2,classToPlot(2),'r')
+                    end
+                    if classToPlot(3) >= lim4Green
+                        barplot3 = bar(plothandle2,3,classToPlot(3),'g')
+                    else
+                        barplot3 = bar(plothandle2,3,classToPlot(3),'r')
+                    end
+                    if classToPlot(4) >= lim4Green
+                        barplot4 = bar(plothandle2,4,classToPlot(4),'g')
+                    else
+                        barplot4 = bar(plothandle2,4,classToPlot(4),'r')
+                    end
+                    if classToPlot(5) >= lim4Green
+                        barplot5 = bar(plothandle2,5,classToPlot(5),'g')
+                    else
+                        barplot5 = bar(plothandle2,5,classToPlot(5),'r')
+                    end
                     
                     outputValue = [outputValue;[(classVal(end,1)-classVal(end,2)),(classVal(end,3)-classVal(end,4))] ... 
                         + outputValue(end,:)];

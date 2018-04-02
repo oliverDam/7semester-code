@@ -50,7 +50,13 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
         time = 0;
         lol = compass(0,0);
         windowSize = 40;
-        barplot = bar(plothandle2,[0 0 0 0]);
+        lim4Green = 0.75
+        %barplot = bar(plothandle2,[0 0 0 0]);
+        barplot1 = bar(plothandle2,1,0);
+        barplot2 = bar(plothandle2,2,0);
+        barplot3 = bar(plothandle2,3,0);
+        barplot4 = bar(plothandle2,4,0);
+        barplot5 = bar(plothandle2,5,0);
         
         %Makes sure we'll record for the stated 'recordingTime'
         while time <= 60
@@ -82,8 +88,7 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     featWL = mean(featureExtractionWL(toBeFiltered));
                     featZC = mean(featureExtractionZC(toBeFiltered));
                     
-                    feat = [featMav,featWL];
-                    %feat = [featMav, featSSC, featWL, featZC];
+                    feat = [featMav, featSSC, featWL, featZC];
                     
                     getRegressValue = [getRegressValue;getRegressionValue(featMav,ExtensionRegression, ...
                         FlexionRegression,RadialRegression,UlnarRegression)];
@@ -93,8 +98,42 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
-                    delete(barplot);
-                    barplot = bar(plothandle2,classToPlot,'g');
+                    
+                    %
+                    %delete(barplot);
+                    %barplot = bar(plothandle2,classToPlot,'g');
+                    
+                    delete(barplot1);
+                    delete(barplot2);
+                    delete(barplot3);
+                    delete(barplot4);
+                    delete(barplot5);
+                    
+                    if classToPlot(1) >= lim4Green
+                        barplot1 = bar(plothandle2,1,classToPlot(1),'g')
+                    else
+                        barplot1 = bar(plothandle2,1,classToPlot(1),'r')
+                    end
+                    if classToPlot(2) >= lim4Green
+                        barplot2 = bar(plothandle2,2,classToPlot(2),'g')
+                    else
+                        barplot2 = bar(plothandle2,2,classToPlot(2),'r')
+                    end
+                    if classToPlot(3) >= lim4Green
+                        barplot3 = bar(plothandle2,3,classToPlot(3),'g')
+                    else
+                        barplot3 = bar(plothandle2,3,classToPlot(3),'r')
+                    end
+                    if classToPlot(4) >= lim4Green
+                        barplot4 = bar(plothandle2,4,classToPlot(4),'g')
+                    else
+                        barplot4 = bar(plothandle2,4,classToPlot(4),'r')
+                    end
+                    if classToPlot(5) >= lim4Green
+                        barplot5 = bar(plothandle2,5,classToPlot(5),'g')
+                    else
+                        barplot5 = bar(plothandle2,5,classToPlot(5),'r')
+                    end
                     
                     valueToPlot = mean(getRegressValue(end-5:end,:));
                     
@@ -126,8 +165,7 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     featWL = mean(featureExtractionWL(toBeFiltered));
                     featZC = mean(featureExtractionZC(toBeFiltered));
                     
-                    feat = [featMav,featWL];
-                    %feat = [featMav, featSSC, featWL, featZC];
+                    feat = [featMav, featSSC, featWL, featZC];
 
                     getRegressValue = [getRegressValue;getRegressionValue(featMav,ExtensionRegression, ...
                         FlexionRegression,RadialRegression,UlnarRegression)];
@@ -137,8 +175,41 @@ function compassClassification(handles, handles2, m1, sensX, sensY)
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
-                    delete(barplot);
-                    barplot = bar(plothandle2,classToPlot,'g');
+                    %delete(barplot);
+                    %barplot = bar(plothandle2,classToPlot,'g');
+                    
+                    %Colorful barplot:                    
+                    delete(barplot1);
+                    delete(barplot2);
+                    delete(barplot3);
+                    delete(barplot4);
+                    delete(barplot5);
+                    
+                    if classToPlot(1) >= lim4Green
+                        barplot1 = bar(plothandle2,1,classToPlot(1),'g')
+                    else
+                        barplot1 = bar(plothandle2,1,classToPlot(1),'r')
+                    end
+                    if classToPlot(2) >= lim4Green
+                        barplot2 = bar(plothandle2,2,classToPlot(2),'g')
+                    else
+                        barplot2 = bar(plothandle2,2,classToPlot(2),'r')
+                    end
+                    if classToPlot(3) >= lim4Green
+                        barplot3 = bar(plothandle2,3,classToPlot(3),'g')
+                    else
+                        barplot3 = bar(plothandle2,3,classToPlot(3),'r')
+                    end
+                    if classToPlot(4) >= lim4Green
+                        barplot4 = bar(plothandle2,4,classToPlot(4),'g')
+                    else
+                        barplot4 = bar(plothandle2,4,classToPlot(4),'r')
+                    end
+                    if classToPlot(5) >= lim4Green
+                        barplot5 = bar(plothandle2,5,classToPlot(5),'g')
+                    else
+                        barplot5 = bar(plothandle2,5,classToPlot(5),'r')
+                    end
                     
                     %Finds the values to plot:
                     valueToPlot = mean(getRegressValue(end-5:end,:));
