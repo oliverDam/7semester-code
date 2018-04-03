@@ -27,10 +27,11 @@ if isError ~= 1
     %Creates the trapezoid based on the slidervalue from the input.
     if movementType == 5
         x = [0 2000 5000 10000 35000 45000]
+        y = [0.05 0.05 0.05 0.05 0.05 0.05]
     else
         x = [0 2000 5000 10000 13000 15000];
+        y = [0.01, 0.01, sliderValue, sliderValue, 0.01 0.01];
     end
-    y = [0.01, 0.01, sliderValue, sliderValue, 0.01 0.01];
     
     handleplot = handles2;
     plothandle = handles;
@@ -148,39 +149,39 @@ delete(trapezoid);
 Intensity = num2str(sliderValue*100);
 
 if movementType == 1
-    if sliderValue == 0.2
-        EmgFlexion20 = butterFilter(EmgMatrix);
-    elseif sliderValue == 0.4
+    if sliderValue == 0.4
         EmgFlexion40 = butterFilter(EmgMatrix);
+    elseif sliderValue == 0.5
+        EmgFlexion50 = butterFilter(EmgMatrix);
     else
-        EmgFlexion60 = butterFilter(EmgMatrix);
+        EmgFlexion70 = butterFilter(EmgMatrix);
     end
     
 elseif movementType == 2
-    if sliderValue == 0.2
-        EmgExtension20 = butterFilter(EmgMatrix);
-    elseif sliderValue == 0.4
+    if sliderValue == 0.4
         EmgExtension40 = butterFilter(EmgMatrix);
+    elseif sliderValue == 0.5
+        EmgExtension50 = butterFilter(EmgMatrix);
     else
-        EmgExtension60 = butterFilter(EmgMatrix);
+        EmgExtension70 = butterFilter(EmgMatrix);
     end
     
 elseif movementType == 3
-    if sliderValue == 0.2
-        EmgRadial20 = butterFilter(EmgMatrix);
-    elseif sliderValue == 0.4
+    if sliderValue == 0.4
         EmgRadial40 = butterFilter(EmgMatrix);
+    elseif sliderValue == 0.5
+        EmgRadial50 = butterFilter(EmgMatrix);
     else
-        EmgRadial60 = butterFilter(EmgMatrix);
+        EmgRadial70 = butterFilter(EmgMatrix);
     end
     
 elseif movementType == 4
-    if sliderValue == 0.2
-        EmgUlnar20 = butterFilter(EmgMatrix);
-    elseif sliderValue == 0.4
+    if sliderValue == 0.4
         EmgUlnar40 = butterFilter(EmgMatrix);
+    elseif sliderValue == 0.5
+        EmgUlnar50 = butterFilter(EmgMatrix);
     else
-        EmgUlnar60 = butterFilter(EmgMatrix);
+        EmgUlnar70 = butterFilter(EmgMatrix);
     end
 else 
     EmgRest = butterFilter(EmgMatrix);
