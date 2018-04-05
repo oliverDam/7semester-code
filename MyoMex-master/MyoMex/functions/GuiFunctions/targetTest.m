@@ -29,7 +29,8 @@ plothandle2 = handles2;
         
         axes(plothandle2)
         whyTho = [1 1 1 1 1];
-        someBars = bar(plothandle2, whyTho,'w');
+        someBars = bar(plothandle2, whyTho,'c');
+        ylim([0 1]);
         str = {'Extension','Flexion','Radial','Ulnar','Rest'};
         set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
         hold on;        
@@ -44,23 +45,18 @@ plothandle2 = handles2;
         radius = 1;
         outputValue = [0,0];
         gotPoint = 0;
+
         regressValue = [];
         classVal = [0 0 0 0 0; 0 0 0 0 0]
-        lim4Green = 0.75
-        %barplot = bar(plothandle2,[0 0 0 0]);
-        barplot1 = bar(plothandle2,0,1);
-        barplot2 = bar(plothandle2,0,2);
-        barplot3 = bar(plothandle2,0,3);
-        barplot4 = bar(plothandle2,0,4);
-        barplot5 = bar(plothandle2,0,5);
+        barplot = bar(plothandle2,[0 0 0 0 0]);
         
         %This determines how long we can try to get to the area.
         maxTime = 5; 
         
         %Begin the test at x = 0 & y = 0.
         prevValue = [0,0];
-        lol = plot(plothandle,prevValue,'or','MarkerSize', 10, ...
-            'MarkerFaceColor','g');
+        lol = scatter(plothandle,prevValue(1),prevValue(2),'b', ...
+            'MarkerFaceColor','r');
         
         %randomOrder = randperm(8,8)    %find random order for targetplots
         randomOrder = (1:31); % not random anymore
@@ -125,57 +121,22 @@ plothandle2 = handles2;
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
+                    set(someBars,'XData',[1 2 3 4 5],'YData',classToPlot);
                     
                     regressValue = [regressValue;getSingleRegression(featMav,...
-                        ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression,classToPlot)];
-                        
+                        ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression,classToPlot)]; 
+                    
                     %delete(barplot);
                     %barplot = bar(plothandle2,classToPlot,'g');
-                    
-                    delete(barplot1);
-                    delete(barplot2);
-                    delete(barplot3);
-                    delete(barplot4);
-                    delete(barplot5);
-                    
-                    if classToPlot(1) >= lim4Green
-                        barplot1 = bar(plothandle2,1,classToPlot(1),'g');
-                    else
-                        barplot1 = bar(plothandle2,1,classToPlot(1),'r');
-                    end
-                    if classToPlot(2) >= lim4Green
-                        barplot2 = bar(plothandle2,2,classToPlot(2),'g');
-                    else
-                        barplot2 = bar(plothandle2,2,classToPlot(2),'r');
-                    end
-                    if classToPlot(3) >= lim4Green
-                        barplot3 = bar(plothandle2,3,classToPlot(3),'g');
-                    else
-                        barplot3 = bar(plothandle2,3,classToPlot(3),'r');
-                    end
-                    if classToPlot(4) >= lim4Green
-                        barplot4 = bar(plothandle2,4,classToPlot(4),'g');
-                    else
-                        barplot4 = bar(plothandle2,4,classToPlot(4),'r');
-                    end
-                    if classToPlot(5) >= lim4Green
-                        barplot5 = bar(plothandle2,5,classToPlot(5),'g');
-                    else
-                        barplot5 = bar(plothandle2,5,classToPlot(5),'r');
-                    end
-                    
-                    %temp = mean(getRegressValue(end-5:end,:));
-                    %outputValue = [outputValue;[(classVal(end,1)-classVal(end,2)),(classVal(end,3)-classVal(end,4))] ... 
-                    %    + outputValue(end,:)];
-                    
                     
                     outputValue = [outputValue;outputValue(end,:)+regressValue(end,:)];
                     
                     axes(plothandle);
-                    delete(lol);
-                    lol = scatter(plothandle, outputValue(end,1),outputValue(end,2),'b', ...
-            'MarkerFaceColor','r');
-                    %axis([-max_lim max_lim -max_lim max_lim]);
+                    set(lol,'XData',outputValue(end,1),'YData',outputValue(end,2));
+                    %delete(lol);
+                    %lol = scatter(plothandle, outputValue(end,1),outputValue(end,2),'b', ...
+            %'MarkerFaceColor','r');
+                    
                     drawnow;
                     
                     buffer1 = 0;
@@ -206,54 +167,21 @@ plothandle2 = handles2;
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
+                    
                     %delete(barplot);
                     %barplot = bar(plothandle2,classToPlot,'g');
                     
                     regressValue = [regressValue;getSingleRegression(featMav,...
                         ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression,classToPlot)];
                     
-                    delete(barplot1);
-                    delete(barplot2);
-                    delete(barplot3);
-                    delete(barplot4);
-                    delete(barplot5);
-                    
-                    if classToPlot(1) >= lim4Green
-                        barplot1 = bar(plothandle2,1,classToPlot(1),'g');
-                    else
-                        barplot1 = bar(plothandle2,1,classToPlot(1),'r');
-                    end
-                    if classToPlot(2) >= lim4Green
-                        barplot2 = bar(plothandle2,2,classToPlot(2),'g');
-                    else
-                        barplot2 = bar(plothandle2,2,classToPlot(2),'r');
-                    end
-                    if classToPlot(3) >= lim4Green
-                        barplot3 = bar(plothandle2,3,classToPlot(3),'g');
-                    else
-                        barplot3 = bar(plothandle2,3,classToPlot(3),'r');
-                    end
-                    if classToPlot(4) >= lim4Green
-                        barplot4 = bar(plothandle2,4,classToPlot(4),'g');
-                    else
-                        barplot4 = bar(plothandle2,4,classToPlot(4),'r');
-                    end
-                    if classToPlot(5) >= lim4Green
-                        barplot5 = bar(plothandle2,5,classToPlot(5),'g');
-                    else
-                        barplot5 = bar(plothandle2,5,classToPlot(5),'r');
-                    end
-                    
-                    %outputValue = [outputValue;[(classVal(end,1)-classVal(end,2)),(classVal(end,3)-classVal(end,4))] ... 
-                    %    + outputValue(end,:)];
-                    
                     outputValue = [outputValue;outputValue(end,:)+regressValue(end,:)];
                     
                     axes(plothandle);
-                    delete(lol);
-                    lol = scatter(plothandle,outputValue(end,1),outputValue(end,2),'b', ...
-            'MarkerFaceColor','r');
-                    %axis([-max_lim max_lim -max_lim max_lim]);
+                    set(lol,'XData',outputValue(end,1),'YData',outputValue(end,2));
+                    %delete(lol);
+                    %lol = scatter(plothandle,outputValue(end,1),outputValue(end,2),'b', ...
+            %'MarkerFaceColor','r');
+                    
                     drawnow;
                     
                     buffer2 = 0;
