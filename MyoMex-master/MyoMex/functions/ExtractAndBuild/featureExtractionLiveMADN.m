@@ -15,51 +15,51 @@ for b = 1:length(normRaw(:,1))
     temp = abs(normRaw(b,1)-normRaw(b,2));
     twoChan1(b) = temp;
 end
-MADN1 = sum(twoChan1)/length(normRaw1(:,1));
+MADN1 = sum(twoChan1)/length(normRaw(:,1));
 
 for b = 1:length(normRaw(:,1))
     temp = abs(normRaw(b,2)-normRaw(b,3));
     twoChan2(b) = temp;
 end
-MADN2 = sum(twoChan2)/length(normRaw1(:,1));
+MADN2 = sum(twoChan2)/length(normRaw(:,1));
 
 for b = 1:length(normRaw(:,1))
     temp = abs(normRaw(b,3)-normRaw(b,4));
     twoChan3(b) = temp;
 end
-MADN3 = sum(twoChan3)/length(normRaw1(:,1));
+MADN3 = sum(twoChan3)/length(normRaw(:,1));
 
 for b = 1:length(normRaw(:,1))
     temp = abs(normRaw(b,4)-normRaw(b,5));
     twoChan4(b) = temp;
 end
-MADN4 = sum(twoChan4)/length(normRaw1(:,1));
+MADN4 = sum(twoChan4)/length(normRaw(:,1));
 
 for b = 1:length(normRaw(:,1))
     temp = abs(normRaw(b,5)-normRaw(b,6));
     twoChan5(b) = temp;
 end
-MADN5 = sum(twoChan5)/length(normRaw1(:,1));
+MADN5 = sum(twoChan5)/length(normRaw(:,1));
 
 for b = 1:length(normRaw(:,1))
     temp = abs(normRaw(b,6)-normRaw(b,7));
     twoChan6(b) = temp;
 end
-MADN6 = sum(twoChan6)/length(normRaw1(:,1));
+MADN6 = sum(twoChan6)/length(normRaw(:,1));
 
 for b = 1:length(normRaw(:,1))
     temp = abs(normRaw(b,7)-normRaw(b,8));
     twoChan7(b) = temp;
 end
-MADN7 = sum(twoChan7)/length(normRaw1(:,1));
+MADN7 = sum(twoChan7)/length(normRaw(:,1));
 
 for b = 1:length(normRaw(:,1))
     temp = abs(normRaw(b,8)-normRaw(b,1));
     twoChan8(b) = temp;
 end
-MADN8 = sum(twoChan8)/length(normRaw1(:,1));
+MADN8 = sum(twoChan8)/length(normRaw(:,1));
 
-allChan = [CC1 CC2 CC3 CC4 CC5 CC6 CC7 CC8];
+allChan = [MADN1 MADN2 MADN3 MADN4 MADN5 MADN6 MADN7 MADN8];
 
 
 CCoutput = allChan;
