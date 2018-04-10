@@ -1,4 +1,4 @@
-function [output] = createRegressionModel(rightEmgData, wrongEmgData1, wrongEmgData2, wrongEmgData3, restData, movement)
+function [output] = createRegressionModel(rightEmgData, wrongEmgData1, wrongEmgData2, wrongEmgData3, wrongEmgData4, wrongEmgData5, restData, movement)
 
 %Take ALL the data as inputs and creates the regressors.
 %Movement is the percent value between 0 and 1 for the movement
@@ -11,9 +11,9 @@ inputData(1:L,1:8) = rightEmgData;
 inputData(L+1:2*L,1:8) = wrongEmgData1;
 inputData(2*L+1:3*L,1:8) = wrongEmgData2;
 inputData(3*L+1:4*L,1:8) = wrongEmgData3;
-inputData(4*L+1:(4*L+LR),1:8) = restData;
-
-movement = [movement; ones(LR,1)*0];
+inputData(4*L+1:5*L,1:8) = wrongEmgData4;
+inputData(5*L+1:6*L,1:8) = wrongEmgData5;
+inputData(6*L+1:6*L+LR,1:8) = restData;
 
 %Makes it into something table-ish:
 channel_1 = inputData(:,1);

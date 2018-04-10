@@ -9,8 +9,12 @@ function trapezoidPlot(sliderValue, handles, handles2, m1, movementType)
         movement = 'Extension';
     elseif movementType == 3
         movement = 'Radial';
-    else
+    elseif movementType == 4
         movement = 'Ulnar';
+    elseif movementType == 5
+        movement = 'Fist';
+    else 
+        movement = 'Stretch';
     end
 
     MVC = cell2mat(struct2cell(load(convertCharsToStrings(strcat('MVC',movement,'.mat')))));
@@ -25,7 +29,7 @@ if isError ~= 1
     pause(0.1);
     
     %Creates the trapezoid based on the slidervalue from the input.
-    if movementType == 5
+    if movementType == 7
         x = [0 2000 5000 10000 35000 45000]
         y = [0.05 0.05 0.05 0.05 0.05 0.05]
     else
@@ -38,8 +42,9 @@ if isError ~= 1
     if ~isempty(plothandle);
         cla();
         axes(plothandle);
+        cla();
         trapezoid = plot(x,y);
-        if movementType == 5
+        if movementType == 7
             xlim([0 45000]);
         else
             xlim([0 15000]);
@@ -51,7 +56,7 @@ if isError ~= 1
         
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.
-        if movementType == 5
+        if movementType == 7
             recordingTime = 45;
         else 
             recordingTime = 15;
@@ -182,6 +187,22 @@ elseif movementType == 4
         EmgUlnar50 = butterFilter(EmgMatrix);
     else
         EmgUlnar70 = butterFilter(EmgMatrix);
+    end
+elseif movementType == 5
+    if sliderValue == 0.4
+        EmgFist40 = butterFilter(EmgMatrix);
+    elseif sliderValue == 0.5
+        EmgFist50 = butterFilter(EmgMatrix);
+    else
+        EmgFist70 = butterFilter(EmgMatrix);
+    end
+elseif movementType == 6
+    if sliderValue == 0.4
+        EmgStretch40 = butterFilter(EmgMatrix);
+    elseif sliderValue == 0.5
+        EmgStretch50 = butterFilter(EmgMatrix);
+    else
+        EmgStretch70 = butterFilter(EmgMatrix);
     end
 else 
     EmgRest = butterFilter(EmgMatrix);

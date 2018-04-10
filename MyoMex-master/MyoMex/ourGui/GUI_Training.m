@@ -103,9 +103,7 @@ function Stop_MVC_Callback(hObject, eventdata, handles)
 %save the data when press stop
 [m1,mm] = initDevice();
 startRecording(m1);
-sliderValue1 = get(handles.slider2,'Value');
-sliderValue2 = get(handles.slider3,'Value');
-compassClassification(handles.axes1, handles.regressionBarPlot, m1,sliderValue1,sliderValue2);
+classificationTraining(handles.axes1, m1);
 stopRecording(m1,mm);
 
 % --- Executes on button press in Fraction_MVC.

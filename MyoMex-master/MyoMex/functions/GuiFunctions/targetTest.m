@@ -9,6 +9,8 @@ function targetTest(handles1, handles2, m1)
     load('FlexionRegression.mat');
     load('RadialRegression.mat');
     load('UlnarRegression.mat');
+    load('FistRegression.mat');
+    load('StretchRegression.mat');
     load('MdlLinear.mat');
 
 %Setup of the plot:
@@ -28,10 +30,10 @@ plothandle2 = handles2;
         hold on;
         
         axes(plothandle2)
-        whyTho = [1 1 1 1 1];
-        someBars = bar(plothandle2, whyTho,'c');
+        whyTho = [1 1 1 1 1 1 1];
+        someBars = bar(plothandle2, whyTho,'b');
         ylim([0 1]);
-        str = {'Extension','Flexion','Radial','Ulnar','Rest'};
+        str = {'Extension','Flexion','Radial','Ulnar','Fist','Stretch','Rest'};
         set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
         hold on;        
         
@@ -43,20 +45,20 @@ plothandle2 = handles2;
         allPoint = 1;
         onPoint = 1;
         radius = 1;
-        outputValue = [0,0];
+        outputValue = [0,0,10];
         gotPoint = 0;
 
         regressValue = [];
-        classVal = [0 0 0 0 0; 0 0 0 0 0]
-        barplot = bar(plothandle2,[0 0 0 0 0]);
+        classVal = [0 0 0 0 0 0 0; 0 0 0 0 0 0 0]
+        barplot = bar(plothandle2,[0 0 0 0 0 0 0]);
         
         %This determines how long we can try to get to the area.
         maxTime = 5; 
         
         %Begin the test at x = 0 & y = 0.
         prevValue = [0,0];
-        lol = scatter(plothandle,prevValue(1),prevValue(2),'b', ...
-            'MarkerFaceColor','r');
+        lol = plot(plothandle,prevValue(1),prevValue(2),'b', 'Marker', 'o', ...
+             'MarkerFaceColor','r');
         
         %randomOrder = randperm(8,8)    %find random order for targetplots
         randomOrder = (1:31); % not random anymore
@@ -121,10 +123,11 @@ plothandle2 = handles2;
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
-                    set(someBars,'XData',[1 2 3 4 5],'YData',classToPlot);
+                    set(someBars,'XData',[1 2 3 4 5 6 7],'YData',classToPlot);
                     
                     regressValue = [regressValue;getSingleRegression(featMav,...
-                        ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression,classToPlot)]; 
+                        ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
+                        FistRegression,StretchRegression,classToPlot)]; 
                     
                     %delete(barplot);
                     %barplot = bar(plothandle2,classToPlot,'g');
@@ -133,6 +136,7 @@ plothandle2 = handles2;
                     
                     axes(plothandle);
                     set(lol,'XData',outputValue(end,1),'YData',outputValue(end,2));
+                    set(lol,'MarkerSize',outputValue(end,3));
                     %delete(lol);
                     %lol = scatter(plothandle, outputValue(end,1),outputValue(end,2),'b', ...
             %'MarkerFaceColor','r');
@@ -172,12 +176,14 @@ plothandle2 = handles2;
                     %barplot = bar(plothandle2,classToPlot,'g');
                     
                     regressValue = [regressValue;getSingleRegression(featMav,...
-                        ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression,classToPlot)];
+                        ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
+                        FistRegression,StretchRegression,classToPlot)];
                     
                     outputValue = [outputValue;outputValue(end,:)+regressValue(end,:)];
                     
                     axes(plothandle);
                     set(lol,'XData',outputValue(end,1),'YData',outputValue(end,2));
+                    set(lol,'MarkerSize',outputValue(end,3));
                     %delete(lol);
                     %lol = scatter(plothandle,outputValue(end,1),outputValue(end,2),'b', ...
             %'MarkerFaceColor','r');

@@ -92,6 +92,12 @@ if doWhat == 0;
     elseif movementType == 4
         MVCUlnar = mean(maxEmgMatrix(75:110,:));
         movement = 'Ulnar';
+    elseif movementType == 5
+        MVCFist = mean(maxEmgMatrix(75:110,:));
+        movement = 'Fist';
+    elseif movementType == 6
+        MVCStretch = mean(maxEmgMatrix(75:110,:));
+        movement = 'Stretch';
     end
 
     Name1 = convertCharsToStrings(strcat('MVC',movement,'.mat'));
