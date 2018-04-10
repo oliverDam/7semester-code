@@ -41,6 +41,10 @@ plothandle2 = handles2;
         %after you screw it up.        
         buffer1 = 0;
         buffer2 = 0;
+        Max = 19.5;
+        Min = -19.5;
+        MaxRad = 150;
+        MinRad = 5;
         windowSize = 40;
         allPoint = 1;
         onPoint = 1;
@@ -53,7 +57,7 @@ plothandle2 = handles2;
         barplot = bar(plothandle2,[0 0 0 0 0 0 0]);
         
         %This determines how long we can try to get to the area.
-        maxTime = 5; 
+        maxTime = 50; 
         
         %Begin the test at x = 0 & y = 0.
         prevValue = [0,0];
@@ -66,7 +70,8 @@ plothandle2 = handles2;
             0, 0.60 ,0, 0.75 ,0, 0.60 ,0, 0 ,0, -0.60 ,0, -0.75 ,0, -0.60 ,0, 0; ...
             0.30 ,0 , 0 ,0, -0.30 ,0, -0.30 ,0, -0.30 ,0, 0 ,0, 0.30 ,0, 0.30 , ...
             0, 0.60 ,0, 0 ,0, -0.60 ,0, -0.75 ,0, -0.60 ,0, 0 ,0, 0.60 ,0, 0.75];
-            
+        SizeOfDot = 2*rand(1,30);
+
         %Makes sure we'll record for the stated 'recordingTime'
         while allPoint ~= 32
             
@@ -82,7 +87,7 @@ plothandle2 = handles2;
                 time = m1.timeEMG;
                 
                 %This is when we're on point and need to plot a new square
-                if onPoint == 1;
+                if onPoint == 1
                     datplotData = plotData(:,randomOrder(1,allPoint));     % choose random plot.
                     %h=[];
 
@@ -94,8 +99,18 @@ plothandle2 = handles2;
                         datplotData(2,1)+radius; datplotData(2,1)+radius;...
                         datplotData(2,1)-radius; datplotData(2,1)-radius];
 
-                    h_target = plot(plothandle,targetAreaX,targetAreaY,'r');
+                    %h_target = plot(plothandle,targetAreaX,targetAreaY,'r');
                     %axis(plothandle,[-max_lim max_lim -max_lim max_lim]);
+                    
+                    %Plots the circle:
+                    r = SizeOfDot(randomOrder(1,allPoint));
+                    x = datplotData(1);
+                    y = datplotData(2);
+                    d = r*2;
+                    px = x-r;
+                    py = y-r;
+                    h_target = rectangle(plothandle,'Position',[px py d d],'Curvature',[1,1]);
+                    
                     timeStart(allPoint) = time;
                     onPoint = 0;
                 end
@@ -134,9 +149,23 @@ plothandle2 = handles2;
                     
                     outputValue = [outputValue;outputValue(end,:)+regressValue(end,:)];
                     
+                    XData = outputValue(end,1);
+                    YData = outputValue(end,2);
+                    ZData = outputValue(end,3);
+                    XData(XData>Max) = Max;
+                    XData(XData<Min) = Min;
+                    YData(YData>Max) = Max;
+                    YData(YData<Min) = Min;
+                    ZData(ZData>MaxRad) = MaxRad;
+                    ZData(ZData<MinRad) = MinRad;
+                    outputValue(end,:) = [XData,YData,ZData];
+
                     axes(plothandle);
-                    set(lol,'XData',outputValue(end,1),'YData',outputValue(end,2));
-                    set(lol,'MarkerSize',outputValue(end,3));
+                    set(lol,'XData',XData,'YData',YData);
+                    set(lol,'MarkerSize',ZData);
+                    
+                    %set(lol,'XData',outputValue(end,1),'YData',outputValue(end,2));
+                    %set(lol,'MarkerSize',outputValue(end,3));
                     %delete(lol);
                     %lol = scatter(plothandle, outputValue(end,1),outputValue(end,2),'b', ...
             %'MarkerFaceColor','r');
@@ -180,10 +209,22 @@ plothandle2 = handles2;
                         FistRegression,StretchRegression,classToPlot)];
                     
                     outputValue = [outputValue;outputValue(end,:)+regressValue(end,:)];
-                    
+
+                    %Makes sure the values doesn't fuck up:
+                    XData = outputValue(end,1);
+                    YData = outputValue(end,2);
+                    ZData = outputValue(end,3);
+                    XData(XData>Max) = Max;
+                    XData(XData<Min) = Min;
+                    YData(YData>Max) = Max;
+                    YData(YData<Min) = Min;
+                    ZData(ZData>MaxRad) = MaxRad;
+                    ZData(ZData<MinRad) = MinRad;
+                    outputValue(end,:) = [XData,YData,ZData];
+
                     axes(plothandle);
-                    set(lol,'XData',outputValue(end,1),'YData',outputValue(end,2));
-                    set(lol,'MarkerSize',outputValue(end,3));
+                    set(lol,'XData',XData,'YData',YData);
+                    set(lol,'MarkerSize',ZData);
                     %delete(lol);
                     %lol = scatter(plothandle,outputValue(end,1),outputValue(end,2),'b', ...
             %'MarkerFaceColor','r');
@@ -196,18 +237,19 @@ plothandle2 = handles2;
                 end
                 
                 gotPoint = inpolygon(outputValue(end,1),outputValue(end,2),targetAreaX,targetAreaY);
-                if gotPoint == 1 
+                
+                if gotPoint == 1 && (r*35)-5 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3)
                     onPoint = 1;
                     timeEnd(allPoint) = time;
                     gotIt(allPoint) = 1;
                     allPoint = allPoint+1;
-                    delete(h_target)
+                    delete(h_target);
                 elseif time-timeStart(allPoint) >= maxTime
                     onPoint = 1;
                     timeEnd(allPoint) = time;
                     gotIt(allPoint) = 0;
                     allPoint = allPoint+1;
-                    delete(h_target)
+                    delete(h_target);
                 end
                 
             end
