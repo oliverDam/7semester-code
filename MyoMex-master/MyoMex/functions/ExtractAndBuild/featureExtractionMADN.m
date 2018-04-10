@@ -1,4 +1,4 @@
-function [CCoutput] = featureExtractionCC(emgData);
+function [MADNoutput] = featureExtractionMADN(emgData);
 
 normRaw1 = [];
 normRaw2 = [];
@@ -86,95 +86,96 @@ for j = 1:length(c8(1,:));
 normRaw8 = [normRaw8,meabs8'];    
 end
 
-% % Calculate CC --> multiplying data points from channel x with the
-% % corresponding data points from the neighboring channel. These values are
+% % Calculate CC --> subtracting data points from channel x with the
+% % corresponding data points from the neighboring channel and the absolute is
+% % taking from this value. These values are
 % % summed and divided by the window length (40 samples). 
-CC1 = [];
-CC2 = [];
-CC3 = [];
-CC4 = [];
-CC5 = [];
-CC6 = [];
-CC7 = [];
-CC8 = [];
+MADN1 = [];
+MADN2 = [];
+MADN3 = [];
+MADN4 = [];
+MADN5 = [];
+MADN6 = [];
+MADN7 = [];
+MADN8 = [];
 
 for a = 1:length(normRaw1(1,:))
     for b = 1:length(normRaw1(:,1))
-    temp = normRaw1(b,a)*normRaw2(b,a);
+    temp = abs(normRaw1(b,a)-normRaw2(b,a));
     twoChan1(b) = temp;
     end
 temp1 = sum(twoChan1)/length(normRaw1(:,1));
-CC1 = [CC1,temp1];
+MADN1 = [MADN1,temp1];
 end 
 
 for a = 1:length(normRaw2(1,:))
     for b = 1:length(normRaw2(:,1))
-    temp = normRaw2(b,a)*normRaw3(b,a);
+    temp = abs(normRaw2(b,a)-normRaw3(b,a));
     twoChan2(b) = temp;
     end
 temp2 = sum(twoChan2)/length(normRaw2(:,1));
-CC2 = [CC2,temp2];
+MADN2 = [MADN2,temp2];
 end
 
 
 for a = 1:length(normRaw3(1,:))
     for b = 1:length(normRaw3(:,1))
-    temp = normRaw3(b,a)*normRaw4(b,a);
+    temp = abs(normRaw3(b,a)-normRaw4(b,a));
     twoChan3(b) = temp;
     end
 temp3 = sum(twoChan3)/length(normRaw3(:,1));
-CC3 = [CC3,temp3];
+MADN3 = [MADN3,temp3];
 end 
 
 
 for a = 1:length(normRaw4(1,:))
     for b = 1:length(normRaw4(:,1))
-    temp = normRaw4(b,a)*normRaw5(b,a);
+    temp = abs(normRaw4(b,a)-normRaw5(b,a));
     twoChan4(b) = temp;
     end
 temp4 = sum(twoChan4)/length(normRaw4(:,1));
-CC4 = [CC4,temp4];
+MADN4 = [MADN4,temp4];
 end
 
 
 for a = 1:length(normRaw5(1,:))
     for b = 1:length(normRaw5(:,1))
-    temp = normRaw5(b,a)*normRaw6(b,a);
+    temp = abs(normRaw5(b,a)-normRaw6(b,a));
     twoChan5(b) = temp;
     end
 temp5 = sum(twoChan5)/length(normRaw5(:,1));
-CC5 = [CC5,temp5];
+MADN5 = [MADN5,temp5];
 end 
 
 for a = 1:length(normRaw6(1,:))
     for b = 1:length(normRaw6(:,1))
-    temp = normRaw6(b,a)*normRaw7(b,a);
+    temp = abs(normRaw6(b,a)-normRaw7(b,a));
     twoChan6(b) = temp;
     end
 temp6 = sum(twoChan6)/length(normRaw6(:,1));
-CC6 = [CC6,temp6];
+MADN6 = [MADN6,temp6];
 end
 
 
 for a = 1:length(normRaw7(1,:))
     for b = 1:length(normRaw7(:,1))
-    temp = normRaw7(b,a)*normRaw8(b,a);
+    temp = abs(normRaw7(b,a)-normRaw8(b,a));
     twoChan7(b) = temp;
     end
 temp7 = sum(twoChan7)/length(normRaw7(:,1));
-CC7 = [CC7,temp7];
+MADN7 = [MADN7,temp7];
 end 
 
 
 for a = 1:length(normRaw8(1,:))
     for b = 1:length(normRaw8(:,1))
-    temp = normRaw8(b,a)*normRaw1(b,a);
+    temp = abs(normRaw8(b,a)-normRaw1(b,a));
     twoChan8(b) = temp;
     end
 temp8 = sum(twoChan8)/length(normRaw8(:,1));
-CC8 = [CC8,temp8];
+MADN8 = [MADN8,temp8];
 end 
 
-allChan = [CC1' CC2' CC3' CC4' CC5' CC6' CC7' CC8']
+allChan = [MADN1' MADN2' MADN3' MADN4' MADN5' MADN6' MADN7' MADN8']
 
-CCoutput = allChan;
+MADNoutput = allChan;
