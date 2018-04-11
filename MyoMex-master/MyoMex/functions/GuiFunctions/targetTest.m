@@ -51,6 +51,8 @@ plothandle2 = handles2;
         radius = 1;
         outputValue = [0,0,10];
         gotPoint = 0;
+        gotTime = 0;
+        timeAtPoint = 2;
 
         regressValue = [];
         classVal = [0 0 0 0 0 0 0; 0 0 0 0 0 0 0]
@@ -238,8 +240,13 @@ plothandle2 = handles2;
                 
                 gotPoint = inpolygon(outputValue(end,1),outputValue(end,2),targetAreaX,targetAreaY);
                 
-                if gotPoint == 1 && (r*35)-5 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3)
+                if gotPoint == 1 && (r*35)-5 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3) && gotTime == 0
+                    startTime = time;
+                    gotTime = 1;
+                elseif gotPoint == 1 && (r*35)-5 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3) ...
+                        && gotTime == 1 && time-startTime >= timeAtPoint
                     onPoint = 1;
+                    gotTime = 0;
                     timeEnd(allPoint) = time;
                     gotIt(allPoint) = 1;
                     allPoint = allPoint+1;
