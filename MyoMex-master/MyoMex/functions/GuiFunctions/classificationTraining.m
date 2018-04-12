@@ -2,7 +2,7 @@
 % the compass plot. This is a training plot which means we don't have any
 % targets appearing at all.
 
-function classificationTraining(handles, m1)
+function classificationTraining(handles, handles2, handles3, m1)
 
 
     load('baseline.mat');
@@ -15,6 +15,17 @@ function classificationTraining(handles, m1)
     pause(0.1);
 
     plothandle = handles;
+    plothandle2 = handles2;
+    plothandle3 = handles3;
+    axes(plothandle2);
+    set(gca,'Color',[0.94 0.94 0.94]);
+    ax = gca
+    ax.Visible = 'off'
+    axes(plothandle3);
+    set(gca,'Color',[0.94 0.94 0.94]);
+    ax = gca
+    ax.Visible = 'off'
+
     if ~isempty(plothandle)
         cla();        
         axes(plothandle)
@@ -62,13 +73,14 @@ function classificationTraining(handles, m1)
                     %This is also ok featz cause we so streetz:
                     featMAV = featureExtractionLiveMAV(filterEmg);
                     featWL = featureExtractionLiveWL(filterEmg);
-                    featMMAV = featureExtractionLiveMMAV(filterEmg);
+                    featMMAV = featureExtractionLiveMMAV(featMAV);
                     featSMAV = featureExtractionLiveSMAV(featMAV,featMMAV);
                     featMADN = featureExtractionLiveMADN(filterEmg);
                     featMADR = featureExtractionLiveMADR(filterEmg);
                     featSMADR = featureExtractionLiveSMADR(featMADR,featMMAV);
+                    featCC = featureExtractionLiveCC(filterEmg);
                     
-                    feat = [featSMAV,featMADN];%[featMAV, featWL];%, featSMAV, featMADN]%, featMADR, featSMADR];
+                    feat = [featMAV, featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
                     
                     %%Gets the classifier values with a single model:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
@@ -100,13 +112,14 @@ function classificationTraining(handles, m1)
                     %This is also ok featz cause we so streetz:
                     featMAV = featureExtractionLiveMAV(filterEmg);
                     featWL = featureExtractionLiveWL(filterEmg);
-                    featMMAV = featureExtractionLiveMMAV(filterEmg);
+                    featMMAV = featureExtractionLiveMMAV(featMAV);
                     featSMAV = featureExtractionLiveSMAV(featMAV,featMMAV);
                     featMADN = featureExtractionLiveMADN(filterEmg);
                     featMADR = featureExtractionLiveMADR(filterEmg);
                     featSMADR = featureExtractionLiveSMADR(featMADR,featMMAV);
+                    featCC = featureExtractionLiveCC(filterEmg);
                     
-                    feat = [featSMAV,featMADN];%[featMAV, featWL];%, featSMAV, featMADN]%, featMADR, featSMADR];
+                    feat = [featMAV, featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
                    
                     %%Gets the classifier values:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];

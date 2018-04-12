@@ -23,6 +23,7 @@ allMADR = featureExtractionMADR(allData);
 allSMADR = featureExtractionSMADR(allMADR,allMMAV);
 allSSC = featureExtractionSSC(allData);
 allZC = featureExtractionZC(allData);
+allCC = featureExtractionCC(allData);
 restMAV = featureExtractionMAV(EmgRest(1001:4000,:));
 restWL = featureExtractionWL(EmgRest(1001:4000,:));
 restMMAV = featureExtractionMMAV(restMAV);
@@ -32,6 +33,7 @@ restMADR = featureExtractionMADR(EmgRest(1001:4000,:));
 restSMADR = featureExtractionSMADR(restMADR,restMMAV);
 restSSC = featureExtractionSSC(EmgRest(1001:4000,:));
 restZC = featureExtractionZC(EmgRest(1001:4000,:));
+restCC = featureExtractionCC(EmgRest(1001:4000,:));
 L = length(allMAV)/6;
 
 %Creates the class label names for the classifier
@@ -46,8 +48,8 @@ FistIntensity = featureExtractionMove(allMAV(4*L+1:5*L,:),MVCRadial);
 StretchIntensity = featureExtractionMove(allMAV(5*L+1:6*L,:),MVCUlnar);
 
 %classInput = [allMav,allWL;restMav,restWL];
-classInput = [allSMAV,allMADN;restSMAV,restMADN];%[allMAV,allWL;%,allSMAV,allMADN; ...%,allMADR,allSMADR; ...
-    %restMAV,restWL];%, restSMAV,restMADN];%,restMADR,restSMADR];
+classInput = [allMAV,allWL,allSMAV,allMADN,allMADR,allSMADR, allCC; ...
+    restMAV,restWL,restSMAV,restMADN,restMADR,restSMADR,restCC];
 
 %Creates the classifier
 MdlLinear = fitcdiscr(classInput,moveLabel,'DiscrimType','pseudolinear', ... 

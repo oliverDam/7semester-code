@@ -1,7 +1,7 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function findMVC(handles, m1, doWhat, movementType)
+function findMVC(handles, handles2, handles3, m1, doWhat, movementType)
 
 %Pause for initialization or something:
 pause(0.1);
@@ -18,6 +18,17 @@ end
 %Required setup. Do NOT touch unless you want to screw every single thing
 %in the entire program up!
 plothandle = handles;
+plothandle2 = handles2;
+plothandle3 = handles3;
+axes(plothandle2);
+set(gca,'Color',[0.94 0.94 0.94]);
+ax = gca
+ax.Visible = 'off'
+axes(plothandle3);
+set(gca,'Color',[0.94 0.94 0.94]);
+ax = gca
+ax.Visible = 'off'
+
 if ~isempty(plothandle);
     cla();
     plot(plothandle,x,y,'r');

@@ -1,7 +1,7 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function trapezoidPlot(sliderValue, handles, handles2, m1, movementType)
+function trapezoidPlot(sliderValue, handles, handles2, handles3, m1, movementType)
 
     if movementType == 1
         movement = 'Flexion';
@@ -39,6 +39,12 @@ if isError ~= 1
     
     handleplot = handles2;
     plothandle = handles;
+    plothandle3 = handles3;
+    axes(plothandle3);
+    set(gca,'Color',[0.94 0.94 0.94]);
+    ax = gca
+    ax.Visible = 'off'
+    
     if ~isempty(plothandle);
         cla();
         axes(plothandle);

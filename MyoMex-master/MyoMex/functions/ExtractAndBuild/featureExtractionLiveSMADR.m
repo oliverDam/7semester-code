@@ -1,5 +1,5 @@
-function [SMADRoutput] = featureExtractionLiveSMADR(MADRoutput, MMAVoutput);
+function [SMADRoutput] = featureExtractionLiveSMADR(MADRoutput, MMAVoutput)
 
-SMADR = MADRoutput./MMAVoutput  
+SMADR = MADRoutput./MMAVoutput;
 
 SMADRoutput = SMADR;

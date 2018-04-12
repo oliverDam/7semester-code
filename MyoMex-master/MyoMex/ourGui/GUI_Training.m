@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 20-Feb-2018 11:03:12
+% Last Modified by GUIDE v2.5 12-Apr-2018 10:52:00
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -91,7 +91,7 @@ function start_MVC_Callback(hObject, eventdata, handles)
 [m1,mm] = initDevice();
 startRecording(m1);
 movementType = get(handles.listbox1,'value');
-findMVC(handles.axes1, m1, 0, movementType);
+findMVC(handles.axes1, handles.axes4, handles.regressionBarPlot, m1, 0, movementType);
 stopRecording(m1,mm);
 
 
@@ -103,7 +103,7 @@ function Stop_MVC_Callback(hObject, eventdata, handles)
 %save the data when press stop
 [m1,mm] = initDevice();
 startRecording(m1);
-classificationTraining(handles.axes1, m1);
+classificationTraining(handles.axes1, handles.axes4, handles.regressionBarPlot, m1);
 stopRecording(m1,mm);
 
 % --- Executes on button press in Fraction_MVC.
@@ -113,7 +113,7 @@ function Fraction_MVC_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 [m1,mm] = initDevice();
 startRecording(m1);
-findMVC(handles.axes1, m1, 1, 0);
+findMVC(handles.axes1,handles.axes4,handles.regressionBarPlot, m1, 1, 0);
 stopRecording(m1,mm);
 
 % --- Executes on slider movement.
@@ -158,7 +158,7 @@ startRecording(m1);
 %Gets the needed values;
 sliderValue = get(handles.slider_MVC,'Value');
 movementType = get(handles.listbox1,'value');
-trapezoidPlot(sliderValue, handles.axes1, handles.axes4, m1,movementType);
+trapezoidPlot(sliderValue, handles.axes1, handles.axes4, handles.regressionBarPlot, m1,movementType);
 stopRecording(m1,mm);
 
 
@@ -246,9 +246,8 @@ function TargetTest_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 [m1,mm] = initDevice();
 startRecording(m1);
-%sliderValue1 = get(handles.slider2,'Value');
-%sliderValue2 = get(handles.slider3,'Value');
-targetTest(handles.axes1, handles.regressionBarPlot, m1);
+targetSet = get(handles.listbox3,'value');
+targetTest(handles.axes1, handles.regressionBarPlot,handles.axes4, m1,targetSet);
 stopRecording(m1,mm);
 
 
@@ -279,6 +278,29 @@ function listbox1_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function listbox1_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to listbox1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in listbox3.
+function listbox3_Callback(hObject, eventdata, handles)
+% hObject    handle to listbox3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns listbox3 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from listbox3
+
+
+% --- Executes during object creation, after setting all properties.
+function listbox3_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to listbox3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
