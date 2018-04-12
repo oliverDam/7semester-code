@@ -14,52 +14,63 @@ load('EmgRest.mat');
 
 
 %Extracts features:
-allMav = featureExtractionMAV(allData);
-allSSC = featureExtractionSSC(allData);
+allMAV = featureExtractionMAV(allData);
 allWL = featureExtractionWL(allData);
+allMMAV = featureExtractionMMAV(allMAV);
+allSMAV = featureExtractionSMAV(allMAV,allMMAV);
+allMADN = featureExtractionMADN(allData);
+allMADR = featureExtractionMADR(allData);
+allSMADR = featureExtractionSMADR(allMADR,allMMAV);
+allSSC = featureExtractionSSC(allData);
 allZC = featureExtractionZC(allData);
-restMav = featureExtractionMAV(EmgRest(1001:4000,:));
-restSSC = featureExtractionSSC(EmgRest(1001:4000,:));
+restMAV = featureExtractionMAV(EmgRest(1001:4000,:));
 restWL = featureExtractionWL(EmgRest(1001:4000,:));
+restMMAV = featureExtractionMMAV(restMAV);
+restSMAV = featureExtractionSMAV(restMAV,restMMAV);
+restMADN = featureExtractionMADN(EmgRest(1001:4000,:));
+restMADR = featureExtractionMADR(EmgRest(1001:4000,:));
+restSMADR = featureExtractionSMADR(restMADR,restMMAV);
+restSSC = featureExtractionSSC(EmgRest(1001:4000,:));
 restZC = featureExtractionZC(EmgRest(1001:4000,:));
-L = length(allMav)/6;
+L = length(allMAV)/6;
 
 %Creates the class label names for the classifier
 moveLabel = [repelem({'Extension';'Flexion';'Radial';'Ulnar';'Fist';'Stretch';'Rest'}, L, 1)];
 
 %Finds the intensities of the movements (the intensity shown in trapezoid)
-ExtensionIntensity = featureExtractionMove(allMav(1:L,:),MVCExtension);
-FlexionIntensity = featureExtractionMove(allMav(L+1:2*L,:),MVCFlexion);
-RadialIntensity = featureExtractionMove(allMav(2*L+1:3*L,:),MVCRadial);
-UlnarIntensity = featureExtractionMove(allMav(3*L+1:4*L,:),MVCUlnar);
-FistIntensity = featureExtractionMove(allMav(4*L+1:5*L,:),MVCRadial);
-StretchIntensity = featureExtractionMove(allMav(5*L+1:6*L,:),MVCUlnar);
+ExtensionIntensity = featureExtractionMove(allMAV(1:L,:),MVCExtension);
+FlexionIntensity = featureExtractionMove(allMAV(L+1:2*L,:),MVCFlexion);
+RadialIntensity = featureExtractionMove(allMAV(2*L+1:3*L,:),MVCRadial);
+UlnarIntensity = featureExtractionMove(allMAV(3*L+1:4*L,:),MVCUlnar);
+FistIntensity = featureExtractionMove(allMAV(4*L+1:5*L,:),MVCRadial);
+StretchIntensity = featureExtractionMove(allMAV(5*L+1:6*L,:),MVCUlnar);
 
 %classInput = [allMav,allWL;restMav,restWL];
-classInput = [allMav,allSSC,allWL,allZC;restMav,restSSC,restWL,restZC];
+classInput = [allSMAV,allMADN;restSMAV,restMADN];%[allMAV,allWL;%,allSMAV,allMADN; ...%,allMADR,allSMADR; ...
+    %restMAV,restWL];%, restSMAV,restMADN];%,restMADR,restSMADR];
 
 %Creates the classifier
 MdlLinear = fitcdiscr(classInput,moveLabel,'DiscrimType','pseudolinear', ... 
     'ScoreTransform','none','HyperparameterOptimizationOptions','bayesopt')
 
 %Creates the regression models
-ExtensionRegression = createRegressionModel(allMav(1:L,:),allMav(L+1:2*L,:), ... 
-    allMav(2*L+1:3*L,:), allMav(3*L+1:4*L,:), allMav(4*L+1:5*L,:), allMav(5*L+1:6*L,:), restMav, ExtensionIntensity);
+ExtensionRegression = createRegressionModel(allMAV(1:L,:),allMAV(L+1:2*L,:), ... 
+    allMAV(2*L+1:3*L,:), allMAV(3*L+1:4*L,:), allMAV(4*L+1:5*L,:), allMAV(5*L+1:6*L,:), restMAV, ExtensionIntensity);
 
-FlexionRegression = createRegressionModel(allMav(L+1:2*L,:), allMav(2*L+1:3*L,:), ... 
-    allMav(3*L+1:4*L,:), allMav(4*L+1:5*L,:), allMav(5*L+1:6*L,:), allMav(1:L,:), restMav, FlexionIntensity);
+FlexionRegression = createRegressionModel(allMAV(L+1:2*L,:), allMAV(2*L+1:3*L,:), ... 
+    allMAV(3*L+1:4*L,:), allMAV(4*L+1:5*L,:), allMAV(5*L+1:6*L,:), allMAV(1:L,:), restMAV, FlexionIntensity);
 
-RadialRegression = createRegressionModel(allMav(2*L+1:3*L,:), allMav(3*L+1:4*L,:), ...
-    allMav(4*L+1:5*L,:), allMav(5*L+1:6*L,:), allMav(1:L,:), allMav(L+1:2*L,:), restMav, RadialIntensity);
+RadialRegression = createRegressionModel(allMAV(2*L+1:3*L,:), allMAV(3*L+1:4*L,:), ...
+    allMAV(4*L+1:5*L,:), allMAV(5*L+1:6*L,:), allMAV(1:L,:), allMAV(L+1:2*L,:), restMAV, RadialIntensity);
 
-UlnarRegression = createRegressionModel(allMav(3*L+1:4*L,:), allMav(4*L+1:5*L,:), allMav(5*L+1:6*L,:), allMav(1:L,:), ... 
-    allMav(L+1:2*L,:), allMav(2*L+1:3*L,:), restMav, UlnarIntensity);
+UlnarRegression = createRegressionModel(allMAV(3*L+1:4*L,:), allMAV(4*L+1:5*L,:), allMAV(5*L+1:6*L,:), allMAV(1:L,:), ... 
+    allMAV(L+1:2*L,:), allMAV(2*L+1:3*L,:), restMAV, UlnarIntensity);
 
-FistRegression = createRegressionModel(allMav(4*L+1:5*L,:), allMav(5*L+1:6*L,:), allMav(1:L,:), ... 
-    allMav(L+1:2*L,:), allMav(2*L+1:3*L,:), allMav(3*L+1:4*L,:), restMav, FistIntensity);
+FistRegression = createRegressionModel(allMAV(4*L+1:5*L,:), allMAV(5*L+1:6*L,:), allMAV(1:L,:), ... 
+    allMAV(L+1:2*L,:), allMAV(2*L+1:3*L,:), allMAV(3*L+1:4*L,:), restMAV, FistIntensity);
 
-StretchRegression = createRegressionModel(allMav(5*L+1:6*L,:), allMav(1:L,:), ... 
-    allMav(L+1:2*L,:), allMav(2*L+1:3*L,:), allMav(3*L+1:4*L,:), allMav(4*L+1:5*L,:), restMav, StretchIntensity);
+StretchRegression = createRegressionModel(allMAV(5*L+1:6*L,:), allMAV(1:L,:), ... 
+    allMAV(L+1:2*L,:), allMAV(2*L+1:3*L,:), allMAV(3*L+1:4*L,:), allMAV(4*L+1:5*L,:), restMAV, StretchIntensity);
 
 %Saves all the new things:
 save('ExtensionRegression.mat','ExtensionRegression');
@@ -70,9 +81,8 @@ save('FistRegression.mat','FistRegression');
 save('StretchRegression.mat','StretchRegression');
 save('MdlLinear.mat','MdlLinear');
 save('allData.mat','allData');
-save('allMav.mat','allMav');
-save('allSSC.mat','allSSC');
-save('allWL.mat','allWL');
-save('allZC.mat','allZC');
-save('restMav.mat','restMav');
-save('restWL.mat','restWL');
+save('classInput.mat','classInput');
+% save('allMAV.mat','allMAV');
+% save('allWL.mat','allWL');
+% save('restMAV.mat','restMAV');
+% save('restWL.mat','restWL');

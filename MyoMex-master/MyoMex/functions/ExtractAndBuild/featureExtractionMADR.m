@@ -104,6 +104,6 @@ temp8 = sum(twoChan8)/length(c8(:,1));
 MADR8 = [MADR8,temp8];
 end 
 
-allChan = [MADR1' MADR2' MADR3' MADR4' MADR5' MADR6' MADR7' MADR8']
+allChan = [MADR1' MADR2' MADR3' MADR4' MADR5' MADR6' MADR7' MADR8'];
 
 MADRoutput = allChan;

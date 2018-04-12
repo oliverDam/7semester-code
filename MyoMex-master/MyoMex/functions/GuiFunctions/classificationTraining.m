@@ -60,12 +60,15 @@ function classificationTraining(handles, m1)
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
-                    featMav = featureExtractionLiveMAV(filterEmg);
-                    featSSC = mean(featureExtractionSSC(filterEmg));
-                    featWL = mean(featureExtractionWL(filterEmg));
-                    featZC = mean(featureExtractionZC(filterEmg));
+                    featMAV = featureExtractionLiveMAV(filterEmg);
+                    featWL = featureExtractionLiveWL(filterEmg);
+                    featMMAV = featureExtractionLiveMMAV(filterEmg);
+                    featSMAV = featureExtractionLiveSMAV(featMAV,featMMAV);
+                    featMADN = featureExtractionLiveMADN(filterEmg);
+                    featMADR = featureExtractionLiveMADR(filterEmg);
+                    featSMADR = featureExtractionLiveSMADR(featMADR,featMMAV);
                     
-                    feat = [featMav, featSSC, featWL, featZC];
+                    feat = [featSMAV,featMADN];%[featMAV, featWL];%, featSMAV, featMADN]%, featMADR, featSMADR];
                     
                     %%Gets the classifier values with a single model:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
@@ -95,12 +98,15 @@ function classificationTraining(handles, m1)
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
-                    featMav = featureExtractionLiveMAV(filterEmg);
-                    featSSC = mean(featureExtractionSSC(filterEmg));
-                    featWL = mean(featureExtractionWL(filterEmg));
-                    featZC = mean(featureExtractionZC(filterEmg));
+                    featMAV = featureExtractionLiveMAV(filterEmg);
+                    featWL = featureExtractionLiveWL(filterEmg);
+                    featMMAV = featureExtractionLiveMMAV(filterEmg);
+                    featSMAV = featureExtractionLiveSMAV(featMAV,featMMAV);
+                    featMADN = featureExtractionLiveMADN(filterEmg);
+                    featMADR = featureExtractionLiveMADR(filterEmg);
+                    featSMADR = featureExtractionLiveSMADR(featMADR,featMMAV);
                     
-                    feat = [featMav, featSSC, featWL, featZC];
+                    feat = [featSMAV,featMADN];%[featMAV, featWL];%, featSMAV, featMADN]%, featMADR, featSMADR];
                    
                     %%Gets the classifier values:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
