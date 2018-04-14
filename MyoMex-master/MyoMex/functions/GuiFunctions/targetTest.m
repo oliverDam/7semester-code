@@ -1,6 +1,6 @@
 %This is for the moving dot thing:
 
-function targetTest(handles1, handles2, handles3, m1, targetSet)
+function targetTest(handles1, handles2, handles3, handles4, handles5, handles6, handles7, m1, targetSet)
 
     load('ExtensionRegression.mat');
     load('FlexionRegression.mat');
@@ -10,11 +10,22 @@ function targetTest(handles1, handles2, handles3, m1, targetSet)
     load('StretchRegression.mat');
     load('MdlLinear.mat');
     load('MVCExtension.mat');
+    imageExte = imread('url.jpg');
+    imageFlex = imread('url2.png');
+    imageRadi = imread('url3.jpg');
+    imageUlna = imread('url4.png');
+    imageFist = imread('url5.jpg');
+    imageStre = imread('url6.jpg');
+    imageRest = imread('url7.jpg');
 
 %Setup of the plot:
 plothandle = handles1;
 plothandle2 = handles2;
-plothandle3 = handles3;
+imhandle1 = handles4;
+imhandle2 = handles5;
+imhandle3 = handles6;
+imhandle4 = handles7;
+imhandle5 = handles3;
 
     if ~isempty(plothandle);
         cla();
@@ -29,21 +40,34 @@ plothandle3 = handles3;
         hold on;
         
         axes(plothandle2)
-%         whyTho = [1 1 1 1 1 1 1];
-%         someBars = bar(plothandle2, whyTho,'b');
-%         ylim([0 1]);
-%         str = {'Extension','Flexion','Radial','Ulnar','Fist','Stretch','Rest'};
-%         set(gca, 'XTickLabel',str, 'XTick',1:numel(str),'Color','r');
-%         hold on;    
-        set(gca,'Color',[0.94 0.94 0.94]);
         ax = gca;
         ax.Visible = 'off';
         
-        axes(plothandle3)
-        set(gca,'Color',[0.94 0.94 0.94]);
-        ax = gca;
-        ax.Visible = 'off';
+        %%Adds all the images to the GUI:
+        axes(imhandle5)
+        images = image(imageRest);
+        axis off;
+        axis image;
         
+        axes(imhandle1)
+        image(imageFlex);
+        axis off;
+        axis image;
+        
+        axes(imhandle2)
+        image(imageUlna);
+        axis off;
+        axis image;
+        
+        axes(imhandle3)
+        image(imageExte);
+        axis off;
+        axis image;
+        
+        axes(imhandle4)
+        image(imageRadi);
+        axis off;
+        axis image;
         
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.        
@@ -61,6 +85,7 @@ plothandle3 = handles3;
         gotPoint = 0;
         gotTime = 0;
         timeAtPoint = 1;
+        lim4green = 0.8
 
         regressValue = [];
         classVal = [0 0 0 0 0 0 0; 0 0 0 0 0 0 0]
@@ -176,11 +201,32 @@ plothandle3 = handles3;
                     ZData(ZData>MaxRad) = MaxRad;
                     ZData(ZData<MinRad) = MinRad;
                     outputValue(end,:) = [XData,YData,ZData];
-
+                    
                     axes(plothandle);
                     set(lol,'XData',XData,'YData',YData);
-                    set(lol,'MarkerSize',ZData);
-                                      
+                    set(lol,'MarkerSize',ZData);      
+                    drawnow;
+                    
+                    axes(imhandle5);
+                    delete(images);
+                    %And here comes the image:
+                    if classVal(end,1) >= lim4green
+                        images = image(imageExte);
+                    elseif classVal(end,2) >= lim4green
+                        images = image(imageFlex);
+                    elseif classVal(end,3) >= lim4green
+                        images = image(imageRadi);
+                    elseif classVal(end,4) >= lim4green
+                        images = image(imageUlna);
+                    elseif classVal(end,5) >= lim4green
+                        images = image(imageFist);
+                    elseif classVal(end,6) >= lim4green
+                        images = image(imageStre);
+                    else 
+                        images = image(imageRest);
+                    end
+                    axis off;
+                    axis image;
                     drawnow;
                     
                     buffer1 = 0;

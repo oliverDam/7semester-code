@@ -247,7 +247,8 @@ function TargetTest_Callback(hObject, eventdata, handles)
 [m1,mm] = initDevice();
 startRecording(m1);
 targetSet = get(handles.listbox3,'value');
-targetTest(handles.axes1, handles.regressionBarPlot,handles.axes4, m1,targetSet);
+targetTest(handles.axes1, handles.regressionBarPlot,handles.axes4, ...
+    handles.axes6, handles.axes7, handles.axes8, handles.axes9, m1,targetSet);
 stopRecording(m1,mm);
 
 
