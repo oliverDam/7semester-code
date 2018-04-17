@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 12-Apr-2018 10:52:00
+% Last Modified by GUIDE v2.5 17-Apr-2018 14:10:24
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -143,36 +143,6 @@ startRecording(m1);
 findMVC(handles.axes1,handles.axes4,handles.regressionBarPlot, m1, 1, 0);
 stopRecording(m1,mm);
 
-% --- Executes on slider movement.
-function slider_MVC_Callback(hObject, eventdata, handles)
-% hObject    handle to slider_MVC (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
- sliderValue = get(handles.slider_MVC,'Value');
- set(handles.text2,'String',num2str(sliderValue));
- axesObject = findobj('Tag', 'axes1');
- cla(axesObject);
- 
- 
-
-%axes(findobj('Tag', 'tagForYourAxes')); %At the 2nd place in your code where you use 'handles.axes1'
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-
-
-% --- Executes during object creation, after setting all properties.
-function slider_MVC_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider_MVC (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-%rotate (handle,[1 0 0],90)
-% Hint: slider controls usually have a light gray background.
-if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
-end
-
 
 % --- Executes on button press in plotbutton.
 function plotbutton_Callback(hObject, eventdata, handles)
@@ -193,7 +163,7 @@ hideAxesFunc(handles.axes1);
 startRecording(m1);
 
 %Gets the needed values;
-sliderValue = get(handles.slider_MVC,'Value');
+sliderValue = get(handles.listbox4,'value');
 movementType = get(handles.listbox1,'value');
 trapezoidPlot(sliderValue, handles.axes1, handles.axes4, m1,movementType);
 stopRecording(m1,mm);
@@ -219,60 +189,6 @@ function edit1_CreateFcn(hObject, eventdata, handles)
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
-end
-
-
-% --- Executes on slider movement.
-function slider2_Callback(hObject, eventdata, handles)
-% hObject    handle to slider2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-
- sliderValue2 = get(handles.slider2,'Value');
- set(handles.text9,'String',num2str(sliderValue2));
- axesObject = findobj('Tag', 'axes1');
- cla(axesObject);
-
-
-% --- Executes during object creation, after setting all properties.
-function slider2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: slider controls usually have a light gray background.
-if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
-end
-
-
-% --- Executes on slider movement.
-function slider3_Callback(hObject, eventdata, handles)
-% hObject    handle to slider3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-
- sliderValue3 = get(handles.slider3,'Value');
- set(handles.text10,'String',num2str(sliderValue3));
- axesObject = findobj('Tag', 'axes1');
- cla(axesObject);
-
-
-% --- Executes during object creation, after setting all properties.
-function slider3_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: slider controls usually have a light gray background.
-if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
 
@@ -336,6 +252,29 @@ function listbox3_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function listbox3_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to listbox3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in listbox4.
+function listbox4_Callback(hObject, eventdata, handles)
+% hObject    handle to listbox4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns listbox4 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from listbox4
+
+
+% --- Executes during object creation, after setting all properties.
+function listbox4_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to listbox4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 

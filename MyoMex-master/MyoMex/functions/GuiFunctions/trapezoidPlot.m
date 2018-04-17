@@ -3,6 +3,14 @@
 
 function trapezoidPlot(sliderValue, handles, handles2, m1, movementType)
 
+    if sliderValue == 1
+        moveIntense = 0.4;
+    elseif sliderValue == 2 
+        moveIntense = 0.5;
+    elseif sliderValue == 3
+        moveIntense = 0.7;
+    end
+
     if movementType == 1
         movement = 'Flexion';
     elseif movementType == 2
@@ -34,7 +42,7 @@ if isError ~= 1
         y = [0.05 0.05 0.05 0.05 0.05 0.05];
     else
         x = [0 2000 5000 10000 13000 15000];
-        y = [0.01, 0.01, sliderValue, sliderValue, 0.01 0.01];
+        y = [0.01, 0.01, moveIntense, moveIntense, 0.01 0.01];
     end
     
     handleplot = handles2;
@@ -43,7 +51,9 @@ if isError ~= 1
     if ~isempty(plothandle)
         cla();
         axes(plothandle);
-        cla();
+        set(gca,'Color',[1 1 1]);
+        ax = gca;
+        ax.Visible = 'on';
         trapezoid = plot(x,y);
         if movementType == 7
             xlim([0 45000]);
@@ -66,7 +76,8 @@ if isError ~= 1
         buffer1 = 0;
         buffer2 = 0;
         time = 0;
-        lol = plot(0,0);
+        lol = plot(plothandle, 0, 0, 'or', 'MarkerSize', ...
+                       10, 'MarkerFaceColor', 'g');
         windowSize = 40;
         
         %Makes sure we'll record for the stated 'recordingTime'
@@ -101,14 +112,10 @@ if isError ~= 1
                     ClMeanAbs = mean(removeBaseline(meanAbs, baseline));
                     meanEmg = rescale(ClMeanAbs,'InputMin',0,'InputMax',maximum);
                     
-                    %Plots the dot:
-                    %axes(plothandle);
-                    delete(lol);
-                    lol = plot(plothandle, time*1000, meanEmg, 'or', 'MarkerSize', ...
-                        10, 'MarkerFaceColor', 'g');
+                    set(lol,'XData',time*1000,'YData',meanEmg);
                     drawnow;
                     realSpiderplot(handleplot,meanAbs);
-%                     accelMatrix = m1.accel_log(iiIMU,:);
+                    
                     buffer1 = 0;
                 else 
                     buffer1 = buffer1 + 1;
@@ -134,14 +141,10 @@ if isError ~= 1
                     ClMeanAbs = mean(removeBaseline(meanAbs, baseline));
                     meanEmg = rescale(ClMeanAbs,'InputMin',0,'InputMax',maximum);
                     
-                    %Plots the dot:
-                    %axes(plothandle);
-                    delete(lol);
-                    lol = plot(plothandle,time*1000, meanEmg, 'or', 'MarkerSize', ...
-                        10, 'MarkerFaceColor', 'g');
+                    set(lol,'XData',time*1000,'YData',meanEmg);
                     drawnow;
                     realSpiderplot(handleplot,meanAbs);
-%                     accelMatrix = m1.accel_log(iiIMU,:);
+                    
                     buffer2 = 0;
                 else
                     buffer2 = buffer2 + 1;
@@ -152,57 +155,57 @@ if isError ~= 1
 
 delete(trapezoid);
 %%Saving with a specific name instead of the same for every case:
-Intensity = num2str(sliderValue*100);
+Intensity = num2str(moveIntense*100);
 
 if movementType == 1
-    if sliderValue == 0.4
+    if sliderValue == 1
         EmgFlexion40 = butterFilter(EmgMatrix);
-    elseif sliderValue == 0.5
+    elseif sliderValue == 2
         EmgFlexion50 = butterFilter(EmgMatrix);
-    else
+    elseif sliderValue == 3
         EmgFlexion70 = butterFilter(EmgMatrix);
     end
     
 elseif movementType == 2
-    if sliderValue == 0.4
+    if sliderValue == 1
         EmgExtension40 = butterFilter(EmgMatrix);
-    elseif sliderValue == 0.5
+    elseif sliderValue == 2
         EmgExtension50 = butterFilter(EmgMatrix);
-    else
+    elseif sliderValue == 3
         EmgExtension70 = butterFilter(EmgMatrix);
     end
     
 elseif movementType == 3
-    if sliderValue == 0.4
+    if sliderValue == 1
         EmgRadial40 = butterFilter(EmgMatrix);
-    elseif sliderValue == 0.5
+    elseif sliderValue == 2
         EmgRadial50 = butterFilter(EmgMatrix);
-    else
+    elseif sliderValue == 3
         EmgRadial70 = butterFilter(EmgMatrix);
     end
     
 elseif movementType == 4
-    if sliderValue == 0.4
+    if sliderValue == 1
         EmgUlnar40 = butterFilter(EmgMatrix);
-    elseif sliderValue == 0.5
+    elseif sliderValue == 2
         EmgUlnar50 = butterFilter(EmgMatrix);
-    else
+    elseif sliderValue == 3
         EmgUlnar70 = butterFilter(EmgMatrix);
     end
 elseif movementType == 5
-    if sliderValue == 0.4
+    if sliderValue == 1
         EmgFist40 = butterFilter(EmgMatrix);
-    elseif sliderValue == 0.5
+    elseif sliderValue == 2
         EmgFist50 = butterFilter(EmgMatrix);
-    else
+    elseif sliderValue == 3
         EmgFist70 = butterFilter(EmgMatrix);
     end
 elseif movementType == 6
-    if sliderValue == 0.4
+    if sliderValue == 1
         EmgStretch40 = butterFilter(EmgMatrix);
-    elseif sliderValue == 0.5
+    elseif sliderValue == 2
         EmgStretch50 = butterFilter(EmgMatrix);
-    else
+    elseif sliderValue == 3
         EmgStretch70 = butterFilter(EmgMatrix);
     end
 else 
@@ -210,7 +213,10 @@ else
     movement = 'Rest';
     Intensity = [];
 end
-    
-save(convertCharsToStrings(strcat('Emg',movement,Intensity,'.mat')),convertCharsToStrings(strcat('Emg',movement,Intensity)));
 
+try
+    save(convertCharsToStrings(strcat('Emg',movement,Intensity,'.mat')),convertCharsToStrings(strcat('Emg',movement,Intensity)));
+catch
+    msgbox('Undefined movement/intensity combination');
+end
 end

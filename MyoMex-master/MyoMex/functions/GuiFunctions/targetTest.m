@@ -2,20 +2,20 @@
 
 function targetTest(handles1, handles3, handles4, handles5, handles6, handles7, m1, targetSet)
 
-    load('ExtensionRegression.mat');
-    load('FlexionRegression.mat');
-    load('RadialRegression.mat');
-    load('UlnarRegression.mat');
-    load('FistRegression.mat');
-    load('StretchRegression.mat');
-    load('MdlLinear.mat');
-    imageExte = imread('url.jpg');
-    imageFlex = imread('url2.png');
-    imageRadi = imread('url3.jpg');
-    imageUlna = imread('url4.png');
-    imageFist = imread('url5.jpg');
-    imageStre = imread('url6.jpg');
-    imageRest = imread('url7.jpg');
+load('ExtensionRegression.mat');
+load('FlexionRegression.mat');
+load('RadialRegression.mat');
+load('UlnarRegression.mat');
+load('FistRegression.mat');
+load('StretchRegression.mat');
+load('MdlLinear.mat');
+imageExte = imread('url.jpg');
+imageFlex = imread('url2.png');
+imageRadi = imread('url3.jpg');
+imageUlna = imread('url4.png');
+imageFist = imread('url5.jpg');
+imageStre = imread('url6.jpg');
+imageRest = imread('url7.jpg');
 
 %Setup of the plot:
 plothandle = handles1;
@@ -293,14 +293,14 @@ imhandle5 = handles3;
                 gotPoint = inpolygon(outputValue(end,1),outputValue(end,2),targetAreaX,targetAreaY);
                 
                 %Starts the timer if the size is correct as well:
-                if gotPoint == 1 && (r*35)-5 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3) && gotTime == 0
+                if gotPoint == 1 && (r*35)-10 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3) && gotTime == 0
                     startTime = time;
                     gotTime = 1;
                     overshoot(allPoint) = overshoot(allPoint)+1;
                     
                 %Confirms the target is reached if we're still within the
                 %area w. the correct size after "timeAtPoint":
-                elseif gotPoint == 1 && (r*35)-5 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3) ...
+                elseif gotPoint == 1 && (r*35)-10 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3) ...
                         && gotTime == 1 && time-startTime >= timeAtPoint
                     onPoint = 1;
                     gotTime = 0;
