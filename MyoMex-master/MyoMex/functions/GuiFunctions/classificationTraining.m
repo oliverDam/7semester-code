@@ -2,7 +2,7 @@
 % the compass plot. This is a training plot which means we don't have any
 % targets appearing at all.
 
-function classificationTraining(handles, handles2, handles3, m1)
+function classificationTraining(handles, m1)
 
 
     load('baseline.mat');
@@ -11,30 +11,25 @@ function classificationTraining(handles, handles2, handles3, m1)
     load('FlexionRegression.mat');
     load('RadialRegression.mat');
     load('UlnarRegression.mat');
+    load('FistRegression.mat');
+    load('StretchRegression.mat');
     
     pause(0.1);
 
     plothandle = handles;
-    plothandle2 = handles2;
-    plothandle3 = handles3;
-    axes(plothandle2);
-    set(gca,'Color',[0.94 0.94 0.94]);
-    ax = gca
-    ax.Visible = 'off'
-    axes(plothandle3);
-    set(gca,'Color',[0.94 0.94 0.94]);
-    ax = gca
-    ax.Visible = 'off'
 
     if ~isempty(plothandle)
-        cla();        
+        cla(plothandle);        
         axes(plothandle)
         whyTho = [1 1 1 1 1 1 1];
         someBars = bar(plothandle, whyTho, 'b');
         ylim([0 1]);
-        str = {'Extension','Flexion','Radial','Ulnar','Fist','Stretch','Rest'};
+        str = {' ',' ',' ',' ',' ',' ',' '};
+        %str = {'Extension','Flexion','Radial','Ulnar','Fist','Stretch','Rest'};
         set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
         hold on;
+        
+        
         
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.
@@ -42,6 +37,7 @@ function classificationTraining(handles, handles2, handles3, m1)
         classVal = [0 0 0 0 0 0 0 ; 0 0 0 0 0 0 0];
         buffer1 = 0;
         buffer2 = 0;
+        RV = [0 0 0 0 0 0 0; 0 0 0 0 0 0 0; 0 0 0 0 0 0 0];
         time = 0;
         windowSize = 40;
         lim4Green = 0.75
@@ -86,10 +82,21 @@ function classificationTraining(handles, handles2, handles3, m1)
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
                     
                     len = size(classVal,1);
-                    classToPlot = mean(classVal(len-2:len,:));                   
+                    classToPlot = mean(classVal(len-2:len,:));   
+                    
+                    RV = [RV;getSingleTrainingRegression(featMAV,...
+                        ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
+                        FistRegression,StretchRegression,classToPlot)]; 
+                    
+                    RVTP = mean(RV(len-2:len,:));
+                    
+                    str = {num2str(RVTP(1)),num2str(RVTP(2)),num2str(RVTP(3)), ...
+                        num2str(RVTP(4)),num2str(RVTP(5)),num2str(RVTP(6)), ...
+                        num2str(RVTP(7))};
                     
                     axes(plothandle);
                     set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',classToPlot);
+                    set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
                     drawnow;
 
                     buffer1 = 0;
@@ -127,9 +134,19 @@ function classificationTraining(handles, handles2, handles3, m1)
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
                     
+                    RV = [RV;getSingleTrainingRegression(featMAV,...
+                        ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
+                        FistRegression,StretchRegression,classToPlot)]; 
+                    
+                    RVTP = mean(RV(len-2:len,:));
+                    
+                    str = {num2str(RVTP(1)),num2str(RVTP(2)),num2str(RVTP(3)), ...
+                        num2str(RVTP(4)),num2str(RVTP(5)),num2str(RVTP(6)), ...
+                        num2str(RVTP(7))};
                     
                     axes(plothandle);
                     set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',classToPlot);
+                    set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
                     drawnow;
 
 

@@ -1,7 +1,7 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function trapezoidPlot(sliderValue, handles, handles2, handles3, m1, movementType)
+function trapezoidPlot(sliderValue, handles, handles2, m1, movementType)
 
     if movementType == 1
         movement = 'Flexion';
@@ -20,7 +20,7 @@ function trapezoidPlot(sliderValue, handles, handles2, handles3, m1, movementTyp
     MVC = cell2mat(struct2cell(load(convertCharsToStrings(strcat('MVC',movement,'.mat')))));
     load('baseline.mat');
     
-    maximum = mean(MVC)
+    maximum = mean(MVC);
     disp('MVC and baseline found');
     isError = 0;
 
@@ -30,8 +30,8 @@ if isError ~= 1
     
     %Creates the trapezoid based on the slidervalue from the input.
     if movementType == 7
-        x = [0 2000 5000 10000 35000 45000]
-        y = [0.05 0.05 0.05 0.05 0.05 0.05]
+        x = [0 2000 5000 10000 35000 45000];
+        y = [0.05 0.05 0.05 0.05 0.05 0.05];
     else
         x = [0 2000 5000 10000 13000 15000];
         y = [0.01, 0.01, sliderValue, sliderValue, 0.01 0.01];
@@ -39,13 +39,8 @@ if isError ~= 1
     
     handleplot = handles2;
     plothandle = handles;
-    plothandle3 = handles3;
-    axes(plothandle3);
-    set(gca,'Color',[0.94 0.94 0.94]);
-    ax = gca
-    ax.Visible = 'off'
     
-    if ~isempty(plothandle);
+    if ~isempty(plothandle)
         cla();
         axes(plothandle);
         cla();

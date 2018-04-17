@@ -1,6 +1,6 @@
 %This is for the moving dot thing:
 
-function targetTest(handles1, handles2, handles3, handles4, handles5, handles6, handles7, m1, targetSet)
+function targetTest(handles1, handles3, handles4, handles5, handles6, handles7, m1, targetSet)
 
     load('ExtensionRegression.mat');
     load('FlexionRegression.mat');
@@ -9,7 +9,6 @@ function targetTest(handles1, handles2, handles3, handles4, handles5, handles6, 
     load('FistRegression.mat');
     load('StretchRegression.mat');
     load('MdlLinear.mat');
-    load('MVCExtension.mat');
     imageExte = imread('url.jpg');
     imageFlex = imread('url2.png');
     imageRadi = imread('url3.jpg');
@@ -20,7 +19,6 @@ function targetTest(handles1, handles2, handles3, handles4, handles5, handles6, 
 
 %Setup of the plot:
 plothandle = handles1;
-plothandle2 = handles2;
 imhandle1 = handles4;
 imhandle2 = handles5;
 imhandle3 = handles6;
@@ -28,8 +26,9 @@ imhandle4 = handles7;
 imhandle5 = handles3;
 
     if ~isempty(plothandle);
-        cla();
         axes(plothandle);
+        cla(plothandle);
+        axis on;
         x = [-20,20,20,-20,-20];
         y = [20,20,-20,-20,20];
         extra = plot(x,y);
@@ -38,10 +37,6 @@ imhandle5 = handles3;
         grid on;
         grid minor;
         hold on;
-        
-        axes(plothandle2)
-        ax = gca;
-        ax.Visible = 'off';
         
         %%Adds all the images to the GUI:
         axes(imhandle5)
@@ -152,7 +147,9 @@ imhandle5 = handles3;
                     py = y-r;
                     h_target = rectangle(plothandle,'Position',[px py d d],'Curvature',[1,1]);
                     
-                    timeStart(allPoint) = time;
+                    startPoint(allPoint,:) = outputValue(end,:) %Where is the curser placed now and what is the size of it
+                    timeStart(allPoint) = time; %Time when the new target shows up
+                    overshoot(allPoint) = -1; %Has to be -1 to ensure 0 overshoots if target is reached in first try
                     onPoint = 0;
                 end
                 
@@ -183,7 +180,6 @@ imhandle5 = handles3;
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
-%                     set(someBars,'XData',[1 2 3 4 5 6 7],'YData',classToPlot);
                     
                     regressValue = [regressValue;getSingleRegression(featMAV,...
                         ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
@@ -245,7 +241,7 @@ imhandle5 = handles3;
                         lastSample,1:8);
                     filterEmg = butterFilter(toBeFiltered);
                     
-                    %This is also ok featz cause we so streetz:
+                    %Retrieves the features needed for the classifier:
                     featMAV = featureExtractionLiveMAV(filterEmg);
                     featWL = featureExtractionLiveWL(filterEmg);
                     featMMAV = featureExtractionLiveMMAV(featMAV);
@@ -255,20 +251,22 @@ imhandle5 = handles3;
                     featSMADR = featureExtractionLiveSMADR(featMADR,featMMAV);
                     featCC = featureExtractionLiveCC(filterEmg);
                     
+                    %Sets up our feature-matrix for the classifier:
                     feat = [featMAV, featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
                     
+                    %Retrieves the new classification values:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
-                    
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
                     
+                    %Gets the regression values for the dot-velocity:
                     regressValue = [regressValue;getSingleRegression(featMAV,...
                         ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
                         FistRegression,StretchRegression,classToPlot)];
-                    
+
                     outputValue = [outputValue;outputValue(end,:)+regressValue(end,:)];
 
-                    %Makes sure the values doesn't fuck up:
+                    %All these lines sets the boundaries for the dot:
                     XData = outputValue(end,1);
                     YData = outputValue(end,2);
                     ZData = outputValue(end,3);
@@ -280,6 +278,7 @@ imhandle5 = handles3;
                     ZData(ZData<MinRad) = MinRad;
                     outputValue(end,:) = [XData,YData,ZData];
 
+                    %Plots the dot w. both size and placement:
                     axes(plothandle);
                     set(lol,'XData',XData,'YData',YData);
                     set(lol,'MarkerSize',ZData);                    
@@ -290,11 +289,17 @@ imhandle5 = handles3;
                     buffer2 = buffer2 + 1;
                 end
                 
+                %Sets gotPoint to 1 if were inside the target area
                 gotPoint = inpolygon(outputValue(end,1),outputValue(end,2),targetAreaX,targetAreaY);
                 
+                %Starts the timer if the size is correct as well:
                 if gotPoint == 1 && (r*35)-5 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3) && gotTime == 0
                     startTime = time;
                     gotTime = 1;
+                    overshoot(allPoint) = overshoot(allPoint)+1;
+                    
+                %Confirms the target is reached if we're still within the
+                %area w. the correct size after "timeAtPoint":
                 elseif gotPoint == 1 && (r*35)-5 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3) ...
                         && gotTime == 1 && time-startTime >= timeAtPoint
                     onPoint = 1;
@@ -303,6 +308,8 @@ imhandle5 = handles3;
                     gotIt(allPoint) = 1;
                     allPoint = allPoint+1;
                     delete(h_target);
+                    
+                %Cancels the target if not reached before "maxTime":
                 elseif time-timeStart(allPoint) >= maxTime
                     onPoint = 1;
                     timeEnd(allPoint) = time;
@@ -310,17 +317,16 @@ imhandle5 = handles3;
                     allPoint = allPoint+1;
                     delete(h_target);
                 end
-                
             end
         end
     end
-    gotIt = gotIt(1:2:end);
-    testResult = sum(timeEnd-timeStart)/sum(gotIt);
+
+    %Calculates a few results:
+    %gotIt = gotIt(1:2:end);
     timeDif = timeEnd-timeStart;
     
-    save('testResult.mat','testResult');
-    save('timeStart.mat','timeStart');
-    save('timeEnd.mat','timeEnd');
+    %Saving everything that we need to calculate the fitt's law results:
+    save('overshoot.mat','overshoot');
     save('timeDif.mat','timeDif');
     save('gotIt.mat','gotIt');
     save('EmgMatrix.mat','EmgMatrix');

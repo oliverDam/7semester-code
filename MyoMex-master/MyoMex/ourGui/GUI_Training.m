@@ -101,9 +101,25 @@ function Stop_MVC_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %save the data when press stop
+%Removes the unused axes:
+
+hideAxesFunc(handles.axes4);
+hideAxesFunc(handles.regressionBarPlot);
+hideAxesFunc(handles.axes4);
+hideAxesFunc(handles.axes6);
+hideAxesFunc(handles.axes7);
+hideAxesFunc(handles.axes8);
+hideAxesFunc(handles.axes9);
+hideAxesFunc(handles.axes1);
+
+%Adds the images:
+imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
+    handles.axes13, handles.axes14, handles.axes15, handles.axes16);
+
+%Initiates the training:
 [m1,mm] = initDevice();
 startRecording(m1);
-classificationTraining(handles.axes1, handles.axes4, handles.regressionBarPlot, m1);
+classificationTraining(handles.axes1, m1);
 stopRecording(m1,mm);
 
 % --- Executes on button press in Fraction_MVC.
@@ -111,6 +127,17 @@ function Fraction_MVC_Callback(hObject, eventdata, handles)
 % hObject    handle to Fraction_MVC (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+hideAxesFunc(handles.axes4);
+hideAxesFunc(handles.axes10);
+hideAxesFunc(handles.axes11);
+hideAxesFunc(handles.axes12);
+hideAxesFunc(handles.axes13);
+hideAxesFunc(handles.axes14);
+hideAxesFunc(handles.axes15);
+hideAxesFunc(handles.axes16);
+hideAxesFunc(handles.axes1);
+
 [m1,mm] = initDevice();
 startRecording(m1);
 findMVC(handles.axes1,handles.axes4,handles.regressionBarPlot, m1, 1, 0);
@@ -152,13 +179,23 @@ function plotbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to plotbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+hideAxesFunc(handles.regressionBarPlot);
+hideAxesFunc(handles.axes10);
+hideAxesFunc(handles.axes11);
+hideAxesFunc(handles.axes12);
+hideAxesFunc(handles.axes13);
+hideAxesFunc(handles.axes14);
+hideAxesFunc(handles.axes15);
+hideAxesFunc(handles.axes16);
+hideAxesFunc(handles.axes1);
+
 [m1,mm] = initDevice();
 startRecording(m1);
 
 %Gets the needed values;
 sliderValue = get(handles.slider_MVC,'Value');
 movementType = get(handles.listbox1,'value');
-trapezoidPlot(sliderValue, handles.axes1, handles.axes4, handles.regressionBarPlot, m1,movementType);
+trapezoidPlot(sliderValue, handles.axes1, handles.axes4, m1,movementType);
 stopRecording(m1,mm);
 
 
@@ -244,25 +281,22 @@ function TargetTest_Callback(hObject, eventdata, handles)
 % hObject    handle to TargetTest (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+hideAxesFunc(handles.axes4);
+hideAxesFunc(handles.axes10);
+hideAxesFunc(handles.axes11);
+hideAxesFunc(handles.axes12);
+hideAxesFunc(handles.axes13);
+hideAxesFunc(handles.axes14);
+hideAxesFunc(handles.axes15);
+hideAxesFunc(handles.axes16);
+hideAxesFunc(handles.regressionBarPlot);
+hideAxesFunc(handles.axes1);
+
 [m1,mm] = initDevice();
 startRecording(m1);
 targetSet = get(handles.listbox3,'value');
-targetTest(handles.axes1, handles.regressionBarPlot,handles.axes4, ...
+targetTest(handles.axes1,handles.axes4, ...
     handles.axes6, handles.axes7, handles.axes8, handles.axes9, m1,targetSet);
-stopRecording(m1,mm);
-
-
-% --- Executes on button press in TestIMU.
-function TestIMU_Callback(hObject, eventdata, handles)
-% hObject    handle to TestIMU (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-[m1,mm] = initDevice();
-startRecording(m1);
-sliderValue1 = get(handles.slider2,'Value');
-sliderValue2 = get(handles.slider3,'Value');
-doAdvancedCompassTestThingIMU(handles.axes1, m1,sliderValue1,sliderValue2);
-% Use axes4 for some reason
 stopRecording(m1,mm);
 
 
