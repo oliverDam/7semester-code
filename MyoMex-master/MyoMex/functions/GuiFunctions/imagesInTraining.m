@@ -1,12 +1,12 @@
 function imagesInTraining(im1, im2, im3, im4, im5, im6, im7)
 
-imageExte = imread('url.jpg');
+imageExte = imread('url.png');
 imageFlex = imread('url2.png');
-imageRadi = imread('url3.jpg');
+imageRadi = imread('url3.png');
 imageUlna = imread('url4.png');
-imageFist = imread('url5.jpg');
-imageStre = imread('url6.jpg');
-imageRest = imread('url7.jpg');
+imageFist = imread('url5.png');
+imageStre = imread('url6.png');
+imageRest = imread('url7.png');
 
 axes(im1)
 image(imageExte);

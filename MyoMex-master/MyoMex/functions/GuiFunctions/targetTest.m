@@ -9,13 +9,13 @@ load('UlnarRegression.mat');
 load('FistRegression.mat');
 load('StretchRegression.mat');
 load('MdlLinear.mat');
-imageExte = imread('url.jpg');
+imageExte = imread('url.png');
 imageFlex = imread('url2.png');
-imageRadi = imread('url3.jpg');
+imageRadi = imread('url3.png');
 imageUlna = imread('url4.png');
-imageFist = imread('url5.jpg');
-imageStre = imread('url6.jpg');
-imageRest = imread('url7.jpg');
+imageFist = imread('url5.png');
+imageStre = imread('url6.png');
+imageRest = imread('url7.png');
 
 %Setup of the plot:
 plothandle = handles1;
