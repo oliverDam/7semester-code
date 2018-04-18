@@ -56,23 +56,17 @@ MdlLinear = fitcdiscr(classInput,moveLabel,'DiscrimType','pseudolinear', ...
     'ScoreTransform','none','HyperparameterOptimizationOptions','bayesopt')
 
 %Creates the regression models
-ExtensionRegression = createRegressionModel(allMAV(1:L,:),allMAV(L+1:2*L,:), ... 
-    allMAV(2*L+1:3*L,:), allMAV(3*L+1:4*L,:), allMAV(4*L+1:5*L,:), allMAV(5*L+1:6*L,:), restMAV, ExtensionIntensity);
+ExtensionRegression = createRegressionModel(allMAV(1:L,:), restMAV, ExtensionIntensity);
 
-FlexionRegression = createRegressionModel(allMAV(L+1:2*L,:), allMAV(2*L+1:3*L,:), ... 
-    allMAV(3*L+1:4*L,:), allMAV(4*L+1:5*L,:), allMAV(5*L+1:6*L,:), allMAV(1:L,:), restMAV, FlexionIntensity);
+FlexionRegression = createRegressionModel(allMAV(L+1:2*L,:), restMAV, FlexionIntensity);
 
-RadialRegression = createRegressionModel(allMAV(2*L+1:3*L,:), allMAV(3*L+1:4*L,:), ...
-    allMAV(4*L+1:5*L,:), allMAV(5*L+1:6*L,:), allMAV(1:L,:), allMAV(L+1:2*L,:), restMAV, RadialIntensity);
+RadialRegression = createRegressionModel(allMAV(2*L+1:3*L,:), restMAV, RadialIntensity);
 
-UlnarRegression = createRegressionModel(allMAV(3*L+1:4*L,:), allMAV(4*L+1:5*L,:), allMAV(5*L+1:6*L,:), allMAV(1:L,:), ... 
-    allMAV(L+1:2*L,:), allMAV(2*L+1:3*L,:), restMAV, UlnarIntensity);
+UlnarRegression = createRegressionModel(allMAV(3*L+1:4*L,:), restMAV, UlnarIntensity);
 
-FistRegression = createRegressionModel(allMAV(4*L+1:5*L,:), allMAV(5*L+1:6*L,:), allMAV(1:L,:), ... 
-    allMAV(L+1:2*L,:), allMAV(2*L+1:3*L,:), allMAV(3*L+1:4*L,:), restMAV, FistIntensity);
+FistRegression = createRegressionModel(allMAV(4*L+1:5*L,:), restMAV, FistIntensity);
 
-StretchRegression = createRegressionModel(allMAV(5*L+1:6*L,:), allMAV(1:L,:), ... 
-    allMAV(L+1:2*L,:), allMAV(2*L+1:3*L,:), allMAV(3*L+1:4*L,:), allMAV(4*L+1:5*L,:), restMAV, StretchIntensity);
+StretchRegression = createRegressionModel(allMAV(5*L+1:6*L,:), restMAV, StretchIntensity);
 
 %Saves all the new things:
 save('ExtensionRegression.mat','ExtensionRegression');

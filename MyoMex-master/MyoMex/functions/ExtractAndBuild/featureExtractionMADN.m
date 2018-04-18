@@ -176,6 +176,6 @@ temp8 = sum(twoChan8)/length(normRaw8(:,1));
 MADN8 = [MADN8,temp8];
 end 
 
-allChan = [MADN1' MADN2' MADN3' MADN4' MADN5' MADN6' MADN7' MADN8']
+allChan = [MADN1' MADN2' MADN3' MADN4' MADN5' MADN6' MADN7' MADN8'];
 
 MADNoutput = allChan;

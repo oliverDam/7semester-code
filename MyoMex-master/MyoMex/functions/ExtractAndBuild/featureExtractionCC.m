@@ -175,6 +175,6 @@ temp8 = sum(twoChan8)/length(normRaw8(:,1));
 CC8 = [CC8,temp8];
 end 
 
-allChan = [CC1' CC2' CC3' CC4' CC5' CC6' CC7' CC8']
+allChan = [CC1' CC2' CC3' CC4' CC5' CC6' CC7' CC8'];
 
 CCoutput = allChan;
