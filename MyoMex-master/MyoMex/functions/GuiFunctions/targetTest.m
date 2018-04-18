@@ -174,7 +174,7 @@ imhandle5 = handles3;
                     featSMADR = featureExtractionLiveSMADR(featMADR,featMMAV);
                     featCC = featureExtractionLiveCC(filterEmg);
                     
-                    feat = [featMAV, featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
+                    feat = [featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
                     
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
                     
@@ -252,7 +252,7 @@ imhandle5 = handles3;
                     featCC = featureExtractionLiveCC(filterEmg);
                     
                     %Sets up our feature-matrix for the classifier:
-                    feat = [featMAV, featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
+                    feat = [featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
                     
                     %Retrieves the new classification values:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
@@ -297,6 +297,7 @@ imhandle5 = handles3;
                     startTime = time;
                     gotTime = 1;
                     overshoot(allPoint) = overshoot(allPoint)+1;
+                    startValue(allPoint) = length(outputValue);
                     
                 %Confirms the target is reached if we're still within the
                 %area w. the correct size after "timeAtPoint":
@@ -308,12 +309,19 @@ imhandle5 = handles3;
                     gotIt(allPoint) = 1;
                     allPoint = allPoint+1;
                     delete(h_target);
+                    stopValue(allPoint) = length(outputValue);
                     
                 %Cancels the target if not reached before "maxTime":
                 elseif time-timeStart(allPoint) >= maxTime
                     onPoint = 1;
+                    gotTime = 0;
                     timeEnd(allPoint) = time;
                     gotIt(allPoint) = 0;
+                    if overshoot(allPoint) == -1
+                        overshoot(allPoint) = 0;
+                    else
+                        overshoot(allPoint) = overshoot(allPoint);
+                    end
                     allPoint = allPoint+1;
                     delete(h_target);
                 end
@@ -328,6 +336,8 @@ imhandle5 = handles3;
     %Saving everything that we need to calculate the fitt's law results:
     save('overshoot.mat','overshoot');
     save('timeDif.mat','timeDif');
+    save('startValue.mat','startValue');
+    save('stopValue.mat','stopValue');
     save('gotIt.mat','gotIt');
     save('EmgMatrix.mat','EmgMatrix');
     save('outputValue.mat','outputValue');

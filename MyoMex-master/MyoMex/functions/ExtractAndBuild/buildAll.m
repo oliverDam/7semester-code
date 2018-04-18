@@ -48,8 +48,8 @@ FistIntensity = featureExtractionMove(allMAV(4*L+1:5*L,:),MVCRadial);
 StretchIntensity = featureExtractionMove(allMAV(5*L+1:6*L,:),MVCUlnar);
 
 %classInput = [allMav,allWL;restMav,restWL];
-classInput = [allMAV,allWL,allSMAV,allMADN,allMADR,allSMADR, allCC; ...
-    restMAV,restWL,restSMAV,restMADN,restMADR,restSMADR,restCC];
+classInput = [allWL,allSMAV,allMADN,allMADR,allSMADR, allCC; ...
+    restWL,restSMAV,restMADN,restMADR,restSMADR,restCC];
 
 %Creates the classifier
 MdlLinear = fitcdiscr(classInput,moveLabel,'DiscrimType','pseudolinear', ... 

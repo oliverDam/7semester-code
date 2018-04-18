@@ -111,6 +111,7 @@ hideAxesFunc(handles.axes7);
 hideAxesFunc(handles.axes8);
 hideAxesFunc(handles.axes9);
 hideAxesFunc(handles.axes1);
+set(handles.text14,'Visible','On')
 
 %Adds the images:
 imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
@@ -119,7 +120,7 @@ imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
 %Initiates the training:
 [m1,mm] = initDevice();
 startRecording(m1);
-classificationTraining(handles.axes1, m1);
+classificationTraining(handles.axes1,handles.text14, m1);
 stopRecording(m1,mm);
 
 % --- Executes on button press in Fraction_MVC.
@@ -137,6 +138,7 @@ hideAxesFunc(handles.axes14);
 hideAxesFunc(handles.axes15);
 hideAxesFunc(handles.axes16);
 hideAxesFunc(handles.axes1);
+set(handles.text14,'Visible','Off')
 
 [m1,mm] = initDevice();
 startRecording(m1);
@@ -158,6 +160,7 @@ hideAxesFunc(handles.axes14);
 hideAxesFunc(handles.axes15);
 hideAxesFunc(handles.axes16);
 hideAxesFunc(handles.axes1);
+set(handles.text14,'Visible','Off')
 
 [m1,mm] = initDevice();
 startRecording(m1);
@@ -207,6 +210,7 @@ hideAxesFunc(handles.axes15);
 hideAxesFunc(handles.axes16);
 hideAxesFunc(handles.regressionBarPlot);
 hideAxesFunc(handles.axes1);
+set(handles.text14,'Visible','Off')
 
 [m1,mm] = initDevice();
 startRecording(m1);

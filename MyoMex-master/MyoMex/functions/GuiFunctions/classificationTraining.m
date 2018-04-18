@@ -2,7 +2,7 @@
 % the compass plot. This is a training plot which means we don't have any
 % targets appearing at all.
 
-function classificationTraining(handles, m1)
+function classificationTraining(handles,handles2, m1)
 
 
     load('baseline.mat');
@@ -17,6 +17,7 @@ function classificationTraining(handles, m1)
     pause(0.1);
 
     plothandle = handles;
+    texthandle = handles2;
 
     if ~isempty(plothandle)
         cla(plothandle);        
@@ -25,7 +26,6 @@ function classificationTraining(handles, m1)
         someBars = bar(plothandle, whyTho, 'b');
         ylim([0 1]);
         str = {' ',' ',' ',' ',' ',' ',' '};
-        %str = {'Extension','Flexion','Radial','Ulnar','Fist','Stretch','Rest'};
         set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
         hold on;
         
@@ -43,7 +43,7 @@ function classificationTraining(handles, m1)
         lim4Green = 0.75
         
         %Makes sure we'll record for the stated 'recordingTime'
-        while time <= 60
+        while time <= 600
             
             %This has been stolen from MyoMex to retrieve data:
             timeEMG = m1.timeEMG_log;
@@ -76,7 +76,7 @@ function classificationTraining(handles, m1)
                     featSMADR = featureExtractionLiveSMADR(featMADR,featMMAV);
                     featCC = featureExtractionLiveCC(filterEmg);
                     
-                    feat = [featMAV, featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
+                    feat = [featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
                     
                     %%Gets the classifier values with a single model:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
@@ -89,10 +89,6 @@ function classificationTraining(handles, m1)
                         FistRegression,StretchRegression,classToPlot)]; 
                     
                     RVTP = mean(RV(len-2:len,:));
-                    
-                    str = {num2str(RVTP(1)),num2str(RVTP(2)),num2str(RVTP(3)), ...
-                        num2str(RVTP(4)),num2str(RVTP(5)),num2str(RVTP(6)), ...
-                        num2str(RVTP(7))};
                     
                     axes(plothandle);
                     set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',classToPlot);
@@ -126,7 +122,7 @@ function classificationTraining(handles, m1)
                     featSMADR = featureExtractionLiveSMADR(featMADR,featMMAV);
                     featCC = featureExtractionLiveCC(filterEmg);
                     
-                    feat = [featMAV, featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
+                    feat = [featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
                    
                     %%Gets the classifier values:
                     classVal = [classVal;getClassificationValue(feat,MdlLinear)];
@@ -140,60 +136,49 @@ function classificationTraining(handles, m1)
                     
                     RVTP = mean(RV(len-2:len,:));
                     
-                    str = {num2str(RVTP(1)),num2str(RVTP(2)),num2str(RVTP(3)), ...
-                        num2str(RVTP(4)),num2str(RVTP(5)),num2str(RVTP(6)), ...
-                        num2str(RVTP(7))};
+                    set(texthandle,'String',num2str(int8(100*sum(RVTP))));
                     
                     axes(plothandle);
                     set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',classToPlot);
                     set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
                     drawnow;
-
-
-                    %Colorful barplot: 
-%                     if classToPlot(1) >= lim4Green
-%                         set(barplot1,'FaceColor','Green');
-%                     else
-%                         set(barplot1,'FaceColor','Green');
-%                     end
-%                     if classToPlot(2) >= lim4Green
-%                         set(barplot2,'FaceColor','Green');
-%                     else
-%                         set(barplot2,'FaceColor','Green');
-%                     end
-%                     if classToPlot(3) >= lim4Green
-%                         set(barplot3,'FaceColor','Green');
-%                     else
-%                         set(barplot3,'FaceColor','Green');
-%                     end
-%                     if classToPlot(4) >= lim4Green
-%                         set(barplot4,'FaceColor','Green');
-%                     else
-%                         set(barplot4,'FaceColor','Green');
-%                     end
-%                     if classToPlot(5) >= lim4Green
-%                         set(barplot5,'FaceColor','Green');
-%                     else
-%                         set(barplot5,'FaceColor','Green');
-%                     end
-%                     if classToPlot(6) >= lim4Green
-%                         set(barplot6,'FaceColor','Green');
-%                     else
-%                         set(barplot6,'FaceColor','Green');
-%                     end
-%                     if classToPlot(7) >= lim4Green
-%                         set(barplot7,'FaceColor','Green');
-%                     else
-%                         set(barplot7,'FaceColor','Green');
-%                     end
-%                     set(barplot1,'XData',1,'YData',classToPlot(1));
-%                     set(barplot2,'XData',2,'YData',classToPlot(2));
-%                     set(barplot3,'XData',3,'YData',classToPlot(3));
-%                     set(barplot4,'XData',4,'YData',classToPlot(4));
-%                     set(barplot5,'XData',5,'YData',classToPlot(5));
-%                     set(barplot6,'XData',6,'YData',classToPlot(6));
-%                     set(barplot7,'XData',7,'YData',classToPlot(7));
-
+                    
+                    if classToPlot(1) >= lim4green
+                        set(someBars(1),'facecolor','g')
+                    else
+                        set(someBars(1),'facecolor','b')
+                    end
+                    if classToPlot(2) >= lim4green
+                        set(someBars(2),'facecolor','g')
+                    else
+                        set(someBars(2),'facecolor','b')
+                    end
+                    if classToPlot(3) >= lim4green
+                        set(someBars(3),'facecolor','g')
+                    else
+                        set(someBars(3),'facecolor','b')
+                    end
+                    if classToPlot(4) >= lim4green
+                        set(someBars(4),'facecolor','g')
+                    else
+                        set(someBars(4),'facecolor','b')
+                    end
+                    if classToPlot(5) >= lim4green
+                        set(someBars(5),'facecolor','g')
+                    else
+                        set(someBars(5),'facecolor','b')
+                    end
+                    if classToPlot(6) >= lim4green
+                        set(someBars(6),'facecolor','g')
+                    else
+                        set(someBars(6),'facecolor','b')
+                    end
+                    if classToPlot(7) >= lim4green
+                        set(someBars(7),'facecolor','g')
+                    else
+                        set(someBars(7),'facecolor','b')
+                    end
+                    
                     buffer2 = 0;
                 else
                     buffer2 = buffer2 + 1;
