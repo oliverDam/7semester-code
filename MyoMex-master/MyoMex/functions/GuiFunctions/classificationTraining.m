@@ -37,10 +37,11 @@ function classificationTraining(handles,handles2, m1)
         classVal = [0 0 0 0 0 0 0 ; 0 0 0 0 0 0 0];
         buffer1 = 0;
         buffer2 = 0;
+        tresVal = 0.15
         RV = [0 0 0 0 0 0 0; 0 0 0 0 0 0 0; 0 0 0 0 0 0 0];
         time = 0;
         windowSize = 40;
-        lim4Green = 0.75
+        lim4green = 0.75
         
         %Makes sure we'll record for the stated 'recordingTime'
         while time <= 600
@@ -63,7 +64,6 @@ function classificationTraining(handles,handles2, m1)
                     %Finds and filters the window we've selected
                     toBeFiltered = EmgMatrix(lastSample-(windowSize-1):...
                         lastSample,1:8);
-                    toBeFiltered = toBeFiltered - baseline;
                     filterEmg = butterFilter(toBeFiltered);
                     
                     %This is also ok featz cause we so streetz:
@@ -78,15 +78,22 @@ function classificationTraining(handles,handles2, m1)
                     
                     feat = [featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
                     
-                    %%Gets the classifier values with a single model:
-                    classVal = [classVal;getClassificationValue(feat,MdlLinear)];
+                        %%Gets the classifier values with a single model:
+                        classVal = [classVal;getClassificationValue(feat,MdlLinear)];
+                    
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));   
                     
-                    RV = [RV;getSingleTrainingRegression(featMAV,...
+                    getRV = getRegVal(featMAV,...
                         ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
-                        FistRegression,StretchRegression,classToPlot)]; 
+                        FistRegression,StretchRegression,classToPlot);
+                    
+                    RV = [RV;getRV(1:7)]; 
+                    
+                    if getRV(8) <= tresVal
+                        classVal(end,:) = [0 0 0 0 0 0 1];
+                    end
                     
                     RVTP = mean(RV(len-2:len,:));
                     
@@ -111,7 +118,7 @@ function classificationTraining(handles,handles2, m1)
                         lastSample,1:8);
                     toBeFiltered = toBeFiltered - baseline;
                     filterEmg = butterFilter(toBeFiltered);
-                    
+                                        
                     %This is also ok featz cause we so streetz:
                     featMAV = featureExtractionLiveMAV(filterEmg);
                     featWL = featureExtractionLiveWL(filterEmg);
@@ -123,16 +130,23 @@ function classificationTraining(handles,handles2, m1)
                     featCC = featureExtractionLiveCC(filterEmg);
                     
                     feat = [featWL, featSMAV, featMADN, featMADR, featSMADR, featCC];
-                   
-                    %%Gets the classifier values:
-                    classVal = [classVal;getClassificationValue(feat,MdlLinear)];
+                    
+                        %%Gets the classifier values:
+                        classVal = [classVal;getClassificationValue(feat,MdlLinear)];
+                    
                     
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
                     
-                    RV = [RV;getSingleTrainingRegression(featMAV,...
+                    getRV = getRegVal(featMAV,...
                         ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
-                        FistRegression,StretchRegression,classToPlot)]; 
+                        FistRegression,StretchRegression,classToPlot);
+                    
+                    RV = [RV;getRV(1:7)]; 
+                    
+                    if getRV(8) <= tresVal
+                        classVal(end,:) = [0 0 0 0 0 0 1];
+                    end
                     
                     RVTP = mean(RV(len-2:len,:));
                     
@@ -143,41 +157,41 @@ function classificationTraining(handles,handles2, m1)
                     set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
                     drawnow;
                     
-                    if classToPlot(1) >= lim4green
-                        set(someBars(1),'facecolor','g')
-                    else
-                        set(someBars(1),'facecolor','b')
-                    end
-                    if classToPlot(2) >= lim4green
-                        set(someBars(2),'facecolor','g')
-                    else
-                        set(someBars(2),'facecolor','b')
-                    end
-                    if classToPlot(3) >= lim4green
-                        set(someBars(3),'facecolor','g')
-                    else
-                        set(someBars(3),'facecolor','b')
-                    end
-                    if classToPlot(4) >= lim4green
-                        set(someBars(4),'facecolor','g')
-                    else
-                        set(someBars(4),'facecolor','b')
-                    end
-                    if classToPlot(5) >= lim4green
-                        set(someBars(5),'facecolor','g')
-                    else
-                        set(someBars(5),'facecolor','b')
-                    end
-                    if classToPlot(6) >= lim4green
-                        set(someBars(6),'facecolor','g')
-                    else
-                        set(someBars(6),'facecolor','b')
-                    end
-                    if classToPlot(7) >= lim4green
-                        set(someBars(7),'facecolor','g')
-                    else
-                        set(someBars(7),'facecolor','b')
-                    end
+%                     if classToPlot(1) >= lim4green
+%                         set(someBars(1),'facecolor','g')
+%                     else
+%                         set(someBars(1),'facecolor','b')
+%                     end
+%                     if classToPlot(2) >= lim4green
+%                         set(someBars(2),'facecolor','g')
+%                     else
+%                         set(someBars(2),'facecolor','b')
+%                     end
+%                     if classToPlot(3) >= lim4green
+%                         set(someBars(3),'facecolor','g')
+%                     else
+%                         set(someBars(3),'facecolor','b')
+%                     end
+%                     if classToPlot(4) >= lim4green
+%                         set(someBars(4),'facecolor','g')
+%                     else
+%                         set(someBars(4),'facecolor','b')
+%                     end
+%                     if classToPlot(5) >= lim4green
+%                         set(someBars(5),'facecolor','g')
+%                     else
+%                         set(someBars(5),'facecolor','b')
+%                     end
+%                     if classToPlot(6) >= lim4green
+%                         set(someBars(6),'facecolor','g')
+%                     else
+%                         set(someBars(6),'facecolor','b')
+%                     end
+%                     if classToPlot(7) >= lim4green
+%                         set(someBars(7),'facecolor','g')
+%                     else
+%                         set(someBars(7),'facecolor','b')
+%                     end
                     
                     buffer2 = 0;
                 else

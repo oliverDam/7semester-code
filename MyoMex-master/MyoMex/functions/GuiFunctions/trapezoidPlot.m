@@ -10,6 +10,12 @@ function trapezoidPlot(sliderValue, handles, handles2, m1, movementType)
     elseif sliderValue == 3
         moveIntense = 0.7;
     end
+    
+    if movementType == 7
+        moveIntense = 0.05;
+    else
+        moveIntense = moveIntense;
+    end
 
     if movementType == 1
         movement = 'Flexion';
@@ -37,13 +43,8 @@ if isError ~= 1
     pause(0.1);
     
     %Creates the trapezoid based on the slidervalue from the input.
-    if movementType == 7
-        x = [0 2000 5000 10000 35000 45000];
-        y = [0.05 0.05 0.05 0.05 0.05 0.05];
-    else
         x = [0 2000 5000 10000 13000 15000];
         y = [0.01, 0.01, moveIntense, moveIntense, 0.01 0.01];
-    end
     
     handleplot = handles2;
     plothandle = handles;
@@ -67,12 +68,7 @@ if isError ~= 1
         
         %Setup for later use. Do NOT change it unless you want to fix it
         %after you screw it up.
-        if movementType == 7
-            recordingTime = 45;
-        else 
-            recordingTime = 15;
-        end
-        
+        recordingTime = 15;
         buffer1 = 0;
         buffer2 = 0;
         time = 0;
@@ -209,7 +205,8 @@ elseif movementType == 6
         EmgStretch70 = butterFilter(EmgMatrix);
     end
 else 
-    EmgRest = butterFilter(EmgMatrix);
+    temp = butterFilter(EmgMatrix);
+    EmgRest = [temp;temp;temp];
     movement = 'Rest';
     Intensity = [];
 end

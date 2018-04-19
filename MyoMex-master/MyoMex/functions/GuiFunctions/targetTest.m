@@ -151,6 +151,7 @@ imhandle5 = handles3;
                     timeStart(allPoint) = time; %Time when the new target shows up
                     overshoot(allPoint) = -1; %Has to be -1 to ensure 0 overshoots if target is reached in first try
                     onPoint = 0;
+                    tresVal = 0.15;
                 end
                 
                 %First window:
@@ -181,10 +182,16 @@ imhandle5 = handles3;
                     len = size(classVal,1);
                     classToPlot = mean(classVal(len-2:len,:));
                     
-                    regressValue = [regressValue;getSingleRegression(featMAV,...
+                    getRV = getSingleRegression(featMAV,...
                         ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
-                        FistRegression,StretchRegression,classToPlot)]; 
+                        FistRegression,StretchRegression,classToPlot);
+                    
+                    regressValue = [regressValue;getRV(1:3)]; 
                                         
+                    if getRV(4) <= tresVal
+                        classVal(end,:) = [0 0 0 0 0 0 1];
+                    end
+                    
                     outputValue = [outputValue;outputValue(end,:)+regressValue(end,:)];
                     
                     XData = outputValue(end,1);
@@ -260,10 +267,16 @@ imhandle5 = handles3;
                     classToPlot = mean(classVal(len-2:len,:));
                     
                     %Gets the regression values for the dot-velocity:
-                    regressValue = [regressValue;getSingleRegression(featMAV,...
+                    getRV = getSingleRegression(featMAV,...
                         ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
-                        FistRegression,StretchRegression,classToPlot)];
-
+                        FistRegression,StretchRegression,classToPlot);
+                    
+                    regressValue = [regressValue;getRV(1:3)]; 
+                                        
+                    if getRV(4) <= tresVal
+                        classVal(end,:) = [0 0 0 0 0 0 1];
+                    end
+                    
                     outputValue = [outputValue;outputValue(end,:)+regressValue(end,:)];
 
                     %All these lines sets the boundaries for the dot:

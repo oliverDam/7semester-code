@@ -31,7 +31,10 @@ ax.Visible = 'off'
 
 if ~isempty(plothandle);
     cla();
+    axes(plothandle);
     plot(plothandle,x,y,'r');
+    xlim([x(1) x(end)]);
+    ylim([0 1]);
     hold on;
     plot(plothandle,[0 0],[0 1],'w');
         

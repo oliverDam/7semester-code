@@ -1,4 +1,4 @@
-function [output] = getRegressionValue(featureData,mahExtensionRegrizzle,mahFlexionRegrizzle,mahRadialRegrizzle,mahUlnarRegrizzle)
+function [output] = getRegressionValue(featureData,ExteReg,FlexReg,RadiReg,UlnReg)
 
 flex1 = featureData(:,1);
 flex2 = featureData(:,2);
@@ -9,10 +9,10 @@ flex6 = featureData(:,6);
 flex7 = featureData(:,7);
 flex8 = featureData(:,8);
 
-ypredFlex = mean(feval(mahFlexionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
-ypredExte = mean(feval(mahExtensionRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
-ypredRadi = mean(feval(mahRadialRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
-ypredUlna = mean(feval(mahUlnarRegrizzle,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
+ypredFlex = mean(feval(FlexReg,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
+ypredExte = mean(feval(ExteReg,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
+ypredRadi = mean(feval(RadiReg,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
+ypredUlna = mean(feval(UlnReg,flex1,flex2,flex3,flex4,flex5,flex6,flex7,flex8));
 
 if ypredExte >= ypredFlex
     xValue = ypredExte;
