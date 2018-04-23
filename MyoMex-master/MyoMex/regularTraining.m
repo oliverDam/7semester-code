@@ -59,7 +59,7 @@ function classificationTraining(handles,handles2,handles3, m1)
         windowSize = 40;
         maxTime = 120;
         thisTime = 0;
-        lim4green = 0.75;
+        lim4green = [0.75 1];
         i = 2;
         
         %Makes sure we'll record for the stated 'recordingTime'
@@ -113,7 +113,7 @@ function classificationTraining(handles,handles2,handles3, m1)
                     
                     
                     len = size(classVal,1);
-                    classToPlot = mean(classVal(len-2:len,:));   
+                    classToPlot = decideClass(mean(classVal(len-2:len,:)));
                     
                     getRV = getRegVal(featMAV,...
                         ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
@@ -166,7 +166,7 @@ function classificationTraining(handles,handles2,handles3, m1)
                     
                     
                     len = size(classVal,1);
-                    classToPlot = mean(classVal(len-2:len,:));
+                    classToPlot = decideClass(mean(classVal(len-2:len,:)));
                     
                     getRV = getRegVal(featMAV,...
                         ExtensionRegression,FlexionRegression,RadialRegression,UlnarRegression, ...
@@ -187,7 +187,7 @@ function classificationTraining(handles,handles2,handles3, m1)
                     set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
                     drawnow;
 
-                if lim4green+25 >= max(classToPlot(1:6)) >= lim4green
+                if (lim4green(1) <= max(sum(RVTP))) && (max(sum(RVTP)) <= lim4green(2))
                     set(texthandle,'BackgroundColor','g');
                 else
                     set(texthandle,'BackgroundColor','r');
@@ -201,3 +201,4 @@ function classificationTraining(handles,handles2,handles3, m1)
         end
     end
 end
+                

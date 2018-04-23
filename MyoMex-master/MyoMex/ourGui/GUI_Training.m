@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 17-Apr-2018 14:10:24
+% Last Modified by GUIDE v2.5 23-Apr-2018 09:53:09
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -103,14 +103,11 @@ function Stop_MVC_Callback(hObject, eventdata, handles)
 %save the data when press stop
 %Removes the unused axes:
 
-hideAxesFunc(handles.axes4);
 hideAxesFunc(handles.regressionBarPlot);
-hideAxesFunc(handles.axes4);
 hideAxesFunc(handles.axes6);
 hideAxesFunc(handles.axes7);
 hideAxesFunc(handles.axes8);
 hideAxesFunc(handles.axes9);
-hideAxesFunc(handles.axes1);
 set(handles.text14,'Visible','On')
 
 %Adds the images:
@@ -120,7 +117,7 @@ imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
 %Initiates the training:
 [m1,mm] = initDevice();
 startRecording(m1);
-classificationTraining(handles.axes1,handles.text14, m1);
+classificationTraining(handles.axes1,handles.text14,handles.axes4, m1);
 stopRecording(m1,mm);
 
 % --- Executes on button press in Fraction_MVC.
@@ -287,3 +284,28 @@ function listbox4_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in pushbutton11.
+function pushbutton11_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton11 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+hideAxesFunc(handles.regressionBarPlot);
+hideAxesFunc(handles.axes4);
+hideAxesFunc(handles.axes6);
+hideAxesFunc(handles.axes7);
+hideAxesFunc(handles.axes8);
+hideAxesFunc(handles.axes9);
+hideAxesFunc(handles.axes1);
+set(handles.text14,'Visible','On')
+
+imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
+    handles.axes13, handles.axes14, handles.axes15, handles.axes16);
+
+%Initiates the training:
+[m1,mm] = initDevice();
+startRecording(m1);
+regularTraining(handles.axes1,handles.text14,handles.axes4, m1);
+stopRecording(m1,mm);

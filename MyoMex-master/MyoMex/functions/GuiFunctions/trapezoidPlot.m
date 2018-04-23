@@ -155,7 +155,7 @@ Intensity = num2str(moveIntense*100);
 
 if movementType == 1
     if sliderValue == 1
-        EmgFlexion40 = butterFilter(EmgMatrix);
+        EmgFlexion40 = EmgMatrix;
     elseif sliderValue == 2
         EmgFlexion50 = butterFilter(EmgMatrix);
     elseif sliderValue == 3
