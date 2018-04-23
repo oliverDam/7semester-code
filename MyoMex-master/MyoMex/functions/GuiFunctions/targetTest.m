@@ -80,10 +80,11 @@ imhandle5 = handles3;
         gotPoint = 0;
         gotTime = 0;
         timeAtPoint = 1;
-        lim4green = 0.8
+        lim4green = 0.8;
+        firstTime = 1;
 
         regressValue = [];
-        classVal = [0 0 0 0 0 0 0; 0 0 0 0 0 0 0]
+        classVal = [0 0 0 0 0 0 0; 0 0 0 0 0 0 0];
 %         barplot = bar(plothandle2,[0 0 0 0 0 0 0]);
         
         %This determines how long we can try to get to the area.
@@ -108,7 +109,7 @@ imhandle5 = handles3;
         plotData = ...
             2*[3,0,2,-1,-4,2,-5,1,6,-2,0,4,-4,-6,1,7 ...
             ;1,4,-3,4,0,-4,-6,2,5,-3,0,-4,2,7,1,4];
-        SizeOfDot = [1 0.5 0.4 0.9 1.2 1.4 0.7 1.3 1 1.6 0.9 0.4 0.8 1.3 1.1 1.5];
+        SizeOfDot = 2*[1 0.5 0.4 0.9 1.2 1.4 0.7 1.3 1 1.6 0.9 0.4 0.8 1.3 1.1 1.5];
 
         %Makes sure we'll record for the stated 'recordingTime'
         while allPoint ~= 17
@@ -129,7 +130,10 @@ imhandle5 = handles3;
                     datplotData = plotData(:,randomOrder(1,allPoint));     % choose random plot.
                     %h=[];
                     r = SizeOfDot(randomOrder(1,allPoint));
-                    radius = r*0.5;
+                    radius = r/3;
+                    
+                    
+                    dotLimit = [(r*30)-10, (r*30)+10];
 
                     targetAreaX = [datplotData(1,1)-radius; ... 
                         datplotData(1,1)-radius; datplotData(1,1)+radius;...
@@ -145,9 +149,12 @@ imhandle5 = handles3;
                     d = r*2;
                     px = x-r;
                     py = y-r;
+                    rx = x-r/3;
+                    ry = y-r/3;
                     h_target = rectangle(plothandle,'Position',[px py d d],'Curvature',[1,1]);
+                    h_target2 = rectangle(plothandle,'Position',[rx ry d/3 d/3],'Curvature',[1 1]);
                     
-                    startPoint(allPoint,:) = outputValue(end,:) %Where is the curser placed now and what is the size of it
+                    startPoint(allPoint,:) = outputValue(end,:); %Where is the curser placed now and what is the size of it
                     timeStart(allPoint) = time; %Time when the new target shows up
                     overshoot(allPoint) = -1; %Has to be -1 to ensure 0 overshoots if target is reached in first try
                     onPoint = 0;
@@ -306,27 +313,41 @@ imhandle5 = handles3;
                 gotPoint = inpolygon(outputValue(end,1),outputValue(end,2),targetAreaX,targetAreaY);
                 
                 %Starts the timer if the size is correct as well:
-                if gotPoint == 1 && (r*35)-10 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3) && gotTime == 0
-                    startTime = time;
+                if gotPoint == 1 && dotLimit(1) <= outputValue(end,3) && dotLimit(2) >= outputValue(end,3) && gotTime == 0
+                    if firstTime == 1
+                        startTime = time;
+                    end
                     gotTime = 1;
                     overshoot(allPoint) = overshoot(allPoint)+1;
                     startValue(allPoint) = length(outputValue);
+                    set(lol,'MarkerFaceColor','g');
+                    firstTime = 0;
+                    
+                %Resets if we get out of time again
+                elseif gotTime == 1 && (gotPoint == 0 || (dotLimit(1) >= outputValue(end,3) || dotLimit(2) <= outputValue(end,3)))
+                    gotTime = 0;
+                    set(lol,'MarkerFaceColor','r');
+                    firstTime = 1;
                     
                 %Confirms the target is reached if we're still within the
                 %area w. the correct size after "timeAtPoint":
-                elseif gotPoint == 1 && (r*35)-10 <= outputValue(end,3) && (r*35)+5 >= outputValue(end,3) ...
+                elseif gotPoint == 1 && dotLimit(1) <= outputValue(end,3) && dotLimit(2) >= outputValue(end,3) ...
                         && gotTime == 1 && time-startTime >= timeAtPoint
                     onPoint = 1;
+                    firstTime = 1;
                     gotTime = 0;
                     timeEnd(allPoint) = time;
                     gotIt(allPoint) = 1;
                     allPoint = allPoint+1;
                     delete(h_target);
+                    delete(h_target2);
                     stopValue(allPoint) = length(outputValue);
+                    set(lol,'MarkerFaceColor','r');
                     
                 %Cancels the target if not reached before "maxTime":
                 elseif time-timeStart(allPoint) >= maxTime
                     onPoint = 1;
+                    firstTime = 1;
                     gotTime = 0;
                     timeEnd(allPoint) = time;
                     gotIt(allPoint) = 0;
@@ -337,6 +358,8 @@ imhandle5 = handles3;
                     end
                     allPoint = allPoint+1;
                     delete(h_target);
+                    delete(h_target2);
+                    set(lol,'MarkerFaceColor','g');
                 end
             end
         end

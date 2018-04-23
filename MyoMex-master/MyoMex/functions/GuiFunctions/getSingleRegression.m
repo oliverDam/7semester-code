@@ -14,18 +14,18 @@ pred(6) = mean(feval(StrReg,flex));
 threshold = max(pred);
 
 if class == 1
-    predValue = [pred(1),0,0];
+    predValue = [pred(1)^2,0,0];
 elseif class == 2
-    predValue = [-pred(2),0,0];
+    predValue = [-(pred(2)^2),0,0];
 elseif class == 3
-    predValue = [0,pred(3),0];
+    predValue = [0,pred(3)^2,0];
 elseif class == 4
-    predValue = [0,-pred(4),0];
+    predValue = [0,-(pred(4)^2),0];
 elseif class == 5
-    predValue = [0,0,-pred(5)];
+    predValue = [0,0,-(pred(5)^2)];
 elseif class == 6
-    predValue = [0,0,pred(6)];
-elseif class == 7
+    predValue = [0,0,pred(6)^2];
+else
     predValue = [0,0,0];
 end
 
