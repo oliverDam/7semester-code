@@ -178,7 +178,7 @@ function Fraction_MVC_Callback(hObject, eventdata, handles)
 %Finds the axes we're going to use:
 hideAxesFunc(handles.axes1,'on');
 hideAxesFunc(handles.axes4,'on');
-hideAxesFunc(handles.axesregressionBarPlot,'on');
+hideAxesFunc(handles.regressionBarPlot,'on');
 
 [m1,mm] = initDevice();
 startRecording(m1);
@@ -187,7 +187,7 @@ stopRecording(m1,mm);
 
 hideAxesFunc(handles.axes1,'off');
 hideAxesFunc(handles.axes4,'off');
-hideAxesFunc(handles.axesregressionBarPlot,'off');
+hideAxesFunc(handles.regressionBarPlot,'off');
 
 
 % --- Executes on button press in plotbutton.

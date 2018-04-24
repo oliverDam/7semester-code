@@ -191,6 +191,12 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
                     axes(plothandle);
                     set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',100*classToPlot);
                     drawnow;
+                    
+                    if lim4green(2) >= max(RVTP) && max(RVTP) >= lim4green(1) && classToPlot(i) >= 0.8
+                    set(texthandle,'BackgroundColor','g');
+                else
+                    set(texthandle,'BackgroundColor','r');
+                end
 
                     buffer1 = 0;
                 else 
