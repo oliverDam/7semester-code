@@ -13,9 +13,6 @@ imageExte = imread('url.png');
 imageFlex = imread('url2.png');
 imageRadi = imread('url3.png');
 imageUlna = imread('url4.png');
-imageFist = imread('url5.png');
-imageStre = imread('url6.png');
-imageRest = imread('url7.png');
 
 %Setup of the plot:
 plothandle = handles1;
@@ -29,11 +26,11 @@ imhandle5 = handles3;
         axes(plothandle);
         cla(plothandle);
         axis on;
-        x = [-20,20,20,-20,-20];
-        y = [20,20,-20,-20,20];
+        x = 0.5*[-20,20,20,-20,-20];
+        y = 0.5*[20,20,-20,-20,20];
         extra = plot(x,y);
-        xlim([-20 20]);
-        ylim([-20 20]);
+        xlim(0.5*[-20 20]);
+        ylim(0.5*[-20 20]);
         grid on;
         grid minor;
         hold on;
@@ -68,8 +65,8 @@ imhandle5 = handles3;
         %after you screw it up.        
         buffer1 = 0;
         buffer2 = 0;
-        Max = 19.5;
-        Min = -19.5;
+        Max = 9.9;
+        Min = -9.9;
         MaxRad = 150;
         MinRad = 5;
         windowSize = 40;
@@ -82,18 +79,22 @@ imhandle5 = handles3;
         timeAtPoint = 1;
         lim4green = 0.8;
         firstTime = 1;
+        maxTime = 150; 
+        startValue = [];
+        stopValue = [];
+        overshoot = [];
+        timeDif = [];
+        gotIt = [];
 
         regressValue = [];
         classVal = [0 0 0 0 0 0 0; 0 0 0 0 0 0 0];
-%         barplot = bar(plothandle2,[0 0 0 0 0 0 0]);
-        
-        %This determines how long we can try to get to the area.
-        maxTime = 50; 
         
         %Begin the test at x = 0 & y = 0.
         prevValue = [0,0];
         lol = plot(plothandle,prevValue(1),prevValue(2),'b', 'Marker', 'o', ...
              'MarkerFaceColor','r');
+        lol2 = plot(plothandle,prevValue(1),prevValue(2),'k',' Marker', 'o', ...
+            'MarkerFaceColor','k');
          
         %Decides what targetset to use:
         if targetSet == 1
@@ -107,9 +108,12 @@ imhandle5 = handles3;
         end
         
         plotData = ...
-            2*[3,0,2,-1,-4,2,-5,1,6,-2,0,4,-4,-6,1,7 ...
+            [3,0,2,-1,-4,2,-5,1,6,-2,0,4,-4,-6,1,7 ...
             ;1,4,-3,4,0,-4,-6,2,5,-3,0,-4,2,7,1,4];
-        SizeOfDot = 2*[1 0.5 0.4 0.9 1.2 1.4 0.7 1.3 1 1.6 0.9 0.4 0.8 1.3 1.1 1.5];
+        %NewSizes:
+        SizeOfDot = [1 0.6 0.7 0.9 1.2 1.2 0.8 1.2 1 1.2 0.9 0.6 0.8 1.2 1.1 1.3];
+        %OldData:
+        %SizeOfDot = [1 0.5 0.4 0.9 1.2 1.4 0.7 1.3 1 1.6 0.9 0.4 0.8 1.3 1.1 1.5];
 
         %Makes sure we'll record for the stated 'recordingTime'
         while allPoint ~= 17
@@ -133,7 +137,7 @@ imhandle5 = handles3;
                     radius = r/3;
                     
                     
-                    dotLimit = [(r*30)-10, (r*30)+10];
+                    dotLimit = [(r*60)-10, (r*60)+10];
 
                     targetAreaX = [datplotData(1,1)-radius; ... 
                         datplotData(1,1)-radius; datplotData(1,1)+radius;...
@@ -214,29 +218,8 @@ imhandle5 = handles3;
                     
                     axes(plothandle);
                     set(lol,'XData',XData,'YData',YData);
+                    set(lol2,'XData',XData,'YData',YData);
                     set(lol,'MarkerSize',ZData);      
-                    drawnow;
-                    
-                    axes(imhandle5);
-                    delete(images);
-                    %And here comes the image:
-                    if classVal(end,1) >= lim4green
-                        images = image(imageExte);
-                    elseif classVal(end,2) >= lim4green
-                        images = image(imageFlex);
-                    elseif classVal(end,3) >= lim4green
-                        images = image(imageRadi);
-                    elseif classVal(end,4) >= lim4green
-                        images = image(imageUlna);
-                    elseif classVal(end,5) >= lim4green
-                        images = image(imageFist);
-                    elseif classVal(end,6) >= lim4green
-                        images = image(imageStre);
-                    else 
-                        images = image(imageRest);
-                    end
-                    axis off;
-                    axis image;
                     drawnow;
                     
                     buffer1 = 0;
@@ -301,6 +284,7 @@ imhandle5 = handles3;
                     %Plots the dot w. both size and placement:
                     axes(plothandle);
                     set(lol,'XData',XData,'YData',YData);
+                    set(lol2,'XData',XData,'YData',YData);
                     set(lol,'MarkerSize',ZData);                    
                     drawnow;
                     
@@ -328,6 +312,9 @@ imhandle5 = handles3;
                     gotTime = 0;
                     set(lol,'MarkerFaceColor','r');
                     firstTime = 1;
+                    
+                elseif gotPoint == 0
+                    set(lol,'MarkerFaceColor','r');
                     
                 %Confirms the target is reached if we're still within the
                 %area w. the correct size after "timeAtPoint":
@@ -359,7 +346,7 @@ imhandle5 = handles3;
                     allPoint = allPoint+1;
                     delete(h_target);
                     delete(h_target2);
-                    set(lol,'MarkerFaceColor','g');
+                    set(lol,'MarkerFaceColor','r');
                 end
             end
         end
