@@ -2,7 +2,7 @@
 % the compass plot. This is a training plot which means we don't have any
 % targets appearing at all.
 
-function classificationTraining(handles,handles2,handles3, m1)
+function classificationTraining(handles,handles2,handles3,handles4, m1)
 
 
     load('baseline.mat');
@@ -21,12 +21,16 @@ function classificationTraining(handles,handles2,handles3, m1)
     images(5) = {imread('url5.png')};
     images(6) = {imread('url6.png')};
     images(7) = {imread('url7.png')};
+    images(8) = {imread('3.png')};
+    images(9) = {imread('2.png')};
+    images(10) = {imread('1.png')};
     
     pause(0.1);
 
     plothandle = handles;
     texthandle = handles2;
     imagehandle = handles3;
+    texthandle2 = handles4;
 
     if ~isempty(plothandle)
         cla(plothandle);        
@@ -57,13 +61,27 @@ function classificationTraining(handles,handles2,handles3, m1)
         RV = [0 0 0 0 0 0 0; 0 0 0 0 0 0 0; 0 0 0 0 0 0 0];
         time = 0;
         windowSize = 40;
-        maxTime = 120;
-        thisTime = 0;
-        lim4green = [0.75 1];
-        i = 2;
+        maxTime = 720;
+        moveTime = 30;
+        pauseTime = 10;
+        thisTime = -10;
+        stopNow = 0;
+        i = 1;
+        j = 1;
+        numLvl = [0.15 0.35 0.55 0.75; 0.25 0.45 0.65 0.85];
+        strLvl = {'15-25' '35-45' '55-65' '75-85'};
+        lim4green = [numLvl(1,1),numLvl(2,1)];
+        
+        set(texthandle2,'String',strLvl(j));
+        
+        axes(imagehandle);
+        curImg = cell2mat(images(i));
+        image(curImg);
+        axis off;
+        axis image;
         
         %Makes sure we'll record for the stated 'recordingTime'
-        while time <= 600
+        while stopNow ~= 1
             
             %This has been stolen from MyoMex to retrieve data:
             timeEMG = m1.timeEMG_log;
@@ -80,14 +98,52 @@ function classificationTraining(handles,handles2,handles3, m1)
                     %Gets the time we've recorded EMG in this function
                     time = m1.timeEMG;
                     
-                    %Changes an image
-                    if time-thisTime >= maxTime/6
+                    if time-thisTime >= moveTime
+                        %Here comes the pause:
+                        axes(imagehandle);
+                        curImg = cell2mat(images(7));
+                        image(curImg);
+                        axis off;
+                        axis image;
+                        set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',[0 0 0 0 0 0 0]);
+                        pause(pauseTime-3);
+                        curImg = cell2mat(images(8));
+                        image(curImg);
+                        axis off;
+                        axis image;
+                        pause(1);
+                        curImg = cell2mat(images(9));
+                        image(curImg);
+                        axis off;
+                        axis image;
+                        pause(1);
+                        curImg = cell2mat(images(10));
+                        image(curImg);
+                        axis off;
+                        axis image;
+                        pause(1);
+
+                        %Avoids problems with matrixes and stuff. Stay in
+                        %the matrix!
+                        if i == 6
+                            i = 1;
+                            j = j+1;
+                            if j == 5
+                                stopNow = 1;
+                                j = 4;
+                            end
+                        else
+                            i = i+1;
+                        end
+                        
+                        %Then we update the images and stuff!                        
                         axes(imagehandle);
                         curImg = cell2mat(images(i));
                         image(curImg);
                         axis off;
                         axis image;
-                        i = i+1;
+                        set(texthandle2,'String',strLvl(j));
+                        lim4green = [numLvl(1,j),numLvl(2,j)];
                         thisTime = time;
                     end
                     
@@ -187,7 +243,7 @@ function classificationTraining(handles,handles2,handles3, m1)
                     set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
                     drawnow;
 
-                if (lim4green(1) <= max(sum(RVTP))) && (max(sum(RVTP)) <= lim4green(2))
+                if lim4green(2) >= max(RVTP) && max(RVTP) >= lim4green(1) && classToPlot(i) >= 0.8
                     set(texthandle,'BackgroundColor','g');
                 else
                     set(texthandle,'BackgroundColor','r');

@@ -64,6 +64,26 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
+%Removes some of the stuff from the gui:
+set(handles.text14,'Visible','Off');
+set(handles.text15,'Visible','Off');
+set(handles.text16,'Visible','Off');
+set(handles.text18,'Visible','Off');
+hideAxesFunc(handles.regressionBarPlot,'off');
+hideAxesFunc(handles.axes1,'off');
+hideAxesFunc(handles.axes4,'off');
+hideAxesFunc(handles.axes6,'off');
+hideAxesFunc(handles.axes7,'off');
+hideAxesFunc(handles.axes8,'off');
+hideAxesFunc(handles.axes9,'off');
+hideAxesFunc(handles.axes10,'off');
+hideAxesFunc(handles.axes11,'off');
+hideAxesFunc(handles.axes12,'off');
+hideAxesFunc(handles.axes13,'off');
+hideAxesFunc(handles.axes14,'off');
+hideAxesFunc(handles.axes15,'off');
+hideAxesFunc(handles.axes16,'off');
+
 % Creates a t:
 %t = tcpip('localhost',9090);
 
@@ -88,11 +108,20 @@ function start_MVC_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %plot emg data from MYO
+
+hideAxesFunc(handles.axes1,'on');
+hideAxesFunc(handles.axes4,'on');
+hideAxesFunc(handles.regressionBarPlot,'on');
+
 [m1,mm] = initDevice();
 startRecording(m1);
 movementType = get(handles.listbox1,'value');
 findMVC(handles.axes1, handles.axes4, handles.regressionBarPlot, m1, 0, movementType);
 stopRecording(m1,mm);
+
+hideAxesFunc(handles.axes1,'off');
+hideAxesFunc(handles.axes4,'off');
+hideAxesFunc(handles.regressionBarPlot,'off');
 
 
 % --- Executes on button press in compassClassification.
@@ -101,14 +130,20 @@ function Stop_MVC_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %save the data when press stop
-%Removes the unused axes:
-
-hideAxesFunc(handles.regressionBarPlot);
-hideAxesFunc(handles.axes6);
-hideAxesFunc(handles.axes7);
-hideAxesFunc(handles.axes8);
-hideAxesFunc(handles.axes9);
-set(handles.text14,'Visible','On')
+%Adds the relevant axes:
+hideAxesFunc(handles.axes1,'on');
+hideAxesFunc(handles.axes10,'on');
+hideAxesFunc(handles.axes11,'on');
+hideAxesFunc(handles.axes12,'on');
+hideAxesFunc(handles.axes13,'on');
+hideAxesFunc(handles.axes14,'on');
+hideAxesFunc(handles.axes15,'on');
+hideAxesFunc(handles.axes16,'on');
+hideAxesFunc(handles.axes4,'on');
+set(handles.text14,'Visible','on');
+set(handles.text15,'Visible','on');
+set(handles.text16,'Visible','on');
+set(handles.text18,'Visible','on');
 
 %Adds the images:
 imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
@@ -117,30 +152,42 @@ imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
 %Initiates the training:
 [m1,mm] = initDevice();
 startRecording(m1);
-classificationTraining(handles.axes1,handles.text14,handles.axes4, m1);
+classificationTraining(handles.axes1,handles.text14,handles.axes4,handles.text15, m1);
 stopRecording(m1,mm);
+
+%Removes the axes:
+hideAxesFunc(handles.axes1,'off');
+hideAxesFunc(handles.axes4,'off');
+hideAxesFunc(handles.axes10,'off');
+hideAxesFunc(handles.axes11,'off');
+hideAxesFunc(handles.axes12,'off');
+hideAxesFunc(handles.axes13,'off');
+hideAxesFunc(handles.axes14,'off');
+hideAxesFunc(handles.axes15,'off');
+hideAxesFunc(handles.axes16,'off');
+set(handles.text14,'Visible','Off');
+set(handles.text15,'Visible','Off');
+set(handles.text16,'Visible','Off');
+set(handles.text18,'Visible','Off');
 
 % --- Executes on button press in Fraction_MVC.
 function Fraction_MVC_Callback(hObject, eventdata, handles)
 % hObject    handle to Fraction_MVC (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-hideAxesFunc(handles.axes4);
-hideAxesFunc(handles.axes10);
-hideAxesFunc(handles.axes11);
-hideAxesFunc(handles.axes12);
-hideAxesFunc(handles.axes13);
-hideAxesFunc(handles.axes14);
-hideAxesFunc(handles.axes15);
-hideAxesFunc(handles.axes16);
-hideAxesFunc(handles.axes1);
-set(handles.text14,'Visible','Off')
+%Finds the axes we're going to use:
+hideAxesFunc(handles.axes1,'on');
+hideAxesFunc(handles.axes4,'on');
+hideAxesFunc(handles.axesregressionBarPlot,'on');
 
 [m1,mm] = initDevice();
 startRecording(m1);
 findMVC(handles.axes1,handles.axes4,handles.regressionBarPlot, m1, 1, 0);
 stopRecording(m1,mm);
+
+hideAxesFunc(handles.axes1,'off');
+hideAxesFunc(handles.axes4,'off');
+hideAxesFunc(handles.axesregressionBarPlot,'off');
 
 
 % --- Executes on button press in plotbutton.
@@ -148,16 +195,8 @@ function plotbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to plotbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-hideAxesFunc(handles.regressionBarPlot);
-hideAxesFunc(handles.axes10);
-hideAxesFunc(handles.axes11);
-hideAxesFunc(handles.axes12);
-hideAxesFunc(handles.axes13);
-hideAxesFunc(handles.axes14);
-hideAxesFunc(handles.axes15);
-hideAxesFunc(handles.axes16);
-hideAxesFunc(handles.axes1);
-set(handles.text14,'Visible','Off')
+hideAxesFunc(handles.axes1,'on');
+hideAxesFunc(handles.axes4,'on');
 
 [m1,mm] = initDevice();
 startRecording(m1);
@@ -167,6 +206,9 @@ sliderValue = get(handles.listbox4,'value');
 movementType = get(handles.listbox1,'value');
 trapezoidPlot(sliderValue, handles.axes1, handles.axes4, m1,movementType);
 stopRecording(m1,mm);
+
+hideAxesFunc(handles.axes1,'off');
+hideAxesFunc(handles.axes4,'off');
 
 
 
@@ -197,17 +239,12 @@ function TargetTest_Callback(hObject, eventdata, handles)
 % hObject    handle to TargetTest (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-hideAxesFunc(handles.axes4);
-hideAxesFunc(handles.axes10);
-hideAxesFunc(handles.axes11);
-hideAxesFunc(handles.axes12);
-hideAxesFunc(handles.axes13);
-hideAxesFunc(handles.axes14);
-hideAxesFunc(handles.axes15);
-hideAxesFunc(handles.axes16);
-hideAxesFunc(handles.regressionBarPlot);
-hideAxesFunc(handles.axes1);
-set(handles.text14,'Visible','Off')
+hideAxesFunc(handles.axes1,'on');
+hideAxesFunc(handles.axes4,'on');
+hideAxesFunc(handles.axes6,'on');
+hideAxesFunc(handles.axes7,'on');
+hideAxesFunc(handles.axes8,'on');
+hideAxesFunc(handles.axes9,'on');
 
 [m1,mm] = initDevice();
 startRecording(m1);
@@ -215,6 +252,13 @@ targetSet = get(handles.listbox3,'value');
 targetTest(handles.axes1,handles.axes4, ...
     handles.axes6, handles.axes7, handles.axes8, handles.axes9, m1,targetSet);
 stopRecording(m1,mm);
+
+hideAxesFunc(handles.axes1,'off');
+hideAxesFunc(handles.axes4,'off');
+hideAxesFunc(handles.axes6,'off');
+hideAxesFunc(handles.axes7,'off');
+hideAxesFunc(handles.axes8,'off');
+hideAxesFunc(handles.axes9,'off');
 
 
 % --- Executes on selection change in listbox1.
@@ -292,14 +336,19 @@ function pushbutton11_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-hideAxesFunc(handles.regressionBarPlot);
-hideAxesFunc(handles.axes4);
-hideAxesFunc(handles.axes6);
-hideAxesFunc(handles.axes7);
-hideAxesFunc(handles.axes8);
-hideAxesFunc(handles.axes9);
-hideAxesFunc(handles.axes1);
-set(handles.text14,'Visible','On')
+hideAxesFunc(handles.axes10,'on');
+hideAxesFunc(handles.axes11,'on');
+hideAxesFunc(handles.axes12,'on');
+hideAxesFunc(handles.axes13,'on');
+hideAxesFunc(handles.axes14,'on');
+hideAxesFunc(handles.axes15,'on');
+hideAxesFunc(handles.axes16,'on');
+hideAxesFunc(handles.axes1,'on');
+hideAxesFunc(handles.axes4,'on');
+set(handles.text14,'Visible','On');
+set(handles.text15,'Visible','On');
+set(handles.text16,'Visible','On');
+set(handles.text18,'Visible','On');
 
 imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
     handles.axes13, handles.axes14, handles.axes15, handles.axes16);
@@ -307,5 +356,19 @@ imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
 %Initiates the training:
 [m1,mm] = initDevice();
 startRecording(m1);
-regularTraining(handles.axes1,handles.text14,handles.axes4, m1);
+regularTraining(handles.axes1,handles.text14,handles.axes4,handles.text15, m1);
 stopRecording(m1,mm);
+
+hideAxesFunc(handles.axes10,'off');
+hideAxesFunc(handles.axes11,'off');
+hideAxesFunc(handles.axes12,'off');
+hideAxesFunc(handles.axes13,'off');
+hideAxesFunc(handles.axes14,'off');
+hideAxesFunc(handles.axes15,'off');
+hideAxesFunc(handles.axes16,'off');
+hideAxesFunc(handles.axes1,'off');
+hideAxesFunc(handles.axes4,'off');
+set(handles.text14,'Visible','Off');
+set(handles.text15,'Visible','Off');
+set(handles.text16,'Visible','Off');
+set(handles.text18,'Visible','Off');
