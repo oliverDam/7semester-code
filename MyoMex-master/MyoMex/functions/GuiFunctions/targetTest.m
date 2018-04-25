@@ -359,6 +359,10 @@ imhandle4 = handles7;
     %gotIt = gotIt(1:2:end);
     timeDif = timeEnd-timeStart;
     
+    delete(lol);
+    delete(lol2);
+    delete(h_target);
+    delete(h_target2);
     axes(plothandle)
     imshow(imageThum);
     axis off;

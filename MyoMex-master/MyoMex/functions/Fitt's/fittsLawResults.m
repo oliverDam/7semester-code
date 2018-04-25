@@ -2,7 +2,7 @@ function [CR,ID,OS,PE,SD,TP] = fittsLawResults(gotIt, targetSet, overshoot, outp
 
 CR = completionRate(gotIt,targetSet);
 ID = indexOfDifficulty(targetSet);
-OS = overshot(overshoot,targetSet);
+OS = overshot(overshoot,gotIt);%targetSet);
 PE = pathEfficiency(outputValue,targetSet);
 SD = stoppingDistance(startValue,stopValue,outputValue);
 TP = throughput(timeDif,targetSet);

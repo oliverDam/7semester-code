@@ -1,5 +1,5 @@
-function [output] = overshot(overshoots,targetset)
+function [output] = overshot(overshoots,gotIt)%targetset)
 
-L = length(createTargetset(targetset));
+L = sum(gotIt);%length(createTargetset(targetset));
 
 output = sum(overshoots)/L;
