@@ -1,7 +1,7 @@
 % this plots the trapezoid in the axes1 in the training GUI when button
 % "Plot Button" is pressed
 
-function findMVC(handles, handles2, handles3, m1, doWhat, movementType)
+function findMVC(handles, handles2, m1, doWhat, movementType)
 
 %Pause for initialization or something:
 pause(0.1);
@@ -19,15 +19,6 @@ end
 %in the entire program up!
 plothandle = handles;
 plothandle2 = handles2;
-plothandle3 = handles3;
-axes(plothandle2);
-set(gca,'Color',[0.94 0.94 0.94]);
-ax = gca
-ax.Visible = 'off'
-axes(plothandle3);
-set(gca,'Color',[0.94 0.94 0.94]);
-ax = gca
-ax.Visible = 'off'
 
 if ~isempty(plothandle);
     cla();
@@ -81,6 +72,7 @@ if ~isempty(plothandle);
                 delete(lol);
                 lol = plot(time*1000, maxEmg, 'or', 'MarkerSize', 10, 'MarkerFaceColor', 'g');
                 drawnow;
+                realSpiderplot(plothandle2,meanAbs);
                 buffer = 0;
             else
                 buffer = buffer + 1;
@@ -94,10 +86,10 @@ hold off;
 
 %% Something with the name of the variables we're going to save:
 if doWhat == 0;
-    if movementType == 1
+    if movementType == 2
         MVCFlexion = mean(maxEmgMatrix(75:110,:));
         movement = 'Flexion';
-    elseif movementType == 2
+    elseif movementType == 1
         MVCExtension = mean(maxEmgMatrix(75:110,:));
         movement = 'Extension';
     elseif movementType == 3

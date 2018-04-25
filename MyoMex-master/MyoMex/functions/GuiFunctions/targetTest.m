@@ -1,6 +1,6 @@
 %This is for the moving dot thing:
 
-function targetTest(handles1, handles3, handles4, handles5, handles6, handles7, m1, targetSet)
+function targetTest(handles1, handles4, handles5, handles6, handles7, m1, targetSet)
 
 load('ExtensionRegression.mat');
 load('FlexionRegression.mat');
@@ -13,6 +13,7 @@ imageExte = imread('url.png');
 imageFlex = imread('url2.png');
 imageRadi = imread('url3.png');
 imageUlna = imread('url4.png');
+imageThum = imread('url8.png');
 
 %Setup of the plot:
 plothandle = handles1;
@@ -20,7 +21,6 @@ imhandle1 = handles4;
 imhandle2 = handles5;
 imhandle3 = handles6;
 imhandle4 = handles7;
-imhandle5 = handles3;
 
     if ~isempty(plothandle);
         axes(plothandle);
@@ -36,10 +36,6 @@ imhandle5 = handles3;
         hold on;
         
         %%Adds all the images to the GUI:
-        axes(imhandle5)
-        images = image(imageRest);
-        axis off;
-        axis image;
         
         axes(imhandle1)
         image(imageFlex);
@@ -77,9 +73,9 @@ imhandle5 = handles3;
         gotPoint = 0;
         gotTime = 0;
         timeAtPoint = 1;
-        lim4green = 0.8;
+        youGoGirl = 0;
         firstTime = 1;
-        maxTime = 150; 
+        maxTime = 15; 
         startValue = [];
         stopValue = [];
         overshoot = [];
@@ -93,7 +89,7 @@ imhandle5 = handles3;
         prevValue = [0,0];
         lol = plot(plothandle,prevValue(1),prevValue(2),'b', 'Marker', 'o', ...
              'MarkerFaceColor','r');
-        lol2 = plot(plothandle,prevValue(1),prevValue(2),'k',' Marker', 'o', ...
+        lol2 = plot(plothandle,prevValue(1),prevValue(2),'k','Marker', 'o', ...
             'MarkerFaceColor','k');
          
         %Decides what targetset to use:
@@ -293,46 +289,8 @@ imhandle5 = handles3;
                     buffer2 = buffer2 + 1;
                 end
                 
-                %Sets gotPoint to 1 if were inside the target area
-                gotPoint = inpolygon(outputValue(end,1),outputValue(end,2),targetAreaX,targetAreaY);
-                
-                %Starts the timer if the size is correct as well:
-                if gotPoint == 1 && dotLimit(1) <= outputValue(end,3) && dotLimit(2) >= outputValue(end,3) && gotTime == 0
-                    if firstTime == 1
-                        startTime = time;
-                    end
-                    gotTime = 1;
-                    overshoot(allPoint) = overshoot(allPoint)+1;
-                    startValue(allPoint) = length(outputValue);
-                    set(lol,'MarkerFaceColor','g');
-                    firstTime = 0;
-                    
-                %Resets if we get out of time again
-                elseif gotTime == 1 && (gotPoint == 0 || (dotLimit(1) >= outputValue(end,3) || dotLimit(2) <= outputValue(end,3)))
-                    gotTime = 0;
-                    set(lol,'MarkerFaceColor','r');
-                    firstTime = 1;
-                    
-                elseif gotPoint == 0
-                    set(lol,'MarkerFaceColor','r');
-                    
-                %Confirms the target is reached if we're still within the
-                %area w. the correct size after "timeAtPoint":
-                elseif gotPoint == 1 && dotLimit(1) <= outputValue(end,3) && dotLimit(2) >= outputValue(end,3) ...
-                        && gotTime == 1 && time-startTime >= timeAtPoint
-                    onPoint = 1;
-                    firstTime = 1;
-                    gotTime = 0;
-                    timeEnd(allPoint) = time;
-                    gotIt(allPoint) = 1;
-                    allPoint = allPoint+1;
-                    delete(h_target);
-                    delete(h_target2);
-                    stopValue(allPoint) = length(outputValue);
-                    set(lol,'MarkerFaceColor','r');
-                    
                 %Cancels the target if not reached before "maxTime":
-                elseif time-timeStart(allPoint) >= maxTime
+                if time-timeStart(allPoint) >= maxTime 
                     onPoint = 1;
                     firstTime = 1;
                     gotTime = 0;
@@ -348,6 +306,51 @@ imhandle5 = handles3;
                     delete(h_target2);
                     set(lol,'MarkerFaceColor','r');
                 end
+                
+                %Sets gotPoint to 1 if were inside the target area
+                gotPoint = inpolygon(outputValue(end,1),outputValue(end,2),targetAreaX,targetAreaY);
+                
+                %Starts the timer if the size is correct as well:
+                if gotPoint == 1 && dotLimit(1) <= outputValue(end,3) && dotLimit(2) >= outputValue(end,3) && gotTime == 0
+                    if firstTime == 1
+                        startTime = time;
+                    end
+                    gotTime = 1;
+                    try
+                        overshoot(allPoint) = overshoot(allPoint)+1;
+                        startValue(allPoint) = length(outputValue);
+                    catch
+                        overshoot(end) = overshoot(end)+1;
+                        startValue(end) = length(outputValue);
+                    end
+                    set(lol,'MarkerFaceColor','g');
+                    firstTime = 0;
+                    
+                %Resets if we get out of time again
+                elseif gotTime == 1 && (gotPoint == 0 || (dotLimit(1) >= outputValue(end,3) || dotLimit(2) <= outputValue(end,3)))
+                    gotTime = 0;
+                    set(lol,'MarkerFaceColor','r');
+                    firstTime = 1;
+                    
+                elseif gotPoint == 0 && time-youGoGirl >= 1
+                    set(lol,'MarkerFaceColor','r');
+                    
+                %Confirms the target is reached if we're still within the
+                %area w. the correct size after "timeAtPoint":
+                elseif gotPoint == 1 && dotLimit(1) <= outputValue(end,3) && dotLimit(2) >= outputValue(end,3) ...
+                        && gotTime == 1 && time-startTime >= timeAtPoint
+                    onPoint = 1;
+                    firstTime = 1;
+                    gotTime = 0;
+                    timeEnd(allPoint) = time;
+                    gotIt(allPoint) = 1;
+                    allPoint = allPoint+1;
+                    delete(h_target);
+                    delete(h_target2);
+                    stopValue(allPoint) = length(outputValue);
+                    set(lol,'MarkerFaceColor','b');
+                    youGoGirl = time;
+                end
             end
         end
     end
@@ -355,6 +358,13 @@ imhandle5 = handles3;
     %Calculates a few results:
     %gotIt = gotIt(1:2:end);
     timeDif = timeEnd-timeStart;
+    
+    axes(plothandle)
+    imshow(imageThum);
+    axis off;
+    axis image;
+    
+    pause(4);
     
     %Saving everything that we need to calculate the fitt's law results:
     save('overshoot.mat','overshoot');

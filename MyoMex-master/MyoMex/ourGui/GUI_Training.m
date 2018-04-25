@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 23-Apr-2018 09:53:09
+% Last Modified by GUIDE v2.5 25-Apr-2018 10:43:10
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -69,7 +69,6 @@ set(handles.text14,'Visible','Off');
 set(handles.text15,'Visible','Off');
 set(handles.text16,'Visible','Off');
 set(handles.text18,'Visible','Off');
-hideAxesFunc(handles.regressionBarPlot,'off');
 hideAxesFunc(handles.axes1,'off');
 hideAxesFunc(handles.axes4,'off');
 hideAxesFunc(handles.axes6,'off');
@@ -111,17 +110,15 @@ function start_MVC_Callback(hObject, eventdata, handles)
 
 hideAxesFunc(handles.axes1,'on');
 hideAxesFunc(handles.axes4,'on');
-hideAxesFunc(handles.regressionBarPlot,'on');
 
 [m1,mm] = initDevice();
 startRecording(m1);
 movementType = get(handles.listbox1,'value');
-findMVC(handles.axes1, handles.axes4, handles.regressionBarPlot, m1, 0, movementType);
+findMVC(handles.axes1, handles.axes4, m1, 0, movementType);
 stopRecording(m1,mm);
 
 hideAxesFunc(handles.axes1,'off');
 hideAxesFunc(handles.axes4,'off');
-hideAxesFunc(handles.regressionBarPlot,'off');
 
 
 % --- Executes on button press in compassClassification.
@@ -178,16 +175,14 @@ function Fraction_MVC_Callback(hObject, eventdata, handles)
 %Finds the axes we're going to use:
 hideAxesFunc(handles.axes1,'on');
 hideAxesFunc(handles.axes4,'on');
-hideAxesFunc(handles.regressionBarPlot,'on');
 
 [m1,mm] = initDevice();
 startRecording(m1);
-findMVC(handles.axes1,handles.axes4,handles.regressionBarPlot, m1, 1, 0);
+findMVC(handles.axes1,handles.axes4, m1, 1, 0);
 stopRecording(m1,mm);
 
 hideAxesFunc(handles.axes1,'off');
 hideAxesFunc(handles.axes4,'off');
-hideAxesFunc(handles.regressionBarPlot,'off');
 
 
 % --- Executes on button press in plotbutton.
@@ -240,7 +235,6 @@ function TargetTest_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 hideAxesFunc(handles.axes1,'on');
-hideAxesFunc(handles.axes4,'on');
 hideAxesFunc(handles.axes6,'on');
 hideAxesFunc(handles.axes7,'on');
 hideAxesFunc(handles.axes8,'on');
@@ -249,12 +243,11 @@ hideAxesFunc(handles.axes9,'on');
 [m1,mm] = initDevice();
 startRecording(m1);
 targetSet = get(handles.listbox3,'value');
-targetTest(handles.axes1,handles.axes4, ...
+targetTest(handles.axes1, ...
     handles.axes6, handles.axes7, handles.axes8, handles.axes9, m1,targetSet);
 stopRecording(m1,mm);
 
 hideAxesFunc(handles.axes1,'off');
-hideAxesFunc(handles.axes4,'off');
 hideAxesFunc(handles.axes6,'off');
 hideAxesFunc(handles.axes7,'off');
 hideAxesFunc(handles.axes8,'off');
@@ -372,3 +365,10 @@ set(handles.text14,'Visible','Off');
 set(handles.text15,'Visible','Off');
 set(handles.text16,'Visible','Off');
 set(handles.text18,'Visible','Off');
+
+
+% --------------------------------------------------------------------
+function Untitled_1_Callback(hObject, eventdata, handles)
+% hObject    handle to Untitled_1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)

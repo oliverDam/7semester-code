@@ -18,9 +18,9 @@ function trapezoidPlot(sliderValue, handles, handles2, m1, movementType)
     end
 
     if movementType == 1
-        movement = 'Flexion';
-    elseif movementType == 2
         movement = 'Extension';
+    elseif movementType == 2
+        movement = 'Flexion';
     elseif movementType == 3
         movement = 'Radial';
     elseif movementType == 4
@@ -56,11 +56,7 @@ if isError ~= 1
         ax = gca;
         ax.Visible = 'on';
         trapezoid = plot(x,y);
-        if movementType == 7
-            xlim([0 45000]);
-        else
-            xlim([0 15000]);
-        end
+        xlim([0 15000]);
         ylim([0 1]);
         hold on;
         xlabel('Time in ms');
@@ -153,7 +149,7 @@ delete(trapezoid);
 %%Saving with a specific name instead of the same for every case:
 Intensity = num2str(moveIntense*100);
 
-if movementType == 1
+if movementType == 2
     if sliderValue == 1
         EmgFlexion40 = EmgMatrix;
     elseif sliderValue == 2
@@ -162,7 +158,7 @@ if movementType == 1
         EmgFlexion70 = butterFilter(EmgMatrix);
     end
     
-elseif movementType == 2
+elseif movementType == 1
     if sliderValue == 1
         EmgExtension40 = butterFilter(EmgMatrix);
     elseif sliderValue == 2

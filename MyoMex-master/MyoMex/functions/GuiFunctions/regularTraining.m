@@ -24,6 +24,7 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
     images(8) = {imread('3.png')};
     images(9) = {imread('2.png')};
     images(10) = {imread('1.png')};
+    images(11) = {imread('url9.png')};
     
     pause(0.1);
 
@@ -39,7 +40,8 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
         axis auto;
         whyTho = [1 1 1 1 1 1 1];
         someBars = bar(plothandle, whyTho, 'b');
-        ylabel('Confidence Score in %')
+        ylabel('Confidence Score in %');
+        xlabel('');
         ylim([0 100]);
         str = {' ',' ',' ',' ',' ',' ',' '};
         set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
@@ -68,7 +70,7 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
         stopNow = 0;
         i = 1;
         j = 1;
-        numLvl = [0.15 0.35 0.55 0.75; 0.25 0.45 0.65 0.85];
+        numLvl = [0.14 0.34 0.54 0.74; 0.26 0.46 0.66 0.86];
         strLvl = {'15-25' '35-45' '55-65' '75-85'};
         lim4green = [numLvl(1,1),numLvl(2,1)];
         
@@ -99,30 +101,6 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
                     time = m1.timeEMG;
                     
                     if time-thisTime >= moveTime
-                        %Here comes the pause:
-                        axes(imagehandle);
-                        curImg = cell2mat(images(7));
-                        image(curImg);
-                        axis off;
-                        axis image;
-                        set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',[0 0 0 0 0 0 0]);
-                        pause(pauseTime-3);
-                        curImg = cell2mat(images(8));
-                        image(curImg);
-                        axis off;
-                        axis image;
-                        pause(1);
-                        curImg = cell2mat(images(9));
-                        image(curImg);
-                        axis off;
-                        axis image;
-                        pause(1);
-                        curImg = cell2mat(images(10));
-                        image(curImg);
-                        axis off;
-                        axis image;
-                        pause(1);
-
                         %Avoids problems with matrixes and stuff. Stay in
                         %the matrix!
                         if i == 6
@@ -134,6 +112,40 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
                             end
                         else
                             i = i+1;
+                        end
+                        
+                        if stopNow == 0
+                            %Here comes the pause:
+                            axes(imagehandle);
+                            curImg = cell2mat(images(7));
+                            image(curImg);
+                            axis off;
+                            axis image;
+                            set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',[0 0 0 0 0 0 0]);
+                            pause(pauseTime-3);
+                            axes(imagehandle);
+                            curImg = cell2mat(images(8));
+                            image(curImg);
+                            axis off;
+                            axis image;
+                            pause(1);
+                            curImg = cell2mat(images(9));
+                            image(curImg);
+                            axis off;
+                            axis image;
+                            pause(1);
+                            curImg = cell2mat(images(10));
+                            image(curImg);
+                            axis off;
+                            axis image;
+                            pause(1);
+                        else
+                            axes(plothandle);
+                            curImg = cell2mat(images(11));
+                            imshow(curImg);
+                            axis off;
+                            axis image;
+                            pause(5);
                         end
                         
                         %Then we update the images and stuff!                        
