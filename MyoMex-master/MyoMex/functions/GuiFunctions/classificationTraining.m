@@ -65,7 +65,7 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
         time = 0;
         windowSize = 40;
         maxTime = 720;
-        moveTime = 30;
+        moveTime = 40;
         pauseTime = 10;
         thisTime = -10;
         stopNow = 0;

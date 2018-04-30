@@ -78,7 +78,7 @@ imhandle4 = handles7;
         maxTime = 15; 
         startValue = [];
         stopValue = [];
-        overshoot = [];
+        overshots = [];
         timeDif = [];
         gotIt = [];
 
@@ -96,18 +96,21 @@ imhandle4 = handles7;
         if targetSet == 1
             randomOrder = (1:16);
         elseif targetSet == 2
-            randomOrder = [1,4,3,5,6,8,2,9,7,16,10,12,13,11,15,14];
+            randomOrder = [16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1];
         elseif targetSet == 3
-            randomOrder = [4,5,1,7,6,3,10,14,13,16,8,11,2,15,12,9];
+            randomOrder = [8,7,6,5,4,3,2,1,9,10,11,12,13,14,15,16];
         elseif targetSet == 4
-            randomOrder = [6,11,16,1,4,15,13,5,2,12,14,7,3,8,10,9];
+            randomOrder = [9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8];
         end
         
-        plotData = ...
-            [3,0,2,-1,-4,2,-5,1,6,-2,0,4,-4,-6,1,7 ...
-            ;1,4,-3,4,0,-4,-6,2,5,-3,0,-4,2,7,1,4];
+        
+        plotData = 3.5*[1 0.5 0 -0.5 -1 -0.5 0 0.5 2 1 0 -1 -2 -1 0 1; ...
+            0 0.5 1 0.5 0 -0.5 -1 -0.5 0 1 2 1 0 -1 -2 -1];
+%         plotData = ...
+%             [3,0,2,-1,-4,2,-5,1,6,-2,0,4,-4,-6,1,7 ...
+%             ;1,4,-3,4,0,-4,-6,2,5,-3,0,-4,2,7,1,4];
         %NewSizes:
-        SizeOfDot = [1 0.6 0.7 0.9 1.2 1.2 0.8 1.2 1 1.2 0.9 0.6 0.8 1.2 1.1 1.3];
+        SizeOfDot = [0.8 1.2 1 1.4 1.2 1 0.8 1.2 1 1.2 0.8 1.4 1.2 1 0.8 1.2];
         %OldData:
         %SizeOfDot = [1 0.5 0.4 0.9 1.2 1.4 0.7 1.3 1 1.6 0.9 0.4 0.8 1.3 1.1 1.5];
 
@@ -156,7 +159,7 @@ imhandle4 = handles7;
                     
                     startPoint(allPoint,:) = outputValue(end,:); %Where is the curser placed now and what is the size of it
                     timeStart(allPoint) = time; %Time when the new target shows up
-                    overshoot(allPoint) = -1; %Has to be -1 to ensure 0 overshoots if target is reached in first try
+                    overshots(allPoint) = -1; %Has to be -1 to ensure 0 overshotss if target is reached in first try
                     onPoint = 0;
                     tresVal = 0.15;
                 end
@@ -296,10 +299,10 @@ imhandle4 = handles7;
                     gotTime = 0;
                     timeEnd(allPoint) = time;
                     gotIt(allPoint) = 0;
-                    if overshoot(allPoint) == -1
-                        overshoot(allPoint) = 0;
+                    if overshots(allPoint) == -1
+                        overshots(allPoint) = 0;
                     else
-                        overshoot(allPoint) = overshoot(allPoint);
+                        overshots(allPoint) = overshots(allPoint);
                     end
                     allPoint = allPoint+1;
                     delete(h_target);
@@ -317,10 +320,10 @@ imhandle4 = handles7;
                     end
                     gotTime = 1;
                     try
-                        overshoot(allPoint) = overshoot(allPoint)+1;
+                        overshots(allPoint) = overshots(allPoint)+1;
                         startValue(allPoint) = length(outputValue);
                     catch
-                        overshoot(end) = overshoot(end)+1;
+                        overshots(end) = overshots(end)+1;
                         startValue(end) = length(outputValue);
                     end
                     set(lol,'MarkerFaceColor','g');
@@ -371,7 +374,7 @@ imhandle4 = handles7;
     pause(4);
     
     %Saving everything that we need to calculate the fitt's law results:
-    save('overshoot.mat','overshoot');
+    save('overshots.mat','overshots');
     save('timeDif.mat','timeDif');
     save('startValue.mat','startValue');
     save('stopValue.mat','stopValue');

@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 25-Apr-2018 10:43:10
+% Last Modified by GUIDE v2.5 30-Apr-2018 10:05:37
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -372,3 +372,21 @@ function Untitled_1_Callback(hObject, eventdata, handles)
 % hObject    handle to Untitled_1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton12.
+function pushbutton12_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton12 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+buildAll();
+tempImg = imread('url8.png');
+hideAxesFunc(handles.axes1,'on');
+handle = handles.axes1;
+axes(handle);
+lol = image(tempImg);
+pause(2);
+hideAxesFunc(handles.axes1,'off');
+delete(lol);
+delete(handle);
+
