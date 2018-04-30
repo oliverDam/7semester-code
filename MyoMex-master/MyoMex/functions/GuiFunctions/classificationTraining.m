@@ -24,10 +24,10 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
     images(8) = {imread('3.png')};
     images(9) = {imread('2.png')};
     images(10) = {imread('1.png')};
-    images(11) = {imread('url8.png');
+    images(11) = {imread('url8.png')};
     
     pause(0.1);
-
+    
     plothandle = handles;
     texthandle = handles2;
     imagehandle = handles3;
@@ -65,20 +65,21 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
         time = 0;
         windowSize = 40;
         maxTime = 720;
-        moveTime = 40;
+        moveTime = 30;
         pauseTime = 10;
         thisTime = -10;
         stopNow = 0;
         i = 1;
         j = 1;
-        numLvl = [0.14 0.34 0.54 0.74; 0.26 0.46 0.66 0.86];
-        strLvl = {'15-25' '35-45' '55-65' '75-85'};
+        numLvl = rot90([0.14 0.34 0.54 0.74; 0.26 0.46 0.66 0.86],2);
+        strLvl = rot90({'15-25' '35-45' '55-65' '75-85'},2);
         lim4green = [numLvl(1,1),numLvl(2,1)];
+        randomOrder = randperm(6);
         
         set(texthandle2,'String',strLvl(j));
         
         axes(imagehandle);
-        curImg = cell2mat(images(i));
+        curImg = cell2mat(images(randomOrder(i)));
         image(curImg);
         axis off;
         axis image;
@@ -107,6 +108,7 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
                         %Avoids problems with matrixes and stuff. Stay in
                         %the matrix!
                         if i == 6
+                            randomOrder = randperm(6);
                             i = 1;
                             j = j+1;
                             if j == 5
@@ -143,7 +145,7 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
                             pause(1);
                             %Then we update the images and stuff!                        
                             axes(imagehandle);
-                            curImg = cell2mat(images(i));
+                            curImg = cell2mat(images(randomOrder(i)));
                             image(curImg);
                             axis off;
                             axis image;
@@ -203,7 +205,7 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
                     set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',100*classToPlot);
                     drawnow;
                     
-                    if lim4green(2) >= max(RVTP) && max(RVTP) >= lim4green(1) && classToPlot(i) >= 0.8
+                    if lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8
                     set(texthandle,'BackgroundColor','g');
                 else
                     set(texthandle,'BackgroundColor','r');
@@ -263,7 +265,7 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
                     set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',100*classToPlot);
                     drawnow;
 
-                if lim4green(2) >= max(RVTP) && max(RVTP) >= lim4green(1) && classToPlot(i) >= 0.8
+                if lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8
                     set(texthandle,'BackgroundColor','g');
                 else
                     set(texthandle,'BackgroundColor','r');

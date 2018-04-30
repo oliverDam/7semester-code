@@ -31,4 +31,8 @@ else
     predValue = [0,0,0];
 end
 
+if max(predValue) >= 1
+    predValue = rescale(predValue);
+end 
+
 output = [predValue, threshold];
