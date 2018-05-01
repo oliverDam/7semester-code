@@ -2,7 +2,7 @@
 % the compass plot. This is a training plot which means we don't have any
 % targets appearing at all.
 
-function classificationTraining(handles,handles2,handles3,handles4, m1)
+function regularTraining(handles,handles2,handles3,handles4, m1)
 
 
     load('baseline.mat');
@@ -68,6 +68,8 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
         pauseTime = 10;
         thisTime = -10;
         stopNow = 0;
+        startTime = 0;
+        gotIt = 0;
         i = 1;
         j = 1;
         numLvl = rot90([0.14 0.34 0.54 0.74; 0.26 0.46 0.66 0.86],2);
@@ -75,6 +77,9 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
         lim4green = [numLvl(1,1),numLvl(2,1)];
         set(texthandle2,'String',strLvl(j));
         randomOrder = randperm(6);
+        stayStable = [];
+        stableTime = [];
+        gotBlue = 0;
         
         axes(imagehandle);
         curImg = cell2mat(images(randomOrder(i)));
@@ -158,6 +163,8 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
                         set(texthandle2,'String',strLvl(j));
                         lim4green = [numLvl(1,j),numLvl(2,j)];
                         thisTime = time;
+                        stayStable(randomOrder(i),j) = 0;
+                        stableTime(randomOrder(i),j) = 0;
                     end
                     
                     %Finds and filters the window we've selected
@@ -201,10 +208,20 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
                     set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
                     drawnow;
                     
-                    if lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8
-                        set(texthandle,'BackgroundColor','g');
+                    if lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime <= 1
+                    set(texthandle,'BackgroundColor','g');
+                        if gotIt == 0
+                            startTime = time;
+                            gotIt = 1;
+                        end
+                    elseif lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime >= 1
+                        set(texthandle,'BackgroundColor','b');
+                        stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
+                        stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);
                     else
                         set(texthandle,'BackgroundColor','r');
+                        gotIt = 0;
+                        startTime = time;
                     end
 
                     buffer1 = 0;
@@ -262,10 +279,24 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
                     set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
                     drawnow;
 
-                if lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8
+                if lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime <= 1
                     set(texthandle,'BackgroundColor','g');
+                    if gotIt == 0
+                        startTime = time;
+                        gotIt = 1;
+                    end
+                elseif lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime >= 1
+                    set(texthandle,'BackgroundColor','b');
+                    gotBlue = 1;
                 else
                     set(texthandle,'BackgroundColor','r');
+                    if gotBlue == 1
+                        stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
+                        stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);
+                        gotBlue = 0;
+                    end
+                    gotIt = 0;
+                    startTime = time;
                 end
                     
                     buffer2 = 0;
@@ -275,5 +306,7 @@ function classificationTraining(handles,handles2,handles3,handles4, m1)
             end
         end
     end
+    save('stayStable.mat','stayStable');
+    save('stableTime.mat','stableTime');
 end
                 

@@ -22,7 +22,7 @@ function varargout = GUI_Training(varargin)
 
 % Edit the above text to modify the response to help GUI_Training
 
-% Last Modified by GUIDE v2.5 30-Apr-2018 10:05:37
+% Last Modified by GUIDE v2.5 01-May-2018 10:23:37
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -390,3 +390,27 @@ hideAxesFunc(handles.axes1,'off');
 delete(lol);
 delete(handle);
 
+
+
+% --- Executes on button press in pushbutton13.
+function pushbutton13_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton13 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+hideAxesFunc(handles.axes1,'on');
+hideAxesFunc(handles.axes6,'on');
+hideAxesFunc(handles.axes7,'on');
+hideAxesFunc(handles.axes8,'on');
+hideAxesFunc(handles.axes9,'on');
+
+[m1,mm] = initDevice();
+startRecording(m1);
+targetTraining(handles.axes1, ...
+    handles.axes6, handles.axes7, handles.axes8, handles.axes9, m1);
+stopRecording(m1,mm);
+
+hideAxesFunc(handles.axes1,'off');
+hideAxesFunc(handles.axes6,'off');
+hideAxesFunc(handles.axes7,'off');
+hideAxesFunc(handles.axes8,'off');
+hideAxesFunc(handles.axes9,'off');
