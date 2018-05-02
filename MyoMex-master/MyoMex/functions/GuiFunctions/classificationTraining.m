@@ -78,8 +78,8 @@ function classificationTraining(handles,handles2,handles3, m1)
         pauseTime = 10;
         thisTime = -10;
         stopNow = 0;
-        stayStable = zeros(4,6);
-        stableTime = zeros(4,6);
+        stayStable = zeros(6,4);
+        stableTime = zeros(6,4);
         i = 1;
         j = 1;
         numLvl = rot90([0.14 0.34 0.54 0.74; 0.26 0.46 0.66 0.86],2);
@@ -231,20 +231,24 @@ function classificationTraining(handles,handles2,handles3, m1)
                     drawnow;
                     
                     if lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime <= 1
-                        set(someOtherBars,'facecolor','g');
-                        if gotIt == 0
-                            startTime = time;
-                            gotIt = 1;
-                        end
-                    elseif lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime >= 1
-                        set(someOtherBars,'facecolor','b');
+                    set(someOtherBars,'facecolor','g');
+                    if gotIt == 0
+                        startTime = time;
+                        gotIt = 1;
+                    end
+                elseif lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime >= 1
+                    set(someOtherBars,'facecolor','b');
+                    gotBlue = 1;
+                else
+                    set(someOtherBars,'facecolor','r');
+                    if gotBlue == 1
                         stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
                         stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);
-                    else
-                        set(someOtherBars,'facecolor','r');
-                        gotIt = 0;
-                        startTime = time;
+                        gotBlue = 0;
                     end
+                    gotIt = 0;
+                    startTime = time;
+                end
 
                     buffer1 = 0;
                 else 

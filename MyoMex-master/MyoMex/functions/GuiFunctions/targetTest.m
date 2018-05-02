@@ -31,6 +31,8 @@ imhandle4 = handles7;
         extra = plot(x,y);
         xlim(0.5*[-20 20]);
         ylim(0.5*[-20 20]);
+        xlabel('');
+        ylabel('');
         grid on;
         grid minor;
         hold on;
@@ -70,6 +72,7 @@ imhandle4 = handles7;
         onPoint = 1;
         radius = 1;
         outputValue = [0,0,30];
+        outputValue2 = [0,0,30];
         gotPoint = 0;
         gotTime = 0;
         timeAtPoint = 1;
@@ -111,7 +114,7 @@ imhandle4 = handles7;
 %             [3,0,2,-1,-4,2,-5,1,6,-2,0,4,-4,-6,1,7 ...
 %             ;1,4,-3,4,0,-4,-6,2,5,-3,0,-4,2,7,1,4];
         %NewSizes:
-        SizeOfDot = [0.8 1.2 1 1.4 1.2 1 0.8 1.2 1 1.2 0.8 1.4 1.2 1 0.8 1.2];
+        SizeOfDot = [0.8 1.2 1 1.3 1.2 1 0.8 1.2 1 1.2 0.8 1.3 1.2 1 0.8 1.2];
         startSize = [90 90 90 90 30 30 30 30 90 90 90 90 30 30 30 30];
         %OldData:
         %SizeOfDot = [1 0.5 0.4 0.9 1.2 1.4 0.7 1.3 1 1.6 0.9 0.4 0.8 1.3 1.1 1.5];
@@ -165,6 +168,7 @@ imhandle4 = handles7;
                     overshots(allPoint) = -1; %Has to be -1 to ensure 0 overshots if target is reached in first try
                     onPoint = 0;
                     tresVal = 0.15;
+                    outputValue2 = [outputValue2; outputValue];
                     outputValue = [0 0 startSize(allPoint)];
                 end
                 
@@ -325,10 +329,10 @@ imhandle4 = handles7;
                     gotTime = 1;
                     try
                         overshots(allPoint) = overshots(allPoint)+1;
-                        startValue(allPoint) = length(outputValue);
+                        startValue(allPoint) = length(outputValue2)+length(outputValue);
                     catch
                         overshots(end) = overshots(end)+1;
-                        startValue(end) = length(outputValue);
+                        startValue(end) = length(outputValue2)+length(outputValue);
                     end
                     set(lol,'MarkerFaceColor','g');
                     firstTime = 0;
@@ -354,7 +358,7 @@ imhandle4 = handles7;
                     allPoint = allPoint+1;
                     delete(h_target);
                     delete(h_target2);
-                    stopValue(allPoint) = length(outputValue);
+                    stopValue(allPoint) = length(outputValue2)+length(outputValue);
                     set(lol,'MarkerFaceColor','b');
                     youGoGirl = time;
                 end
@@ -365,6 +369,8 @@ imhandle4 = handles7;
     %Calculates a few results:
     %gotIt = gotIt(1:2:end);
     timeDif = timeEnd-timeStart;
+    lengthTravel(allPoint) = findLength(outputValue);
+    outputValue2 = [outputValue2; outputValue];
     
     delete(lol);
     delete(lol2);
@@ -385,5 +391,6 @@ imhandle4 = handles7;
     save('gotIt.mat','gotIt');
     save('EmgMatrix.mat','EmgMatrix');
     save('outputValue.mat','outputValue');
+    save('outputValue2.mat','outputValue2');
     save('lengthTravel.mat','lengthTravel');
 end

@@ -2,14 +2,15 @@ function [CR,ID,OS,PE,SD,TP] = fittsLawResults(targetSet)
 
 load('gotIt.mat');
 load('overshots.mat');
-load('outputValue.mat');
+load('lengthTravel.mat');
 load('startValue.mat');
 load('stopValue.mat');
 load('timeDif.mat');
+load('outputValue2.mat');
 
 CR = completionRate(gotIt,targetSet);
 ID = indexOfDifficulty(targetSet);
 OS = overshot(overshots,gotIt);%targetSet);
-PE = pathEfficiency(outputValue,targetSet);
-SD = stoppingDistance(startValue,stopValue,outputValue);
+PE = pathEfficiency(lengthTravel,targetSet);
+SD = stoppingDistance(startValue,stopValue,outputValue2);
 TP = throughput(timeDif,targetSet);
