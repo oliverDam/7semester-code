@@ -65,10 +65,6 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 %Removes some of the stuff from the gui:
-set(handles.text14,'Visible','Off');
-set(handles.text15,'Visible','Off');
-set(handles.text16,'Visible','Off');
-set(handles.text18,'Visible','Off');
 hideAxesFunc(handles.axes1,'off');
 hideAxesFunc(handles.axes4,'off');
 hideAxesFunc(handles.axes6,'off');
@@ -136,11 +132,8 @@ hideAxesFunc(handles.axes13,'on');
 hideAxesFunc(handles.axes14,'on');
 hideAxesFunc(handles.axes15,'on');
 hideAxesFunc(handles.axes16,'on');
+hideAxesFunc(handles.axes9,'on');
 hideAxesFunc(handles.axes4,'on');
-set(handles.text14,'Visible','on');
-set(handles.text15,'Visible','on');
-set(handles.text16,'Visible','on');
-set(handles.text18,'Visible','on');
 
 %Adds the images:
 imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
@@ -149,12 +142,13 @@ imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
 %Initiates the training:
 [m1,mm] = initDevice();
 startRecording(m1);
-classificationTraining(handles.axes1,handles.text14,handles.axes4,handles.text15, m1);
+classificationTraining(handles.axes1,handles.axes4,handles.axes9, m1);
 stopRecording(m1,mm);
 
 %Removes the axes:
 hideAxesFunc(handles.axes1,'off');
 hideAxesFunc(handles.axes4,'off');
+hideAxesFunc(handles.axes9,'off');
 hideAxesFunc(handles.axes10,'off');
 hideAxesFunc(handles.axes11,'off');
 hideAxesFunc(handles.axes12,'off');
@@ -162,10 +156,6 @@ hideAxesFunc(handles.axes13,'off');
 hideAxesFunc(handles.axes14,'off');
 hideAxesFunc(handles.axes15,'off');
 hideAxesFunc(handles.axes16,'off');
-set(handles.text14,'Visible','Off');
-set(handles.text15,'Visible','Off');
-set(handles.text16,'Visible','Off');
-set(handles.text18,'Visible','Off');
 
 % --- Executes on button press in Fraction_MVC.
 function Fraction_MVC_Callback(hObject, eventdata, handles)
@@ -338,10 +328,7 @@ hideAxesFunc(handles.axes15,'on');
 hideAxesFunc(handles.axes16,'on');
 hideAxesFunc(handles.axes1,'on');
 hideAxesFunc(handles.axes4,'on');
-set(handles.text14,'Visible','On');
-set(handles.text15,'Visible','On');
-set(handles.text16,'Visible','On');
-set(handles.text18,'Visible','On');
+hideAxesFunc(handles.axes9,'on');
 
 imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
     handles.axes13, handles.axes14, handles.axes15, handles.axes16);
@@ -349,7 +336,7 @@ imagesInTraining(handles.axes10,handles.axes11,handles.axes12, ...
 %Initiates the training:
 [m1,mm] = initDevice();
 startRecording(m1);
-regularTraining(handles.axes1,handles.text14,handles.axes4,handles.text15, m1);
+regularTraining(handles.axes1,handles.axes4,handles.axes9, m1);
 stopRecording(m1,mm);
 
 hideAxesFunc(handles.axes10,'off');
@@ -361,10 +348,7 @@ hideAxesFunc(handles.axes15,'off');
 hideAxesFunc(handles.axes16,'off');
 hideAxesFunc(handles.axes1,'off');
 hideAxesFunc(handles.axes4,'off');
-set(handles.text14,'Visible','Off');
-set(handles.text15,'Visible','Off');
-set(handles.text16,'Visible','Off');
-set(handles.text18,'Visible','Off');
+hideAxesFunc(handles.axes9,'off');
 
 
 % --------------------------------------------------------------------

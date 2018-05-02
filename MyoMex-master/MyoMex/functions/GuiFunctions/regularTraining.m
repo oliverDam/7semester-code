@@ -2,7 +2,7 @@
 % the compass plot. This is a training plot which means we don't have any
 % targets appearing at all.
 
-function regularTraining(handles,handles2,handles3,handles4, m1)
+function regularTraining(handles,handles2,handles3, m1)
 
 
     load('baseline.mat');
@@ -29,9 +29,8 @@ function regularTraining(handles,handles2,handles3,handles4, m1)
     pause(0.1);
 
     plothandle = handles;
-    texthandle = handles2;
-    imagehandle = handles3;
-    texthandle2 = handles4;
+    imagehandle = handles2;
+    barhandle = handles3;
 
     if ~isempty(plothandle)
         cla(plothandle);        
@@ -45,6 +44,17 @@ function regularTraining(handles,handles2,handles3,handles4, m1)
         ylim([0 100]);
         str = {' ',' ',' ',' ',' ',' ',' '};
         set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
+        hold on;
+        
+        cla(barhandle);
+        axes(barhandle);
+        axis on;
+        axis auto;
+        someOtherBars = barh(barhandle, [100], 'b');
+        ylabel('');
+        xlabel('');
+        xlim([0 100]);
+        ylim([0 2]);
         hold on;
         
         axes(imagehandle);
@@ -64,7 +74,7 @@ function regularTraining(handles,handles2,handles3,handles4, m1)
         time = 0;
         windowSize = 40;
         maxTime = 720;
-        moveTime = 30;
+        moveTime = 40;
         pauseTime = 10;
         thisTime = -10;
         stopNow = 0;
@@ -73,12 +83,18 @@ function regularTraining(handles,handles2,handles3,handles4, m1)
         i = 1;
         j = 1;
         numLvl = rot90([0.14 0.34 0.54 0.74; 0.26 0.46 0.66 0.86],2);
-        strLvl = rot90({'15-25' '35-45' '55-65' '75-85'},2);
+        strLvl = numLvl*100;
         lim4green = [numLvl(1,1),numLvl(2,1)];
-        set(texthandle2,'String',strLvl(j));
+        axes(barhandle);
+        minLine = line([74 74],[-1 4]);
+        maxLine = line([86 86],[-1 4]);        
+        set(minLine,'XData',[strLvl(1,j) strLvl(1,j)],...
+                                'YData',[-1 3]);
+        set(maxLine,'XData',[strLvl(2,j) strLvl(2,j)],...
+            'YData',[-1 3]);
         randomOrder = randperm(6);
-        stayStable = [];
-        stableTime = [];
+        stayStable = zeros(4,6);
+        stableTime = zeros(4,6);
         gotBlue = 0;
         
         axes(imagehandle);
@@ -160,7 +176,10 @@ function regularTraining(handles,handles2,handles3,handles4, m1)
                         image(curImg);
                         axis off;
                         axis image;
-                        set(texthandle2,'String',strLvl(j));
+                        set(minLine,'XData',[strLvl(1,j) strLvl(1,j)],...
+                                'YData',[-1 3]);
+                        set(maxLine,'XData',[strLvl(2,j) strLvl(2,j)],...
+                            'YData',[-1 3]);
                         lim4green = [numLvl(1,j),numLvl(2,j)];
                         thisTime = time;
                         stayStable(randomOrder(i),j) = 0;
@@ -203,23 +222,25 @@ function regularTraining(handles,handles2,handles3,handles4, m1)
                     
                     RVTP = mean(RV(len-2:len,:));
                     
+                    set(someOtherBars,'YData',100*sum(RVTP),'XData', [1]);
+                    
                     axes(plothandle);
                     set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',100*classToPlot);
                     set(gca, 'XTickLabel',str, 'XTick',1:numel(str));
                     drawnow;
                     
                     if lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime <= 1
-                    set(texthandle,'BackgroundColor','g');
+                    set(someOtherBars,'facecolor','g');
                         if gotIt == 0
                             startTime = time;
                             gotIt = 1;
                         end
                     elseif lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime >= 1
-                        set(texthandle,'BackgroundColor','b');
+                        set(someOtherBars,'facecolor','b');
                         stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
                         stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);
                     else
-                        set(texthandle,'BackgroundColor','r');
+                        set(someOtherBars,'facecolor','r');
                         gotIt = 0;
                         startTime = time;
                     end
@@ -272,7 +293,7 @@ function regularTraining(handles,handles2,handles3,handles4, m1)
                     
                     RVTP = mean(RV(len-2:len,:));
                     
-                    set(texthandle,'String',num2str(int8(100*sum(RVTP))));
+                    set(someOtherBars,'YData',100*sum(RVTP),'XData', [1]);
                     
                     axes(plothandle);
                     set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',100*classToPlot);
@@ -280,16 +301,16 @@ function regularTraining(handles,handles2,handles3,handles4, m1)
                     drawnow;
 
                 if lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime <= 1
-                    set(texthandle,'BackgroundColor','g');
+                    set(someOtherBars,'facecolor','g');
                     if gotIt == 0
                         startTime = time;
                         gotIt = 1;
                     end
                 elseif lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime >= 1
-                    set(texthandle,'BackgroundColor','b');
+                    set(someOtherBars,'facecolor','b');
                     gotBlue = 1;
                 else
-                    set(texthandle,'BackgroundColor','r');
+                    set(someOtherBars,'facecolor','r');
                     if gotBlue == 1
                         stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
                         stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);

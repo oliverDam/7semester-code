@@ -5,16 +5,18 @@ function trapezoidPlot(sliderValue, handles, handles2, m1, movementType)
 
     if sliderValue == 1
         moveIntense = 0.4;
+        y = [0.01, 0.01, moveIntense, moveIntense, 0.01 0.01];
     elseif sliderValue == 2 
         moveIntense = 0.5;
+        y = [0.01, 0.01, moveIntense, moveIntense, 0.01 0.01];
     elseif sliderValue == 3
         moveIntense = 0.7;
+        y = [0.01, 0.01, moveIntense, moveIntense, 0.01 0.01];
     end
     
     if movementType == 7
-        moveIntense = 0.05;
-    else
-        moveIntense = moveIntense;
+        moveIntense = 0;
+        y = [0, 0, moveIntense, moveIntense, 0, 0];
     end
 
     if movementType == 1
@@ -44,7 +46,6 @@ if isError ~= 1
     
     %Creates the trapezoid based on the slidervalue from the input.
         x = [0 2000 5000 10000 13000 15000];
-        y = [0.01, 0.01, moveIntense, moveIntense, 0.01 0.01];
     
     handleplot = handles2;
     plothandle = handles;

@@ -7,20 +7,15 @@ function findMVC(handles, handles2, m1, doWhat, movementType)
 pause(0.1);
     
 %Setup of the trapezoid:
-if doWhat == 0
     x = [0 2000 4000 7000 9000 15000];
-    y = [0.5, 0.5, 0.5, 0.5, 0.5 0.5];
-elseif doWhat == 1
-    x = [0 2000 4000 7000 9000 15000];
-    y = [0.01, 0.01, 0.01, 0.01, 0.01 0.01];
-end
+    y = [0, 0, 0, 0, 0, 0];
 
 %Required setup. Do NOT touch unless you want to screw every single thing
 %in the entire program up!
 plothandle = handles;
 plothandle2 = handles2;
 
-if ~isempty(plothandle);
+if ~isempty(plothandle)
     cla();
     axes(plothandle);
     plot(plothandle,x,y,'r');
@@ -111,7 +106,7 @@ if doWhat == 0;
 
     save(Name1,Name2);
     
-elseif doWhat == 1;
+elseif doWhat == 1
     baseline = mean(dataMatrix);
     save('baseline.mat','baseline');
 end
