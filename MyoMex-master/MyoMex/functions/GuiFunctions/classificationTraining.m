@@ -4,7 +4,8 @@
 
 function classificationTraining(handles,handles2,handles3, m1)
 
-
+    beep on;
+    %load('ech.mat');
     load('baseline.mat');
     load('MdlLinear.mat');
     load('ExtensionRegression.mat');
@@ -144,6 +145,7 @@ function classificationTraining(handles,handles2,handles3, m1)
                             axis off;
                             axis image;
                             set(someBars,'XData',[1 2 3 4 5 6 7],'Ydata',[0 0 0 0 0 0 0]);
+                            pause(7)
                             axes(imagehandle);
                             curImg = cell2mat(images(8));
                             image(curImg);
@@ -245,6 +247,8 @@ function classificationTraining(handles,handles2,handles3, m1)
                         stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
                         stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);
                         gotBlue = 0;
+                        beep
+                        %sound(ech,40000);
                     end
                     gotIt = 0;
                     startTime = time;
@@ -319,6 +323,8 @@ function classificationTraining(handles,handles2,handles3, m1)
                         stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
                         stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);
                         gotBlue = 0;
+                        beep
+                        %sound(ech,40000);
                     end
                     gotIt = 0;
                     startTime = time;

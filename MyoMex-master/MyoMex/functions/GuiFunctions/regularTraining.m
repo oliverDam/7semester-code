@@ -4,6 +4,7 @@
 
 function regularTraining(handles,handles2,handles3, m1)
 
+beep on;
 
     load('baseline.mat');
     load('MdlLinear.mat');
@@ -231,19 +232,24 @@ function regularTraining(handles,handles2,handles3, m1)
                     
                     if lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime <= 1
                     set(someOtherBars,'facecolor','g');
-                        if gotIt == 0
-                            startTime = time;
-                            gotIt = 1;
-                        end
-                    elseif lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime >= 1
-                        set(someOtherBars,'facecolor','b');
+                    if gotIt == 0
+                        startTime = time;
+                        gotIt = 1;
+                    end
+                elseif lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime >= 1
+                    set(someOtherBars,'facecolor','b');
+                    gotBlue = 1;
+                else
+                    set(someOtherBars,'facecolor','r');
+                    if gotBlue == 1
                         stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
                         stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);
-                    else
-                        set(someOtherBars,'facecolor','r');
-                        gotIt = 0;
-                        startTime = time;
+                        gotBlue = 0;
+                        beep;
                     end
+                    gotIt = 0;
+                    startTime = time;
+                end
 
                     buffer1 = 0;
                 else 
@@ -315,6 +321,7 @@ function regularTraining(handles,handles2,handles3, m1)
                         stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
                         stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);
                         gotBlue = 0;
+                        beep;
                     end
                     gotIt = 0;
                     startTime = time;

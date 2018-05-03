@@ -2,6 +2,8 @@
 
 function targetTest(handles1, handles4, handles5, handles6, handles7, m1, targetSet)
 
+beep on;
+
 load('ExtensionRegression.mat');
 load('FlexionRegression.mat');
 load('RadialRegression.mat');
@@ -361,6 +363,7 @@ imhandle4 = handles7;
                     stopValue(allPoint) = length(outputValue2)+length(outputValue);
                     set(lol,'MarkerFaceColor','b');
                     youGoGirl = time;
+                    beep
                 end
             end
         end
