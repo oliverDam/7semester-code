@@ -65,7 +65,7 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 %Removes some of the stuff from the gui:
-%hideAxesFunc(handles.axes1,'off');
+hideAxesFunc(handles.axes1,'off');
 hideAxesFunc(handles.axes4,'off');
 hideAxesFunc(handles.axes6,'off');
 hideAxesFunc(handles.axes7,'off');
@@ -365,10 +365,11 @@ function pushbutton12_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 buildAll();
 tempImg = imread('url8.png');
-hideAxesFunc(handles.axes1,'on');
 handle = handles.axes1;
 axes(handle);
 lol = image(tempImg);
+axis image;
+axis off;
 pause(2);
 hideAxesFunc(handles.axes1,'off');
 delete(lol);

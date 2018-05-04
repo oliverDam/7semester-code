@@ -2,7 +2,6 @@
 
 function targetTest(handles1, handles4, handles5, handles6, handles7, m1, targetSet)
 
-beep on;
 
 load('ExtensionRegression.mat');
 load('FlexionRegression.mat');
@@ -11,6 +10,7 @@ load('UlnarRegression.mat');
 load('FistRegression.mat');
 load('StretchRegression.mat');
 load('MdlLinear.mat');
+load('ding.mat');
 imageExte = imread('url.png');
 imageFlex = imread('url2.png');
 imageRadi = imread('url3.png');
@@ -363,7 +363,7 @@ imhandle4 = handles7;
                     stopValue(allPoint) = length(outputValue2)+length(outputValue);
                     set(lol,'MarkerFaceColor','b');
                     youGoGirl = time;
-                    beep
+                    sound(ding,40000);
                 end
             end
         end
@@ -396,4 +396,5 @@ imhandle4 = handles7;
     save('outputValue.mat','outputValue');
     save('outputValue2.mat','outputValue2');
     save('lengthTravel.mat','lengthTravel');
+    
 end

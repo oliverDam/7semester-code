@@ -4,8 +4,7 @@
 
 function classificationTraining(handles,handles2,handles3, m1)
 
-    beep on;
-    %load('ech.mat');
+    load('ding.mat');
     load('baseline.mat');
     load('MdlLinear.mat');
     load('ExtensionRegression.mat');
@@ -240,6 +239,9 @@ function classificationTraining(handles,handles2,handles3, m1)
                     end
                 elseif lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime >= 1
                     set(someOtherBars,'facecolor','b');
+                    if gotBlue == 0;
+                        sound(ding,40000);
+                    end
                     gotBlue = 1;
                 else
                     set(someOtherBars,'facecolor','r');
@@ -247,8 +249,6 @@ function classificationTraining(handles,handles2,handles3, m1)
                         stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
                         stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);
                         gotBlue = 0;
-                        beep
-                        %sound(ech,40000);
                     end
                     gotIt = 0;
                     startTime = time;
@@ -316,6 +316,9 @@ function classificationTraining(handles,handles2,handles3, m1)
                     end
                 elseif lim4green(2) <= sum(RVTP) && sum(RVTP) <= lim4green(1) && classToPlot(randomOrder(i)) >= 0.8 && time-startTime >= 1
                     set(someOtherBars,'facecolor','b');
+                    if gotBlue == 0;
+                        sound(ding,40000);
+                    end
                     gotBlue = 1;
                 else
                     set(someOtherBars,'facecolor','r');
@@ -323,8 +326,6 @@ function classificationTraining(handles,handles2,handles3, m1)
                         stayStable(randomOrder(i),j) = stayStable(randomOrder(i),j)+1;
                         stableTime(randomOrder(i),j) = stableTime(randomOrder(i),j)+(startTime-time);
                         gotBlue = 0;
-                        beep
-                        %sound(ech,40000);
                     end
                     gotIt = 0;
                     startTime = time;
