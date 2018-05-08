@@ -24,7 +24,7 @@ function regularTraining(handles,handles2,handles3, m1)
     images(8) = {imread('3.png')};
     images(9) = {imread('2.png')};
     images(10) = {imread('1.png')};
-    images(11) = {imread('url9.png')};
+    images(11) = {imread('url8.png')};
     
     pause(0.1);
 
