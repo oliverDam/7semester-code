@@ -1,4 +1,4 @@
-function [output] = createTargetset(targetSet)
+function [output, randomOrder] = createTargetset(targetSet)
 
 %What targetset did the 
 if targetSet == 1

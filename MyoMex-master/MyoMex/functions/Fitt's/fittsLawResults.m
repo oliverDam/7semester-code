@@ -14,3 +14,11 @@ OS = overshot(overshots,gotIt);%targetSet);
 PE = pathEfficiency(lengthTravel,targetSet);
 SD = stoppingDistance(startValue,stopValue,outputValue2);
 TP = throughput(timeDif,targetSet);
+
+clear gotIt;
+clear overshots;
+clear lengthTravel;
+clear startValue;
+clear stopValue;
+clear timeDif;
+clear outputValue2;
