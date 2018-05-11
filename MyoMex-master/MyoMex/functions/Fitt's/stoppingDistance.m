@@ -1,10 +1,10 @@
 function [output] = stoppingDistance(startValue,stopValue,outputValue2)
 
-zStop = zeros(1,17-length(stopValue))
-zStart = zeros(1,16-length(startValue))
+zStop = zeros(1,17-length(stopValue));
+zStart = zeros(1,16-length(startValue));
 
-stopValue = [stopValue,zStop]
-startValue = [startValue,zStart]
+stopValue = [stopValue,zStop];
+startValue = [startValue,zStart];
 
 for i=1:length(startValue)
     if stopValue(i+1) == 0

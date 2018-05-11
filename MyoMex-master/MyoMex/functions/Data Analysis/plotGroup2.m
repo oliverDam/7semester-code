@@ -58,21 +58,36 @@ TP1 = [TP1, TP];
 
 figure;
 subplot(2,3,1);
-plot(mean(CR1,2),'-o')
+plot(100*mean(CR1,2),'-o');
+ylabel('Completion Rate in %');
+xlabel('Test Number');
+xlim([1 4]);
 title('Completion Rate - Group 2')
 
 subplot(2,3,2);
 plot(mean(OS1,2),'-o');
+ylabel('Overshoots');
+xlabel('Test Number');
+xlim([1 4]);
 title('Overshoot - Group 2')
 
 subplot(2,3,3);
 plot(mean(PE1,2),'-o');
+ylabel('Path Efficiency');
+xlabel('Test Number');
+xlim([1 4]);
 title('Path Efficiency - Group 2')
 
 subplot(2,3,4);
 plot(mean(SD1,2),'-o');
+ylabel('Stopping Distance');
+xlabel('Test Number');
+xlim([1 4]);
 title('Stopping Distance - Group 2')
 
 subplot(2,3,5);
 plot(mean(TP,2),'-o');
+ylabel('Throughput');
+xlabel('Test Number');
+xlim([1 4]);
 title('Throughput - Group 2');
