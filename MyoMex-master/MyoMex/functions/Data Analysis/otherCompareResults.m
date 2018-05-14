@@ -1,14 +1,26 @@
-function otherCompareResults(feature1, feature2)
+function otherCompareResults(feature1, feature2,rotatez,numOfCells)
 
-feature11 = feature1(1,1:5);
-feature12 = feature1(2,1:5);
-feature13 = feature1(3,1:5);
-feature14 = feature1(4,1:5);
-feature21 = feature2(1,1:5);
-feature22 = feature2(2,1:5);
-feature23 = feature2(3,1:5);
-feature24 = feature2(4,1:5);
+feature = [];
 
-[p,~,stats] = friedman([feature11' feature12' feature13' feature14' feature21' feature22' feature23' feature24']);
+if rotatez == 1
+    for i=1:size(feature1,1)
+        feature = [feature, feature1(i,:)'];
+    end
 
-results = multcompare(stats,'CType','bonferroni');
+    for i=1:size(feature2,1)
+        feature = [feature, feature2(i,:)'];
+    end
+else
+    feature = [feature1,feature2];
+end
+
+[p,~,stats] = friedman([feature],numOfCells)
+
+results = multcompare(stats,'CType','hsd');
+
+%KRUSKAUVALLIS
+%IF GOOD = 2ANOVA
+%OTHERWISE FRIEDMAN - GROUP1 VS GROUP2 
+%PLOT STD AS WELL
+%HSD
+%Niel hookson test - paired test

@@ -2,37 +2,34 @@
 
 function [] = getAnswers()
 
-[CR1,OS1,PE1,SD1,TP1] = plotGroup1;
-[CR2,OS2,PE2,SD2,TP2] = plotGroup2;
+doPlot = 0;
+doCompare = 1;
 
-otherCompareResults(CR1,CR2);
-otherCompareResults(OS1,OS2);
-otherCompareResults(PE1,PE2);
-otherCompareResults(SD1,SD2);
-otherCompareResults(TP1,TP2);
+[CR1,OS1,PE1,SD1,TP1,CR2,OS2,PE2,SD2,TP2,trainResult1,trainResult2] = plotGroup(doPlot);
 
-% 
-% resultsCR1 = compareResults(CR1, CR2, 1);
-% resultsCR2 = compareResults(CR1, CR2, 2);
-% resultsCR3 = compareResults(CR1, CR2, 3);
-% resultsCR4 = compareResults(CR1, CR2, 4);
-% 
-% resultsOS1 = compareResults(OS1, OS2, 1);
-% resultsOS2 = compareResults(OS1, OS2, 2);
-% resultsOS3 = compareResults(OS1, OS2, 3);
-% resultsOS4 = compareResults(OS1, OS2, 4);
-% 
-% resultsPE1 = compareResults(PE1, PE2, 1);
-% resultsPE2 = compareResults(PE1, PE2, 2);
-% resultsPE3 = compareResults(PE1, PE2, 3);
-% resultsPE4 = compareResults(PE1, PE2, 4);
-% 
-% resultsSD1 = compareResults(SD1, SD2, 1);
-% resultsSD2 = compareResults(SD1, SD2, 2);
-% resultsSD3 = compareResults(SD1, SD2, 3);
-% resultsSD4 = compareResults(SD1, SD2, 4);
-% 
-% resultsTP1 = compareResults(TP1, TP2, 1);
-% resultsTP2 = compareResults(TP1, TP2, 2);
-% resultsTP3 = compareResults(TP1, TP2, 3);
-% resultsTP4 = compareResults(TP1, TP2, 4);
+if doCompare == 1
+    [pTestCR,pTCRO] = compareStartToEnd(CR1);
+    [pContCR,pCCRO] = compareStartToEnd(CR2);
+    [pTestOS,pTOSO] = compareStartToEnd(OS1);
+    [pContOS,pCOSO] = compareStartToEnd(OS2);
+    [pTestPE,pTPEO] = compareStartToEnd(PE1);
+    [pContPE,pCPEO] = compareStartToEnd(PE2);
+    [pTestSD,pTSDO] = compareStartToEnd(SD1);
+    [pContSD,pCSDO] = compareStartToEnd(SD2);
+    [pTestTP,pTTPO] = compareStartToEnd(TP1);
+    [pContTP,pCTPO] = compareStartToEnd(TP2);
+    
+    pPairCR = comparePairwise(CR1,CR2);
+    pPairOS = comparePairwise(OS1,OS2);
+    pPairPE = comparePairwise(PE1,PE2);
+    pPairSD = comparePairwise(SD1,SD2);
+    pPairTP = comparePairwise(TP1,TP2);
+    
+    [pTestTrain,pTTO] = compareStartToEnd(setupTrainResult(trainResult1));
+    [pContTrain,pCTO] = compareStartToEnd(setupTrainResult(trainResult2));
+    
+    pPairTrain = comparePairwise(setupTrainResult(trainResult1),... 
+        setupTrainResult(trainResult2));
+    
+    
+end
