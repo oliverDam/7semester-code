@@ -2,10 +2,10 @@
 
 function [] = getAnswers()
 
-doPlot = 1;
-doCompare = 0;
+doPlot = 0;
+doCompare = 1;
 
-[CR1,OS1,PE1,SD1,TP1,CR2,OS2,PE2,SD2,TP2,trainResult1,trainResult2] = plotGroup(0);
+[CR1,OS1,PE1,SD1,TP1,CR2,OS2,PE2,SD2,TP2,trainResult1,trainResult2] = plotGroup(doPlot);
 
 [~] = improvementBetweenSessions(CR1,OS1,PE1,SD1,TP1,CR2,OS2,PE2,SD2,TP2,doPlot);
 

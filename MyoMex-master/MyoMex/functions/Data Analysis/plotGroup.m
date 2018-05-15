@@ -1,6 +1,6 @@
 function [CR1,OS1,PE1,SD1,TP1,CR2,OS2,PE2,SD2,TP2,trainResult1,trainResult2] = plotGroup(doPlot)
 
-%% Group 1:
+%% Test Group:
 CR1 = [];
 OS1 = [];
 PE1 = [];
@@ -76,21 +76,9 @@ TP1 = [TP1, TP];
 L = length(CR1);
 i = 1;
 
-while i <= L
-    for j=1:size(CR1,1)
-        if CR1(j,i) == 0 || OS1(j,i) == 100
-            OS1(:,i) = [];
-            PE1(:,i) = [];
-            SD1(:,i) = [];
-            TP1(:,i) = [];
-            L = L-1;
-        end
-    end
-    i = i+1;
-end
+OS1 = [OS1(:,[1 2 3 5 8])];
 
-
-%% Group 2:
+%% Control Group:
 CR2 = [];
 OS2 = [];
 PE2 = [];
@@ -166,18 +154,7 @@ TP2 = [TP2, TP];
 L = length(CR2);
 i = 1;
 
-while i <= L
-    for j=1:size(CR2,1)
-        if CR2(j,i) == 0
-            OS2(:,i) = [];
-            PE2(:,i) = [];
-            SD2(:,i) = [];
-            TP2(:,i) = [];
-            L = L-1;
-        end
-    end
-    i = i+1;
-end
+OS2 = [OS2(:,[1 2 4 7 8])]
 
 if doPlot == 1
 
@@ -188,60 +165,60 @@ if doPlot == 1
     err2 = 100*std(CR2');
     %Plotting stuff
     figure;
-    errorbar(100*mean(CR1,2),err1,'-o','color','r');
+    errorbar([1.05 2.05 3.05 4.05],100*mean(CR1,2),err1,'-o','color','r');
     hold on;
-    errorbar(100*mean(CR2,2),err2,'-o','color','b');
-    legend('Group 1','Group 2');
-    ylabel('Completion Rate in %');
-    xlabel('Test Number');
+    errorbar([0.95 1.95 2.95 3.95],100*mean(CR2,2),err2,'-o','color','b');
+    legend('Test Group','Control Group');
+    ylabel('Completion Rate in %','fontsize',15);
+    xlabel('Test Number','fontsize',15);
     xlim([MIN-0.25 MAX+0.25]); set(gca,'XTick',[MIN : 1 : MAX]);
-    title('Completion Rate')
+    title('Completion Rate','fontsize',18)
 
     err1 = std(OS1');
     err2 = std(OS2');
     figure;
-    errorbar(mean(OS1,2),err1,'-o','color','r');
+    errorbar([1.05 2.05 3.05 4.05],mean(OS1,2),err1,'-o','color','r');
     hold on;
-    errorbar(mean(OS2,2),err2,'-o','color','b');
-    legend('Group 1','Group 2');
-    ylabel('Overshoots');
-    xlabel('Test Number');
+    errorbar([0.95 1.95 2.95 3.95],mean(OS2,2),err2,'-o','color','b');
+    legend('Test Group','Control Group');
+    ylabel('Overshoots','fontsize',15);
+    xlabel('Test Number','fontsize',15);
     xlim([MIN-0.25 MAX+0.25]); set(gca,'XTick',[MIN : 1 : MAX]);
-    title('Overshoot')
+    title('Overshoot','fontsize',18)
 
     err1 = 100*std(PE1');
     err2 = 100*std(PE2');
     figure;
-    errorbar(100*mean(PE1,2),err1,'-o','color','r');
+    errorbar([1.05 2.05 3.05 4.05],100*mean(PE1,2),err1,'-o','color','r');
     hold on;
-    errorbar(100*mean(PE2,2),err2,'-o','color','b');
-    legend('Group 1','Group 2');
-    ylabel('Path Efficiency in %');
-    xlabel('Test Number');
+    errorbar([0.95 1.95 2.95 3.95],100*mean(PE2,2),err2,'-o','color','b');
+    legend('Test Group','Control Group');
+    ylabel('Path Efficiency in %','fontsize',15);
+    xlabel('Test Number','fontsize',15);
     xlim([MIN-0.25 MAX+0.25]); set(gca,'XTick',[MIN : 1 : MAX]);
-    title('Path Efficiency')
+    title('Path Efficiency','fontsize',18)
 
     err1 = std(SD1');
     err2 = std(SD2');
     figure;
-    errorbar(mean(SD1,2),err1,'-o','color','r');
+    errorbar([1.05 2.05 3.05 4.05],mean(SD1,2),err1,'-o','color','r');
     hold on;
-    errorbar(mean(SD2,2),err2,'-o','color','b');
-    legend('Group 1','Group 2');
-    ylabel('Stopping Distance');
-    xlabel('Test Number');
+    errorbar([0.95 1.95 2.95 3.95],mean(SD2,2),err2,'-o','color','b');
+    legend('Test Group','Control Group');
+    ylabel('Stopping Distance','fontsize',15);
+    xlabel('Test Number','fontsize',15);
     xlim([MIN-0.25 MAX+0.25]); set(gca,'XTick',[MIN : 1 : MAX]);
-    title('Stopping Distance')
+    title('Stopping Distance','fontsize',18)
 
     err1 = std(TP1');
     err2 = std(TP2');
     figure;
-    errorbar(mean(TP1,2),err1,'-o','color','r');
+    errorbar([1.05 2.05 3.05 4.05],mean(TP1,2),err1,'-o','color','r');
     hold on;
-    errorbar(mean(TP2,2),err2,'-o','color','b');
-    legend('Group 1','Group 2');
-    ylabel('Throughput');
-    xlabel('Test Number');
+    errorbar([0.95 1.95 2.95 3.95],mean(TP2,2),err2,'-o','color','b');
+    legend('Test Group','Control Group');
+    ylabel('Throughput','fontsize',15);
+    xlabel('Test Number','fontsize',15);
     xlim([MIN-0.25 MAX+0.25]); set(gca,'XTick',[MIN : 1 : MAX]);
-    title('Throughput');
+    title('Throughput','fontsize',18);
 end
