@@ -49,7 +49,7 @@ if doCompare == 1
     TR2 = setupTrainResult(trainResult2,2);
     
     [pTestTrainPos,pTTP] = compareStartToEnd(TR1);
-    [pContTrainPos,pTTP] = compareStartToEnd(TR2);
+    [pContTrainPos,pCTP] = compareStartToEnd(TR2);
     
     pPairTrainPos = comparePairwise(TR1,TR2);
     
