@@ -15,7 +15,7 @@ end
 addpath(thePath1);
 [CR1,ID1,OS1,PE1,SD1,TP1] = fittsLawResults(1);
 load('stayStable.mat');
-dingThing = sum(stayStable)';
+dingThing = stayStable';
 rmpath(thePath1);
 
 addpath(thePath2);
@@ -25,13 +25,13 @@ rmpath(thePath2);
 addpath(thePath3);
 [CR3,ID3,OS3,PE3,SD3,TP3] = fittsLawResults(3);
 load('stayStable.mat');
-dingThing = [dingThing;sum(stayStable)'];
+dingThing = [dingThing;stayStable'];
 rmpath(thePath3);
 
 addpath(thePath4);
 [CR4,ID4,OS4,PE4,SD4,TP4] = fittsLawResults(4);
 load('stayStable.mat');
-dingThing = [dingThing;sum(stayStable)'];
+dingThing = [dingThing;stayStable'];
 rmpath(thePath4);
 
 CR = [CR1;CR2;CR3;CR4];
