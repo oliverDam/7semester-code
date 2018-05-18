@@ -1,6 +1,6 @@
-function [pp,p] = compareStartToEnd(feature)
+function [pp,p] = compareStartToEnd(feature,lol)
 
-[pp,~,stats] = friedman(feature');
+[pp,~,stats] = friedman(feature',lol);
 
 results = multcompare(stats,'CType','hsd');
 
