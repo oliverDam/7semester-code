@@ -24,11 +24,11 @@ load('EmgStretch40.mat');
 load('EmgStretch50.mat');
 load('EmgStretch70.mat');
 
-Extension = [EmgExtension40(1001:2000,:);EmgExtension50(1001:2000,:);EmgExtension70(1001:2000,:)];
-Flexion = [EmgFlexion40(1001:2000,:);EmgFlexion50(1001:2000,:);EmgFlexion70(1001:2000,:)];
-Radial = [EmgRadial40(1001:2000,:);EmgRadial50(1001:2000,:);EmgRadial70(1001:2000,:)];
-Ulnar = [EmgUlnar40(1001:2000,:);EmgUlnar50(1001:2000,:);EmgUlnar70(1001:2000,:)];
-Fist = [EmgFist40(1001:2000,:);EmgFist50(1001:2000,:);EmgFist70(1001:2000,:)];
-Stretch = [EmgStretch40(1001:2000,:);EmgStretch50(1001:2000,:);EmgStretch70(1001:2000,:)];
+Extension = [EmgExtension40(801:2200,:);EmgExtension50(801:2200,:);EmgExtension70(801:2200,:)];
+Flexion = [EmgFlexion40(801:2200,:);EmgFlexion50(801:2200,:);EmgFlexion70(801:2200,:)];
+Radial = [EmgRadial40(801:2200,:);EmgRadial50(801:2200,:);EmgRadial70(801:2200,:)];
+Ulnar = [EmgUlnar40(801:2200,:);EmgUlnar50(801:2200,:);EmgUlnar70(801:2200,:)];
+Fist = [EmgFist40(801:2200,:);EmgFist50(801:2200,:);EmgFist70(801:2200,:)];
+Stretch = [EmgStretch40(801:2200,:);EmgStretch50(801:2200,:);EmgStretch70(801:2200,:)];
 
 output = [Extension; Flexion; Radial; Ulnar; Fist; Stretch];

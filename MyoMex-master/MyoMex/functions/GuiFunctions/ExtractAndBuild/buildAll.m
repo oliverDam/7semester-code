@@ -24,16 +24,16 @@ allSMADR = featureExtractionSMADR(allMADR,allMMAV);
 allSSC = featureExtractionSSC(allData);
 allZC = featureExtractionZC(allData);
 allCC = featureExtractionCC(allData);
-restMAV = featureExtractionMAV(EmgRest(1001:4000,:));
-restWL = featureExtractionWL(EmgRest(1001:4000,:));
+restMAV = featureExtractionMAV(EmgRest(601:4800,:));
+restWL = featureExtractionWL(EmgRest(601:4800,:));
 restMMAV = featureExtractionMMAV(restMAV);
 restSMAV = featureExtractionSMAV(restMAV,restMMAV);
-restMADN = featureExtractionMADN(EmgRest(1001:4000,:));
-restMADR = featureExtractionMADR(EmgRest(1001:4000,:));
+restMADN = featureExtractionMADN(EmgRest(601:4800,:));
+restMADR = featureExtractionMADR(EmgRest(601:4800,:));
 restSMADR = featureExtractionSMADR(restMADR,restMMAV);
-restSSC = featureExtractionSSC(EmgRest(1001:4000,:));
-restZC = featureExtractionZC(EmgRest(1001:4000,:));
-restCC = featureExtractionCC(EmgRest(1001:4000,:));
+restSSC = featureExtractionSSC(EmgRest(601:4800,:));
+restZC = featureExtractionZC(EmgRest(601:4800,:));
+restCC = featureExtractionCC(EmgRest(601:4800,:));
 L = length(allMAV)/6;
 
 %Creates the class label names for the classifier

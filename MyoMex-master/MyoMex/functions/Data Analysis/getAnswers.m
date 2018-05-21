@@ -40,8 +40,8 @@ if doCompare == 1
     TR1 = setupTrainResult(trainResult1,3);
     TR2 = setupTrainResult(trainResult2,3);
     
-    [pTestTrainInt,pTTI] = compareStartToEnd(TR1,8);
-    [pContTrainInt,pCTI] = compareStartToEnd(TR2,8);
+    [pTestTrainInt,pTTI] = compareStartToEnd(TR1,4);
+    [pContTrainInt,pCTI] = compareStartToEnd(TR2,4);
     
     TR1 = setupTrainResult(trainResult1,0);
     TR2 = setupTrainResult(trainResult2,0);
